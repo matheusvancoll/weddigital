@@ -1,10 +1,18 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 
+import Router from './pages/Router'
+
 function App() {
+
+    let isLogado = false;
+
     return (
-        <div className="App">
-            <h1>WEDDIGITAL</h1>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <Router isUserLogado={isLogado} />
+            </div>
+    </BrowserRouter>
     );
 }
 

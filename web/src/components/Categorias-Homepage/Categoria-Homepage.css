@@ -1,0 +1,24 @@
+.categoria-homepage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22rem;
+    height: 3rem;
+    border-radius: 5px;
+    background-color: var(--color-dourado);
+    margin: 1rem;
+    transition: 0.5s;
+}
+
+.categoria-homepage a{
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
+    color: var(--color-roxo);
+    font-size: 1.25rem;
+}
+
+.categoria-homepage:hover{
+    width: 25rem;
+    height: 3.4rem;
+}
