@@ -1,0 +1,30 @@
+.sidebar-marketplace-container{
+    min-width: 15rem;
+}
+
+
+.sidebar-marketplace-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-marketplace-button button{
+    margin: 1rem;
+    border: none;
+    background-color: var(--color-dourado);
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.sidebar-marketplace-button button:hover{
+    margin: 1rem;
+    border: none;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+}

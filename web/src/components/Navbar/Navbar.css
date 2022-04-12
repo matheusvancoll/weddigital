@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-bottom: 1px solid black;
 }
 
@@ -10,6 +9,10 @@
 .navbar-logo-container{
     display: flex;
     align-items: center;
+}
+.navbar-logo-container a{
+    text-decoration: none;
+    color: var(--color-preto);
 }
 .navbar-logo-img{
     margin: 1rem;
@@ -19,6 +22,7 @@
 .navbar-logo-name{
     font-family: var(--font-logo-WedDigital);
     font-size: 2.25rem;
+    line-height: 1.75rem;
 }
 
 

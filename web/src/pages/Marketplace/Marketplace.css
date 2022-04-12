@@ -1,0 +1,32 @@
+.marketplace-corpo-produtos{
+    justify-content: space-between;
+    display: flex;
+}
+
+.lista-produtos-marketplace{
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto auto;
+}
+
+@media only screen and (min-width: 960px){
+    .lista-produtos-marketplace{
+        grid-template-columns: auto auto auto;
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 1280px){
+    .lista-produtos-marketplace{
+        grid-template-columns: auto auto auto auto;
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 1660px){
+    .lista-produtos-marketplace{
+        grid-template-columns: auto auto auto auto auto;
+        justify-content: center;
+    }
+}

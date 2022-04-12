@@ -1,13 +1,13 @@
 .homepage-container{
     border-bottom: 1px solid black;
 }
+
+/* ===== BUSCA ===== */
 .busca-homepage-container{
     display: flex;
     justify-content: space-between; 
     border-bottom: 1px solid black;
 }
-
-/* ===== BUSCA ===== */
 .busca-homepage-text{
     width: 100%;
     display: flex;
@@ -15,25 +15,34 @@
     justify-content: center;
     align-items: center;
     border-radius: 1px;
-    margin-right: -7rem;
+    margin-right: -5rem;
     z-index:1
 }
 .busca-homepage-title{
     margin-bottom: 1rem;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+}
+.busca-homepage-pesquisa{
+    width: 15rem;
+    display: flex;
+    justify-content: center;
 }
 .busca-homepage-pesquisa input{
-    width: 15rem;
+    width: 12rem;
     height: 2rem;
     margin-bottom: 1rem;
+    margin-left: 0.5rem;
     background-color: var(--color-cinza);
     border-radius: 5px 0px 0px 5px;
     border: none;
 }
-.busca-homepage-pesquisa button{
+.busca-homepage-pesquisa a{
     width: 6rem;
     height: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 1.25rem;
     border-radius: 0 5px 5px 0;
     border: none;
     text-decoration: none;
@@ -55,4 +64,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .busca-homepage-img{
+        width: 600px;
+    }
+
+    .busca-homepage-title{
+        font-size: 2.75rem;
+    }
+
+    .busca-homepage-pesquisa{
+        width: 100%;
+    }
+    .busca-homepage-pesquisa input{
+        width: 25rem;
+        height: 2.5rem;
+    }
+    .busca-homepage-pesquisa a{
+        width: 8rem;
+        height: 2.5rem;
+    }
+    
+    .categoria-homepage-container{
+        height: 6rem;
+        padding: 0.5rem 1rem;
+        flex-direction: row;
+    }
 }

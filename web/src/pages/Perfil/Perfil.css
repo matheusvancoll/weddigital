@@ -1,0 +1,104 @@
+.perfil-infos{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    border-bottom: 1px solid black;
+}
+
+/* ===== DADOS USUARIO ===== */
+/* === IMAGEM === */
+.perfil-dados-usuario{
+    display: flex;
+    align-items: center;
+}
+
+.perfil-img{
+    margin: 2rem 1.75rem 2.25rem 1.25rem;
+}
+
+.perfil-img img{
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+}
+
+
+/* === INFORMAÇÕES === */
+#nomeUsuario{
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+
+/* === BOTAO EDIT === */
+.perfil-edit{
+    display: flex;
+    align-items: center;
+}
+
+.perfil-edit button{
+    width: 5rem;
+    height: 2rem;
+    margin: 1rem 1rem 1rem 0;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.1rem;
+    background-color: var(--color-dourado);
+}
+
+.perfil-edit p{
+    color: var(--color-roxo);
+}
+
+/* === DADOS CASAMENTO === */
+.perfil-info-casamento{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 16rem;
+    height: 6rem;
+    border-radius: 5px;
+    background-color: var(--color-dourado);
+    margin-right: 1rem;
+}
+
+#dataCasamento{
+    font-size: 1.5rem;
+    color: var(--color-roxo);
+    margin-bottom: 0.5rem;
+}
+
+.perfil-info-casamento p{
+    font-size: 1.25rem;
+}
+
+/* ===== FORNECEDORES ===== */
+.perfil-meus-fornecedores{
+    margin: 1.5rem 0 1rem 1rem;
+    font-size: 1.5rem;
+}
+
+.perfil-fornecedores-card-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+@media only screen and (min-width: 768px){
+    .perfil-infos{
+        padding: 0 4rem;
+    }
+
+    .perfil-meus-fornecedores{
+        margin-left: 4rem;
+    }
+
+    .perfil-fornecedores-card-container{
+        padding: 0 4rem;
+        flex-direction: row;
+    }
+}

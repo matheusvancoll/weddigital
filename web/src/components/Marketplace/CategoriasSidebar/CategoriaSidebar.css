@@ -1,0 +1,21 @@
+.sidebar-categorias-container{
+    padding-bottom: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.sidebar-categorias-text{
+    padding: 2rem 0 0.10rem 1rem;
+    font-size: 1.25rem;
+}
+
+/* === OPÇÕES === */
+.sidebar-categorias-list{
+    margin: 0.10rem 0.15rem 0 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-categorias-container input{
+    margin-right: 0.25rem;
+}
+

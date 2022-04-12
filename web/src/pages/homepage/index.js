@@ -2,7 +2,7 @@ import React from 'react'
 import './Homepage.css'
 
 import Navbar from '../../components/Navbar';
-import ImageHome from '../../Assets/homepage.jpg'
+import ImageHome from '../../assets/homepage.jpg'
 import Categorias from '../../components/Categorias-Homepage'
 
 export default function HomePage(props) {
@@ -15,7 +15,7 @@ export default function HomePage(props) {
                     <p className='busca-homepage-title'>Encontre os melhores <br/> profissionais aqui!</p>
                     <div className='busca-homepage-pesquisa'>
                         <input type='text' className='busca-homepage-input' />
-                        <button className='busca-homepage-button'>Pesquisar</button>
+                        <a href='buscar-fornecedores' className='busca-homepage-button'>Pesquisar</a>
                     </div>
                     <p className='busca-homepage-texto-complementar'>
                         Encontre mais de 150 profissionais!

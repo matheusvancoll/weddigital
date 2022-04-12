@@ -1,0 +1,44 @@
+.card-produto-marketplace-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--color-cinza);
+}
+
+/* === IMAGEM === */
+.card-produto-marketplace-image img{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5px;
+    background-color: var(--color-dourado);
+}
+
+/* === DADOS === */
+.card-produto-marketplace-dados{
+    text-align: center;
+}
+
+#cardProdutoTitle{
+    font-size: 1.5rem;
+}
+
+/* === BOTÃO CONTATO === */
+.card-produto-marketplace-container button{
+    padding: 0.5rem 1.25rem;
+    margin-top: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+    transition: 0.5s;
+}
+
+.card-produto-marketplace-container button:hover{
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    padding: 0.5rem 1.5rem;
+}
