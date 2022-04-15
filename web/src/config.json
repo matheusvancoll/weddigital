@@ -3,9 +3,13 @@
     "nome" : "Natália Lima",
     "cidade" : "Natal",
     "estado" : "Rio Grande do Norte",
-    "tipoUsuario" : "Noiva",
+    "tipoUsuario" : "fornecedor",
     "dataCasamento": "30 de Abril de 2022",
     "diasParaCasamento" : "21 dias",
+
+    "casamentosRealizados" : 4,
+    "orcamentosRecebidos" : 6,
+    "orcamentosPendentes" : 1,
 
 
     "filtros": {

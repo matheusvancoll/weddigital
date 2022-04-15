@@ -13,6 +13,11 @@
 .navbar-logo-container a{
     text-decoration: none;
     color: var(--color-preto);
+    transition: 0.5s;
+}
+.navbar-logo-container a:hover{
+    text-decoration: none;
+    color: var(--color-roxo);
 }
 .navbar-logo-img{
     margin: 1rem;
@@ -39,6 +44,7 @@
 
 /* ===== LOGIN ===== */
 .navbar-login{
+    width: 12rem;
     margin-right: 0.8rem;
 }
 .navbar-login a{

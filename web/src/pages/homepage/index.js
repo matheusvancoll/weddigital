@@ -3,12 +3,12 @@ import './Homepage.css'
 
 import Navbar from '../../components/Navbar';
 import ImageHome from '../../assets/homepage.jpg'
-import Categorias from '../../components/Categorias-Homepage'
+import Categoria from '../../components/Categorias-Homepage'
 
 export default function HomePage(props) {
     return (
         <div className='homepage-container'>
-            <Navbar isUserLogado={props.isUserLogado} />
+            <Navbar isUserLogado={props.dadosUsuario.isUserLogado} tipoUsuario={props.dadosUsuario.tipoUsuario} />
 
             <div className='busca-homepage-container'>
                 <div className='busca-homepage-text'>
@@ -25,11 +25,11 @@ export default function HomePage(props) {
             </div>
 
             <div className='categoria-homepage-container'>
-                <Categorias title="Vestidos" />
-                <Categorias title="Buffet" />
-                <Categorias title="Recepção" />
-                <Categorias title="Músicos" />
-                <Categorias title="Fotógrafo" />
+                <Categoria title="Vestidos" />
+                <Categoria title="Buffet" />
+                <Categoria title="Recepção" />
+                <Categoria title="Músicos" />
+                <Categoria title="Fotógrafo" />
             </div>
             
         </div>

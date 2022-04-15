@@ -1,0 +1,70 @@
+/* === TITLE === */
+.addanuncio-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    font-size: 1.75rem;
+}
+
+/* === INPUTS GERAIS */
+.addanuncio-inputs{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.addanuncio-inputs input, select{
+    margin: 0 0 0.5rem 1rem;
+    padding: 1rem;
+    border: none;
+    background-color: var(--color-cinza);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.addanuncio-inputs p{
+    font-size: 1.5rem;
+    margin: 1.75rem 0 0 1rem;
+}
+
+#inputDescricaoAnuncio{
+    height: 5rem;
+}
+
+#inputPrecoAnuncio, #localizacaoCidade, #localizacaoEstado, #emailContato, #telefoneContato{
+    width: 17rem;
+}
+
+
+/* === CONTATO === */
+
+.addanuncio-contato{
+    width: 100%;
+    display: flex;
+}
+
+.addanuncio-contato p{
+    font-size: 1.15rem;
+}
+.contato-check{
+    display: flex;
+    margin-top: -2rem;
+    justify-content: center;
+    align-items: center;
+}
+.contato-check input{
+    margin-top: 2.25rem;
+}
+
+.addanuncio-inputs button{
+    width: 12rem;
+    height: 3rem;
+    border-radius: 5px;
+    margin: 2rem 0 3rem 3rem;
+    border: none;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+    font-weight: 600;
+    font-size: 1.15rem;
+}

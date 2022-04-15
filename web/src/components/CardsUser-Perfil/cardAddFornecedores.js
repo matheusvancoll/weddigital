@@ -1,11 +1,11 @@
 import React from 'react'
-import './FornecedoresPerfil.css'
+import './CardsUser.css'
 
 export default function FornecedoresPerfil(props) {
     return (
         <div className='perfil-fornecedores-card'>
             <p>{props.title}</p>
-            <a href='/buscar-fornecedores'>Adicionar</a>
+            <a href='/adicionar-anuncio'>Adicionar</a>
         </div>
     )
 }

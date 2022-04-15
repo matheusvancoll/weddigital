@@ -11,8 +11,17 @@ export default function Navbar(props) {
             </div>
 
             <div className='navbar-links'>
-                <a href='perfil'>Meu Casamento</a>
-                <a href='buscar-fornecedores'>Fornecedores</a>
+                {props.tipoUsuario == 'fornecedor' ?
+                    <div>
+                        <a href='buscar-fornecedores'>Marketplace</a>
+                        <a href='perfil'>Meus Anúncios</a>
+                        <a href='orcamentos-solicitados'>Orçamentos</a>
+                    </div>:
+                    <div>
+                        <a href='perfil'>Meu Casamento</a>
+                        <a href='buscar-fornecedores'>Fornecedores</a>
+                    </div>
+                }
             </div>
 
             <div className='navbar-login'>

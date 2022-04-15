@@ -1,4 +1,4 @@
-.card-produto-marketplace-container{
+.card-anuncio-marketplace-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,7 +10,7 @@
 }
 
 /* === IMAGEM === */
-.card-produto-marketplace-image img{
+.card-anuncio-marketplace-image img{
     width: 10rem;
     height: 10rem;
     border-radius: 5px;
@@ -18,16 +18,16 @@
 }
 
 /* === DADOS === */
-.card-produto-marketplace-dados{
+.card-anuncio-marketplace-dados{
     text-align: center;
 }
 
-#cardProdutoTitle{
+#cardAnuncioTitle{
     font-size: 1.5rem;
 }
 
 /* === BOTÃO CONTATO === */
-.card-produto-marketplace-container button{
+.card-anuncio-marketplace-container a{
     padding: 0.5rem 1.25rem;
     margin-top: 0.75rem;
     border: none;
@@ -35,9 +35,10 @@
     background-color: var(--color-roxo);
     color: var(--color-branco);
     transition: 0.5s;
+    text-decoration: none;
 }
 
-.card-produto-marketplace-container button:hover{
+.card-anuncio-marketplace-container a:hover{
     background-color: var(--color-dourado);
     color: var(--color-roxo);
     padding: 0.5rem 1.5rem;

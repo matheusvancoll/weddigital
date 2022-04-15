@@ -12,11 +12,9 @@
     display: flex;
     align-items: center;
 }
-
 .perfil-img{
     margin: 2rem 1.75rem 2.25rem 1.25rem;
 }
-
 .perfil-img img{
     width: 9rem;
     height: 9rem;
@@ -57,8 +55,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 16rem;
-    height: 6rem;
+    width: 22rem;
+    height: 8rem;
     border-radius: 5px;
     background-color: var(--color-dourado);
     margin-right: 1rem;
@@ -74,11 +72,67 @@
     font-size: 1.25rem;
 }
 
-/* ===== FORNECEDORES ===== */
-.perfil-meus-fornecedores{
-    margin: 1.5rem 0 1rem 1rem;
+
+/* ==== CARDS ===== */
+.cards-perfil-title{
+    margin: 1.5rem 0 1rem 4rem;
     font-size: 1.5rem;
 }
+/* === FORNECEDORES === */
+.perfil-fornecedor-container{
+    display: flex;
+    align-items: center;
+}
+.perfil-fornecedor-container a{
+    height: 1rem;
+    margin-left: 2rem;
+    padding: 1rem 1.75rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--color-cinza);
+    color: var(--color-preto);
+    border-radius: 5px;
+    transition: 0.5s;
+}
+.perfil-fornecedor-container a:hover{
+    padding: 1.25rem 2rem;
+    color: var(--color-cinza);
+    background-color: var(--color-preto);
+}
+.cards-perfil-fornecedor-container{
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto auto;
+}
+
+@media only screen and (min-width: 960px){
+    .cards-perfil-fornecedor-container{
+        grid-template-columns: auto auto auto;
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 1280px){
+    .cards-perfil-fornecedor-container{
+        grid-template-columns: auto auto auto auto;
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 1660px){
+    .lista-produtos-marketplace{
+        grid-template-columns: auto auto auto auto auto;
+        justify-content: center;
+    }
+}
+
+
+
+/* === NOIV === */
+
 
 .perfil-fornecedores-card-container{
     display: flex;

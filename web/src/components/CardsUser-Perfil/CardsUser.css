@@ -1,0 +1,87 @@
+/* === ANUNCIOS FORNECEDOR */
+.cards-anuncios-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--color-cinza);
+}
+
+/* === IMAGEM === */
+.card-anuncio-image img{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5px;
+    background-color: var(--color-dourado);
+}
+
+/* === DADOS === */
+.card-anuncio-dados{
+    text-align: center;
+}
+
+#cardAnuncioTitle{
+    font-size: 1.5rem;
+}
+
+/* === BOTÃO CONTATO === */
+.cards-anuncios-container button{
+    padding: 0.5rem 1.25rem;
+    margin-top: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+    transition: 0.5s;
+}
+
+.cards-anuncios-container button:hover{
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    padding: 0.5rem 1.5rem;
+}
+
+
+
+
+
+
+
+/* === FORNECEDORES NOIV */
+.perfil-fornecedores-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+    width: 22rem;
+    height: 8rem;
+    margin: 1rem;
+    border-radius: 5px;
+    background-color: var(--color-dourado);
+    transition: 0.5s;
+}
+
+.perfil-fornecedores-card p{
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.perfil-fornecedores-card a{
+    padding: 1rem 1.75rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--color-cinza);
+    color: var(--color-preto);
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.perfil-fornecedores-card a:hover{
+    padding: 1.25rem 2rem;
+    color: var(--color-cinza);
+    background-color: var(--color-preto);
+}

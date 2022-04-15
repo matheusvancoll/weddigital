@@ -3,12 +3,16 @@ import './Perfil.css'
 
 import Navbar from '../../components/Navbar';
 import ImagePerfil from '../../assets/perfil.jpg'
-import FornecedoresPerfil from '../../components/CardAddFornecedoresPerfil'
+
+import CardCasamentoNoiv from './CardCasamentoNoiv';
+import CardCasamentoFornecedor from './CardCasamentoFornecedor';
+import MeusFornecedoresNoiv from './MeusFornecedoresNoiv';
+import MeusAnunciosFornecedor from './MeusAnunciosFornecedor';
 
 export default function HomePage(props) {
     return (
         <div className='perfil-container'>
-            <Navbar isUserLogado={props.dadosUsuario.isUserLogado} />
+            <Navbar isUserLogado={props.dadosUsuario.isUserLogado} tipoUsuario={props.dadosUsuario.tipoUsuario} />
 
             <div className='perfil-infos'>
                 <div className='perfil-dados-usuario'>
@@ -26,22 +30,19 @@ export default function HomePage(props) {
                     </div>
                 </div>
 
-                <div className='perfil-info-casamento'>
-                    <p id='dataCasamento'>{props.dadosUsuario.dataCasamento}</p>
-                    <p>Faltam: {props.dadosUsuario.diasParaCasamento}</p>
+                <div>
+                    {props.dadosUsuario.tipoUsuario == "fornecedor"  ? 
+                        <CardCasamentoFornecedor dadosUsuario={props.dadosUsuario} /> : 
+                        <CardCasamentoNoiv dadosUsuario={props.dadosUsuario}/>
+                    }
                 </div>
-
             </div>
 
             <div>
-                <p className='perfil-meus-fornecedores'>Meus Fornecedores</p>
-                <div className='perfil-fornecedores-card-container'>
-                    <FornecedoresPerfil title='Recepção'/>
-                    <FornecedoresPerfil title='Buffet'/>
-                    <FornecedoresPerfil title='Músicos'/>
-                    <FornecedoresPerfil title='Fotógrafo'/>
-                    <FornecedoresPerfil title='Vestido'/>
-                </div>
+                {props.dadosUsuario.tipoUsuario == "fornecedor"  ? 
+                    <MeusAnunciosFornecedor dadosFornecedor={props.dadosUsuario} />:
+                    <MeusFornecedoresNoiv/>
+                }
             </div>
 
         </div>
