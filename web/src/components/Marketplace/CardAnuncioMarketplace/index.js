@@ -18,11 +18,11 @@ export default function CardProdutoMarketplace(props){
                 <img src={Imagem} />
             </div>
             <div className='card-anuncio-marketplace-dados'>
-                <p id='cardAnuncioTitle'>{props.dadosProduto.title}</p>
+                <p id='cardAnuncioTitle'>{props.dadosProduto.titulo}</p>
                 <p>{props.dadosProduto.cidade}, {props.dadosProduto.estado}</p>
                 <p>Classificacao: {classificação}</p>
             </div>
-            <a href='contato-fornecedor'>Contato</a>
+            <a href={"contato-fornecedor/" + props.dadosProduto.idFornecedor}>Contato</a>
         </div>
     )
 }

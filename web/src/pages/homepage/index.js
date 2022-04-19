@@ -8,7 +8,9 @@ import Categoria from '../../components/Categorias-Homepage'
 export default function HomePage(props) {
     return (
         <div className='homepage-container'>
-            <Navbar isUserLogado={props.dadosUsuario.isUserLogado} tipoUsuario={props.dadosUsuario.tipoUsuario} />
+            {console.log("props")}
+            {console.log(props.dadosUsuario)}
+            <Navbar isUserLogado={props.dadosUsuario.length  != 0 ? true : false} tipoUsuario={props.dadosUsuario.tipoUsuario} />
 
             <div className='busca-homepage-container'>
                 <div className='busca-homepage-text'>

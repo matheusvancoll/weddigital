@@ -74,8 +74,13 @@
             "estado": "São Paulo",
             "classificacao" : 5
         }
-    ]
+    ],
     
-
+    "api":[{
+        "buscarTodosAnuncios": "anuncio/buscarTodos",
+        "buscarAnuncioPeloID": "anuncio/",
+        "statusServer": "status"
+    }
+]
 
 }

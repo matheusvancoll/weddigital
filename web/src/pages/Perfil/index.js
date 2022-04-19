@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Perfil.css'
+
+import api from '../../api';
 
 import Navbar from '../../components/Navbar';
 import ImagePerfil from '../../assets/perfil.jpg'
@@ -9,10 +11,23 @@ import CardCasamentoFornecedor from './CardCasamentoFornecedor';
 import MeusFornecedoresNoiv from './MeusFornecedoresNoiv';
 import MeusAnunciosFornecedor from './MeusAnunciosFornecedor';
 
-export default function HomePage(props) {
+export default function HomePage() {
+    const [Usuario, setUsuario] = useState([])
+    
+    useEffect(() => {
+        api.get("perfilusuario/58").then(({data}) => {
+            setUsuario(data)
+            //eslint-disable-next-line react-hooks/exhaustive-deps           
+        }).catch(error => {
+            console.log("Nenhum usuario encontrato")
+        })        
+    }, [])
+    
+    let dados = Usuario
+    
     return (
         <div className='perfil-container'>
-            <Navbar isUserLogado={props.dadosUsuario.isUserLogado} tipoUsuario={props.dadosUsuario.tipoUsuario} />
+            <Navbar isUserLogado={dados.length  != 0 ? true : false} tipoUsuario={dados.tipoUsuario} />
 
             <div className='perfil-infos'>
                 <div className='perfil-dados-usuario'>
@@ -21,30 +36,29 @@ export default function HomePage(props) {
                     </div>
 
                     <div className='perfil-info-dados'>
-                        <p id='nomeUsuario'>{props.dadosUsuario.nome}</p>
-                        <p>{props.dadosUsuario.cidade}, {props.dadosUsuario.estado}</p>
+                        <p id='nomeUsuario'>{dados.usuario.nomeCompleto}</p>
+                        <p>{dados.usuario.cidade}, {dados.usuario.estado}</p>
                         <div className='perfil-edit'>
                             <button>Editar</button>
-                            <p>{props.dadosUsuario.tipoUsuario}</p>
+                            <p>{dados.tipoUsuario}</p>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    {props.dadosUsuario.tipoUsuario == "fornecedor"  ? 
-                        <CardCasamentoFornecedor dadosUsuario={props.dadosUsuario} /> : 
-                        <CardCasamentoNoiv dadosUsuario={props.dadosUsuario}/>
+                    {dados.tipoUsuario == "Fornecedor"  ? 
+                        <CardCasamentoFornecedor /> : 
+                        <CardCasamentoNoiv dadosCasamento={dados.dadosCasamento}/>
                     }
                 </div>
             </div>
 
             <div>
-                {props.dadosUsuario.tipoUsuario == "fornecedor"  ? 
-                    <MeusAnunciosFornecedor dadosFornecedor={props.dadosUsuario} />:
-                    <MeusFornecedoresNoiv/>
+                {dados.tipoUsuario == "Fornecedor"  ? 
+                    <MeusAnunciosFornecedor listaAnuncios={dados.listaAnuncios} />:
+                    <MeusFornecedoresNoiv dadosCasamento={dados.dadosCasamento}/>
                 }
             </div>
-
         </div>
     )
 }

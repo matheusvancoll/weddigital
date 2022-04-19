@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CardAnuncio from '../../components/CardsUser-Perfil/cardAnunciosPostados'
 import DadosAnuncio from '../../config.json'
@@ -12,6 +12,8 @@ for (let i = 0; i < listaOpcoes.length; i++) {
 }
 
 export default function MeusAnunciosFornecedor(props){
+
+
     return(
         <div>
             <div className='perfil-fornecedor-container'>
