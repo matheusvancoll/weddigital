@@ -7,6 +7,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "js-cookie": "^3.0.1",
     "react": "^18.0.0",
     "react-currency-input-field": "^3.6.4",
     "react-dom": "^18.0.0",

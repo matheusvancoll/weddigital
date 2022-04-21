@@ -20,7 +20,6 @@ export default function MeusFornecedoresNoiv(){
                     <CardFornecedor title='Músicos'/>
                     <CardFornecedor title='Fotógrafo'/>
                     <CardFornecedor title='Vestido'/>
-                    {listaFornecedores}
                 </div>
         </div>
     )

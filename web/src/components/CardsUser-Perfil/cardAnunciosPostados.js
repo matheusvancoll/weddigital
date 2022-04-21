@@ -4,7 +4,7 @@ import './CardsUser.css'
 import Imagem from '../../assets/recepcao.jpeg'
 
 export default function CardAnuncioPostado(props) {
-    let classificação = props.dadosProduto.classificacao
+    let classificação = props.dadosAnuncio.classificacao
     if(classificação === 1){ classificação = "⭐✩✩✩✩" }
     if(classificação === 2){ classificação = "⭐⭐✩✩✩" }
     if(classificação === 3){ classificação = "⭐⭐⭐✩✩" }
@@ -18,8 +18,9 @@ export default function CardAnuncioPostado(props) {
             </div>
 
             <div className='card-anuncio-dados'>
-                <p id='cardAnuncioTitle'>{props.dadosProduto.title}</p>
-                <p>{props.dadosProduto.cidade}, {props.dadosProduto.estado}</p>
+                <p id='cardAnuncioTitle'>{props.dadosAnuncio.titulo}</p>
+                <p> R$ {props.dadosAnuncio.preco}</p>
+                <p>{props.dadosAnuncio.cidade}, {props.dadosAnuncio.estado}</p>
                 <p>Classificacao: {classificação}</p>
             </div>
             <button>Editar</button>

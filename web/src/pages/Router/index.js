@@ -1,44 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import api from '../../api/index'
+import UserContext from '../../api/userContext-api/userContext'
 
+import PrivateRouter from './privateRouter'
 import HomePage from '../Homepage'
+import Login from '../Login/Login'
 import Perfil from '../Perfil'
+import CadastroUsuario from '../Login/CadastroUsuario'
 import Marketplace from '../Marketplace'
-import AdicionarAnuncio from '../Marketplace/adicionarAnuncio'
 
 export default function Router(props) {
+    const { token, tipo } = useContext(UserContext)
     
-    const [Usuario, setUsuario] = useState([])
-    
-    useEffect(() => {
-        api.get("perfilusuario/57").then(({data}) => {
-            setUsuario(data)
-            //eslint-disable-next-line react-hooks/exhaustive-deps           
-        }).catch(error => {
-            console.log("Nenhum usuario encontrato")
-        })        
-    }, [])
+    let idUsuario = token
+    let tipoUsuario = tipo
     
     return(
         <Switch>
             <Route exact path="/">
-                <HomePage dadosUsuario={Usuario} />
+                <HomePage idUsuario={idUsuario} tipoUsuario={tipoUsuario} />
             </Route>
 
-            <Route exact path="/perfil">
-                <Perfil dadosUsuario={Usuario} />
+            <Route exact path="/cadastro">
+                <CadastroUsuario />
             </Route>
 
+            <Route exact path="/login" component={Login} />
+            <PrivateRouter exact path="/perfil" component={Perfil} idUsuario={idUsuario} tipoUsuario={tipoUsuario}/>
+            
             <Route exact path="/buscar-fornecedores">
-                <Marketplace dadosUsuario={Usuario} />
-            </Route>
-
-            <Route exact path="/adicionar-anuncio">
-                <AdicionarAnuncio dadosUsuario={Usuario} />
+                <Marketplace tipoUsuario={tipoUsuario} />
             </Route>
         </Switch>
-        
     )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Perfil.css'
 
 import api from '../../api';
@@ -6,28 +6,37 @@ import api from '../../api';
 import Navbar from '../../components/Navbar';
 import ImagePerfil from '../../assets/perfil.jpg'
 
-import CardCasamentoNoiv from './CardCasamentoNoiv';
-import CardCasamentoFornecedor from './CardCasamentoFornecedor';
+import CardCasamentoFornecedor from './CardDadosPerfilAnunciosFornecedor';
+import CardCasamentoNoiv from './CardDadosCasamentoNoiv';
 import MeusFornecedoresNoiv from './MeusFornecedoresNoiv';
 import MeusAnunciosFornecedor from './MeusAnunciosFornecedor';
 
-export default function HomePage() {
-    const [Usuario, setUsuario] = useState([])
+export default function Perfil(props) {
+    const [DadosResumoPerfil, setDadosResumoPerfil] = useState([])
+    
+    let idUsuario = props.idUsuario
     
     useEffect(() => {
-        api.get("perfilusuario/58").then(({data}) => {
-            setUsuario(data)
-            //eslint-disable-next-line react-hooks/exhaustive-deps           
-        }).catch(error => {
-            console.log("Nenhum usuario encontrato")
-        })        
+        api.get("perfilusuario/"+idUsuario).then(({data}) => {
+            setDadosResumoPerfil(data)
+            //eslint-disable-next-line react-hooks/exhaustive-deps
+        })
     }, [])
-    
-    let dados = Usuario
+
+    let nomeUsuario
+    let cidadeUsuario
+    let estadoUsuario
+    let tipoUsuario
+    if(DadosResumoPerfil.usuario != null || DadosResumoPerfil.usuario != undefined){
+        nomeUsuario = DadosResumoPerfil.usuario.nomeCompleto
+        cidadeUsuario = DadosResumoPerfil.usuario.cidade
+        estadoUsuario = DadosResumoPerfil.usuario.estado
+        tipoUsuario = DadosResumoPerfil.tipoUsuario
+    }
     
     return (
         <div className='perfil-container'>
-            <Navbar isUserLogado={dados.length  != 0 ? true : false} tipoUsuario={dados.tipoUsuario} />
+            <Navbar isLogado={props.idUsuario} tipoUsuario={props.tipoUsuario} />
 
             <div className='perfil-infos'>
                 <div className='perfil-dados-usuario'>
@@ -36,27 +45,31 @@ export default function HomePage() {
                     </div>
 
                     <div className='perfil-info-dados'>
-                        <p id='nomeUsuario'>{dados.usuario.nomeCompleto}</p>
-                        <p>{dados.usuario.cidade}, {dados.usuario.estado}</p>
+                        <p id='nomeUsuario'>{nomeUsuario}</p>
+                        <p>{cidadeUsuario}, {estadoUsuario}</p>
                         <div className='perfil-edit'>
                             <button>Editar</button>
-                            <p>{dados.tipoUsuario}</p>
+                            <p>{tipoUsuario}</p>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    {dados.tipoUsuario == "Fornecedor"  ? 
-                        <CardCasamentoFornecedor /> : 
-                        <CardCasamentoNoiv dadosCasamento={dados.dadosCasamento}/>
-                    }
+                    {tipoUsuario == "Fornecedor" 
+                        ? <CardCasamentoFornecedor />
+                        : tipoUsuario == "Noiva" 
+                            ? <CardCasamentoNoiv /> 
+                            : <div></div>
+                        }
                 </div>
             </div>
 
             <div>
-                {dados.tipoUsuario == "Fornecedor"  ? 
-                    <MeusAnunciosFornecedor listaAnuncios={dados.listaAnuncios} />:
-                    <MeusFornecedoresNoiv dadosCasamento={dados.dadosCasamento}/>
+                {tipoUsuario == "Fornecedor"
+                    ? <MeusAnunciosFornecedor listaAnuncios={DadosResumoPerfil.listaAnuncios} />
+                    : tipoUsuario == "Noiva" 
+                        ?<MeusFornecedoresNoiv dadosCasamento={DadosResumoPerfil.dadosCasamento}/>
+                        : <div></div>
                 }
             </div>
         </div>

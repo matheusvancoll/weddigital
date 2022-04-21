@@ -29,7 +29,7 @@ export default function Marketplace(props){
 
     return(
         <div className='marketplace-container'>
-            <Navbar isUserLogado={props.dadosUsuario.length  != 0 ? true : false} tipoUsuario={props.dadosUsuario.tipoUsuario} />
+            <Navbar isUserLogado={props.tipoUsuario.length  != 0 ? true : false} tipoUsuario={props.tipoUsuario} />
             <div className='marketplace-corpo-produtos'>
                 <SidebarMarketplace />
                 <div className='lista-produtos-marketplace'>

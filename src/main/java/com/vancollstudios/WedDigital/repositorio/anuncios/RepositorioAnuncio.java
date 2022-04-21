@@ -13,5 +13,5 @@ public interface RepositorioAnuncio extends CrudRepository<Anuncio, Integer> {
 
     Optional<Object> findAllByIdAnuncio(Integer idAnuncio);
 
-    Optional<Object> findAllByIdUsuarioFornecedor(Integer tipoUsuario);
+    Iterable<Anuncio> findAllByIdUsuarioFornecedor(Integer tipoUsuario);
 }

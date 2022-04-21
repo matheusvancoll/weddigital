@@ -10,12 +10,16 @@ import com.vancollstudios.WedDigital.repositorio.anuncios.RepositorioAnuncio;
 import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioTipoUsuario;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
+import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ControladorUsuario {
 
@@ -34,14 +38,27 @@ public class ControladorUsuario {
     @Autowired
     ControladorCasamento controladorCasamento;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(path = "/api/usuarios/buscarTodos")
+
+    @GetMapping(path = "/api/usuario/buscarTodosUsuarios")
     public Iterable<Usuario> buscarTodosUsuarios(){
         return repositorioUsuario.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping(path = "/api/usuario/{idUsuario}")
     public Usuario consultarUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario){
         ResponseEntity usuarioEncontrato = repositorioUsuario.findAllByIdUsuario(idUsuario)
@@ -53,7 +70,6 @@ public class ControladorUsuario {
         return ussssseerrr;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/api/tipousuario/{idUsuario}")
     public TipoUsuario consultarTipoUsuarioPeloIdUsuario(@PathVariable("idUsuario") Integer idUsuario){
         ResponseEntity tipoUsuarioEncontrato = repositorioTipoUsuario.findAllByIdTipoUsuario(idUsuario)
@@ -61,14 +77,12 @@ public class ControladorUsuario {
                 .orElse(ResponseEntity.notFound().build());
         Object teste = tipoUsuarioEncontrato.getBody();
         TipoUsuario hue = (TipoUsuario) teste;
-        Usuario userr = consultarUsuarioPorId(51);
-        hue.setDescricaoTipo(userr.getNomeCompleto());
+        Usuario userr = consultarUsuarioPorId(idUsuario);
+        hue.setDescricaoTipo(userr.getNomeUsuario());
         return hue;
     }
 
 
-
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/api/perfilusuario/{idUsuario}")
     public DadosResumoPerfil consultarDadosPerfilPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario){
         Usuario usuario;
@@ -83,18 +97,6 @@ public class ControladorUsuario {
 
         casamento = controladorCasamento.consultarCasamentoPorIdUsuario(idUsuario);
 
-        if(usuario != null){
-            ResponseEntity dadosTipoUsuario = repositorioTipoUsuario.findAllByIdTipoUsuario(usuario.getTipoUsuario())
-                    .map(registro -> ResponseEntity.ok().body(registro)).orElse(ResponseEntity.notFound().build());
-            tipoUsuario = (TipoUsuario) dadosTipoUsuario.getBody();
-
-            ResponseEntity dadosAnuncio = repositorioAnuncio.findAllByIdUsuarioFornecedor(usuario.getTipoUsuario())
-                    .map(registro -> ResponseEntity.ok().body(registro)).orElse(ResponseEntity.notFound().build());
-            anuncios = (Collection<Anuncio>) dadosAnuncio.getBody();
-
-            dadosResumoPerfil.setUsuario(usuario);
-        }
-
         if(tipoUsuario != null){
             dadosResumoPerfil.setTipoUsuario(tipoUsuario.getDescricaoTipo());
         }
@@ -107,29 +109,69 @@ public class ControladorUsuario {
 
 
 
+    public Boolean isUsuarioExistente(String login, String email){
+        ResponseEntity usuarioEncontrato = repositorioUsuario.findAllByLoginOrEmail(login, email)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path = "/api/usuario/salvar")
-    public Usuario criarUsuario(@RequestBody Usuario novoUsuario){
-        return repositorioUsuario.save(novoUsuario);
+        if(usuarioEncontrato != null && usuarioEncontrato.getBody() != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
+    @PostMapping(path = "/api/usuario/novoUsuario")
+    public ResponseEntity<String> criarNovoUsuario(@RequestBody Usuario novoUsuario){
+        Boolean usuarioExistente = isUsuarioExistente(novoUsuario.getLogin(), novoUsuario.getEmail());
+        if(!usuarioExistente){
+            Date dataAtual = new Date();
+            String dataCriacao = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataAtual);
+            cal.add(Calendar.MONTH, 3);
+            String dataExpiracao = Util.converterDataParaStringSemHora(cal.getTime(), "dd/MM/yyyy");
+
+            novoUsuario.setDataCriacao(dataCriacao);
+            novoUsuario.setDataExpiracao(dataExpiracao);
+            novoUsuario.setIs_Validado(false);
+
+            novoUsuario.setSenha(passwordEncoder.encode(novoUsuario.getSenha()));
+            novoUsuario.setIs_SenhaExpirada(false);
+            Integer tokenGenerated = Math.round(1);
+            novoUsuario.setRandomToken(tokenGenerated);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("fdifub");
+        }
+
+        ResponseEntity.ok(repositorioUsuario.save(novoUsuario));
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario Cadastrado");
+    }
+
+    @GetMapping(path = "/api/usuario/validarAcesso")
+    public ResponseEntity<String> validarAcesso(@RequestParam String login, @RequestParam String senha){
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByLoginOrEmail(login, login);
+        if(usuarioOptional == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario inválido");
+        }
+        
+        Usuario usuario  = usuarioOptional.get();
+        Boolean isAcessoValido = passwordEncoder.matches(senha, usuario.getSenha());
+        String tokenAcesso = "";
+
+        if(isAcessoValido){
+            String tipoUsuario;
+            if(usuario.getIs_Noivos()){ tipoUsuario = "noivos"; }
+            else{ tipoUsuario = "profissional"; }
+            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ usuario.getNivelConta() +"."+ usuario.getDataCriacao() +"."+ usuario.getRandomToken();
+        }
+
+        HttpStatus status = isAcessoValido ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+
+        return ResponseEntity.status(status).body(tokenAcesso);
+    }
+
     @PostMapping(path = "/api/tipousuario/salvar")
     public TipoUsuario criarTipoUsuario(@RequestBody TipoUsuario novoTipoUsuario){
         return repositorioTipoUsuario.save(novoTipoUsuario);

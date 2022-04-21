@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 
+import api from "../../api";
+
 import CardAnuncio from '../../components/CardsUser-Perfil/cardAnunciosPostados'
-import DadosAnuncio from '../../config.json'
 
-
-let listaOpcoes = DadosAnuncio.produtos
-let listaAnuncios = []
-
-for (let i = 0; i < listaOpcoes.length; i++) {
-    listaAnuncios.push(<CardAnuncio dadosProduto={listaOpcoes[i]} />)
-}
 
 export default function MeusAnunciosFornecedor(props){
+    const [AnunciosFornecedor, setAnunciosFornecedor] = useState([])
+    
+    useEffect(() => {
+        api.get("anuncio/buscarTodos").then(({data}) => {
+            setAnunciosFornecedor(data)
+            //eslint-disable-next-line react-hooks/exhaustive-deps
+        })
+    }, [])
 
+    let listaOpcoes = AnunciosFornecedor
+    let listaAnuncios = []
+
+    for (let i = 0; i < listaOpcoes.length; i++) {
+        listaAnuncios.push(<CardAnuncio dadosAnuncio={listaOpcoes[i]} />)
+    }
 
     return(
         <div>

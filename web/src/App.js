@@ -2,17 +2,19 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 
 import Router from './pages/Router'
-import informacoesUser from './config.json'
+import UserProvider from './api/userContext-api/userProvider';
 
 function App() {
 
     return (
         <BrowserRouter>
-            <div className="App">
-                <Router dadosUser={informacoesUser} />
-            </div>
+            <UserProvider>
+                <div className="App">
+                    <Router />
+                </div>
+            </UserProvider>
     </BrowserRouter>
-    );
+    )
 }
 
 export default App;
