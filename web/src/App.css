@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100;200;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
 :root {
     --color-roxo: #6C00BF;
@@ -7,7 +8,7 @@
     --color-preto: #000;
     --color-cinza: #D8D8D8;
 
-    --body-font: 'Nunito', sans-serif;
+    --body-font: 'Poppins', sans-serif;
     --normal-font-size: 1rem;
     --font-logo-WedDigital : 'Indie Flower', cursive;
 }
@@ -22,6 +23,3 @@ body {
     font-family: var(--body-font);
 }
 
-
-
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100;200;300&display=swap');

@@ -5,20 +5,16 @@ import './Navbar.css'
 import UserContext from '../../api/userContext-api/userContext'
 
 import Logo from '../../assets/icon.png'
-export default function Navbar(props) {
-    const { setToken, setTipo } = useContext(UserContext)
-    const [ IsLoged, setIsLoged ] = useState(false)
+export default function Navbar() {
+    const { token, setToken } = useContext(UserContext)
     const history = useHistory()
 
-    if(props.idUsuario != null){
-        setIsLoged(true)
-    }
-
+    let dadosToken = token.split('.')
+    let tipoUsuario = dadosToken[0]
+    
     function onSubmit(ev){
         ev.preventDefault()
-
         setToken('')
-        setTipo('')
         history.push('/')
     }
 
@@ -30,28 +26,26 @@ export default function Navbar(props) {
             </div>
 
             <div className='navbar-links'>
-                {props.tipoUsuario == 'Fornecedor' 
+                {tipoUsuario == 'profissional' 
                     ? <div>
-                        <a href='buscar-fornecedores'>Marketplace</a>
-                        <a href='perfil'>Meus Anúncios</a>
-                        <a href='orcamentos-solicitados'>Orçamentos</a>
+                        <a href='perfil'>Meu Portifólio</a>
                     </div>
-                    : props.tipoUsuario == 'Noivos' 
+                    : tipoUsuario == 'noivos' 
                     ? <div>
-                        <a href='perfil'>Meu Casamento</a>
-                        <a href='buscar-fornecedores'>Fornecedores</a>
+                        <a href='/perfil'>Meu Casamento</a>
+                        <a href='/buscar-profissionais'>Fornecedores</a>
                     </div>
                     : <div> </div>
                 }
             </div>
 
             <div className='navbar-login'>
-                <div className={IsLoged ? "" : "isLogado"}>
+                <div className={token ? "" : "isLogado"}>
                     <a href='/perfil' id='btnLogin'>Perfil</a>
                     <a href='/' onClick={onSubmit}>Sair</a>
                 </div>
 
-                <div className={IsLoged ? "isLogado" : ""}>
+                <div className={token ? "isLogado" : ""}>
                     <a href='/login' id='btnLogin'>Acessar</a>
                     <a href='/cadastro'>Registre-se</a>
                 </div>

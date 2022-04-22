@@ -1,6 +1,5 @@
 package com.vancollstudios.WedDigital.model.usuarios;
 
-import com.vancollstudios.WedDigital.model.anuncios.Anuncio;
 import com.vancollstudios.WedDigital.model.casamentos.Casamento;
 
 import java.util.Collection;
@@ -12,8 +11,6 @@ public class DadosResumoPerfil {
     private Usuario usuario;
 
     private Casamento dadosCasamento;
-
-    private Collection<Anuncio> listaAnuncios;
 
    public String getTipoUsuario() {
         return tipoUsuario;
@@ -39,11 +36,4 @@ public class DadosResumoPerfil {
         this.dadosCasamento = dadosCasamento;
     }
 
-    public Collection<Anuncio> getListaAnuncios() {
-        return listaAnuncios;
-    }
-
-    public void setListaAnuncios(Collection<Anuncio> listaAnuncios) {
-        this.listaAnuncios = listaAnuncios;
-    }
 }

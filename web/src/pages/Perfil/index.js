@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Perfil.css'
 
 import api from '../../api';
+import UserContext from '../../api/userContext-api/userContext';
+import UsuarioModel from '../Login/UsuarioModel';
 
 import Navbar from '../../components/Navbar';
 import ImagePerfil from '../../assets/perfil.jpg'
@@ -11,24 +13,28 @@ import CardCasamentoNoiv from './CardDadosCasamentoNoiv';
 import MeusFornecedoresNoiv from './MeusFornecedoresNoiv';
 import MeusAnunciosFornecedor from './MeusAnunciosFornecedor';
 
-export default function Perfil(props) {
-    const [DadosResumoPerfil, setDadosResumoPerfil] = useState([])
-    
-    let idUsuario = props.idUsuario
-    
+export default function Perfil() {
+    const [DadosResumoPerfil, setDadosResumoPerfil] = useState(UsuarioModel.dadosResumoPerfil)
+    const { token } = useContext(UserContext)
+
+    let dadosToken = token.split('.')
+    let idUsuario = dadosToken[1]
+    let nomeUsuario = dadosToken[2]
+
     useEffect(() => {
         api.get("perfilusuario/"+idUsuario).then(({data}) => {
+            console.log("DADOS REEEEEe")
+            console.log(data)
             setDadosResumoPerfil(data)
             //eslint-disable-next-line react-hooks/exhaustive-deps
         })
     }, [])
 
-    let nomeUsuario
+
     let cidadeUsuario
     let estadoUsuario
     let tipoUsuario
     if(DadosResumoPerfil.usuario != null || DadosResumoPerfil.usuario != undefined){
-        nomeUsuario = DadosResumoPerfil.usuario.nomeCompleto
         cidadeUsuario = DadosResumoPerfil.usuario.cidade
         estadoUsuario = DadosResumoPerfil.usuario.estado
         tipoUsuario = DadosResumoPerfil.tipoUsuario
@@ -36,7 +42,7 @@ export default function Perfil(props) {
     
     return (
         <div className='perfil-container'>
-            <Navbar isLogado={props.idUsuario} tipoUsuario={props.tipoUsuario} />
+            <Navbar />
 
             <div className='perfil-infos'>
                 <div className='perfil-dados-usuario'>
@@ -49,15 +55,15 @@ export default function Perfil(props) {
                         <p>{cidadeUsuario}, {estadoUsuario}</p>
                         <div className='perfil-edit'>
                             <button>Editar</button>
-                            <p>{tipoUsuario}</p>
+                            <p>{dadosToken[0]}</p>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    {tipoUsuario == "Fornecedor" 
+                    {dadosToken[0] == "profissional" 
                         ? <CardCasamentoFornecedor />
-                        : tipoUsuario == "Noiva" 
+                        : dadosToken[0] == "noivos" 
                             ? <CardCasamentoNoiv /> 
                             : <div></div>
                         }
@@ -65,9 +71,9 @@ export default function Perfil(props) {
             </div>
 
             <div>
-                {tipoUsuario == "Fornecedor"
+                {dadosToken[0] == "profissional"
                     ? <MeusAnunciosFornecedor listaAnuncios={DadosResumoPerfil.listaAnuncios} />
-                    : tipoUsuario == "Noiva" 
+                    : dadosToken[0] == "noivos" 
                         ?<MeusFornecedoresNoiv dadosCasamento={DadosResumoPerfil.dadosCasamento}/>
                         : <div></div>
                 }

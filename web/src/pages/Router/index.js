@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import UserContext from '../../api/userContext-api/userContext'
+import Teste from '../teste'
 
 import PrivateRouter from './privateRouter'
 import HomePage from '../Homepage'
@@ -11,15 +12,12 @@ import CadastroUsuario from '../Login/CadastroUsuario'
 import Marketplace from '../Marketplace'
 
 export default function Router(props) {
-    const { token, tipo } = useContext(UserContext)
-    
-    let idUsuario = token
-    let tipoUsuario = tipo
-    
+    const { token } = useContext(UserContext)
+
     return(
         <Switch>
             <Route exact path="/">
-                <HomePage idUsuario={idUsuario} tipoUsuario={tipoUsuario} />
+                <HomePage />
             </Route>
 
             <Route exact path="/cadastro">
@@ -27,10 +25,14 @@ export default function Router(props) {
             </Route>
 
             <Route exact path="/login" component={Login} />
-            <PrivateRouter exact path="/perfil" component={Perfil} idUsuario={idUsuario} tipoUsuario={tipoUsuario}/>
+            <PrivateRouter exact path="/perfil" component={Perfil} />
             
-            <Route exact path="/buscar-fornecedores">
-                <Marketplace tipoUsuario={tipoUsuario} />
+            <Route exact path="/buscar-profissionais">
+                <Marketplace />
+            </Route>
+
+            <Route exact path="/teste">
+                <Teste />
             </Route>
         </Switch>
     )

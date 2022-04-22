@@ -20,5 +20,11 @@ module.exports = {
     login:{
         user: '', 
         password: ''
+    },
+
+    dadosResumoPerfil: {
+        nomeUsuario: '',
+        cidade: '',
+        estado: '',
     }
 }

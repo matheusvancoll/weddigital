@@ -8,7 +8,7 @@ import SidebarMarketplace from '../../components/Marketplace/SidebarMarketplace'
 import CardAnuncioMarketplace from '../../components/Marketplace/CardAnuncioMarketplace'
 
 
-export default function Marketplace(props){
+export default function Marketplace(){
     const [Anuncios, setAnuncios] = useState([])
     
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function Marketplace(props){
 
     return(
         <div className='marketplace-container'>
-            <Navbar isUserLogado={props.tipoUsuario.length  != 0 ? true : false} tipoUsuario={props.tipoUsuario} />
+            <Navbar />
             <div className='marketplace-corpo-produtos'>
                 <SidebarMarketplace />
                 <div className='lista-produtos-marketplace'>

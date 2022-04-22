@@ -4,12 +4,13 @@ import './Login.css';
 
 import api from '../../api';
 import UserContext from '../../api/userContext-api/userContext';
-
-
-const login = {user: '', password: '' }
+import UsuarioModel from "./UsuarioModel";
+import Navbar from '../../components/Navbar';
 
 export default function UserLogin(){
-    const [DadosUser, setDadosUSer] = useState(login)
+    const [IsDadosInvalido, setIsDadosInvalido] = useState(false)
+    const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
+    const [DadosUser, setDadosUSer] = useState(UsuarioModel.login)
     const { setToken, setTipo } = useContext(UserContext)
     const history = useHistory()
 
@@ -24,40 +25,58 @@ export default function UserLogin(){
 
     function onSubmit(ev){
         ev.preventDefault();
+        setIsCarregandoDados(true)
+        setIsDadosInvalido(false)
 
         api.get(`usuario/validarAcesso?login=${DadosUser.user}&senha=${DadosUser.password}`)
         .then((response) => {
-            alert("DEUBOPM")
-            console.log(response)
+            setToken(response.data)
+            setIsCarregandoDados(false)
+            history.push('/perfil')
         }).catch((error) => {
-            alert("Usuario ou senha invalida")
-            console.log("error")
-            console.log(error)
+            setIsCarregandoDados(false)
+            setIsDadosInvalido(true)
         })
     
-    
-        setDadosUSer(login)
+        setDadosUSer({
+            ...DadosUser, 
+            password: "",
+        })
     }
 
     return (
-        <div className="user-login">
-            <h1 className="user-login__title">Acessar o Sistema</h1>
-            <div autoComplete="nope">
-                <div className="user-login__form-control">
-                    <label htmlFor="email">E-mail</label>
-                    <input id="email" type="text" name="user" autoComplete="off" value={DadosUser.user} onChange={onChange}/>
+        <>
+            <Navbar />
+            <div className="container-sm login-usuario-container">
+                {IsDadosInvalido
+                ? <div class="alert alert-danger" role="alert">
+                    Login ou senha inválidos!
                 </div>
-                <div className="user-login__form-control">
-                    <label htmlFor="password">Senha</label>
-                    <input id="password" type="password" name="password" value={DadosUser.password} onChange={onChange}/>
-                </div>
-                <button onClick={onSubmit}
-                        theme="contained-green"
-                        className="user-login__submit-button"
-                    >
-                    Entrar
+                :""}
+
+                {IsCarregandoDados
+                ? <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
                 </button>
+                :<div className="container-sm login-usuario-container">
+                    <p className="text-center texto-label-acesso">Login</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email ou Usuario</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
+                                    name="user" value={DadosUser.user} onChange={onChange} />
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" required
+                                    name="password" value={DadosUser.password} onChange={onChange} />
+                        </div>
+                        <button class="btn btn-primary" onClick={onSubmit}>Acessar</button>
+                    </form>
+                </div>
+                }
             </div>
-        </div>
+        </>
     );
 };
