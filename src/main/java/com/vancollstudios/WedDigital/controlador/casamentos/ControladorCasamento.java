@@ -1,7 +1,6 @@
 package com.vancollstudios.WedDigital.controlador.casamentos;
 
 import com.vancollstudios.WedDigital.model.casamentos.Casamento;
-import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

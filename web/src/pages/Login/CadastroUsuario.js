@@ -12,7 +12,7 @@ export default function CadastroUsuario(){
     const history = useHistory()
     const { token, setToken } = useContext(UserContext)
 
-    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuario)
+    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioDTO)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
@@ -28,9 +28,12 @@ export default function CadastroUsuario(){
         })
     }
 
+    console.log(DadosCadastro)
+
     function onSubmit(ev){
         ev.preventDefault();
         setIsCarregandoDados(true)
+        setIsUsuarioExistente(false)
         let termosUso = document.getElementById('invalidCheck').checked
 
         if(!termosUso){
@@ -136,8 +139,9 @@ export default function CadastroUsuario(){
 
                             <div className="col-md-5">
                                 <label for="validationCustom04" className="form-label">Estado*</label>
-                                <select className="form-select" id="validationCustom04" required>
-                                    <option selected disabled value="..">Selecione</option>
+                                <select className="form-select" id="validationCustom04" required
+                                        name="estado" value={DadosCadastro.estado} onChange={onChange} >
+                                    <option selected disabled>Selecione</option>
                                     <option value="AC">Acre</option>
                                     <option value="AL">Alagoas</option>
                                     <option value="AP">Amapá</option>

@@ -1,20 +1,22 @@
 module.exports = {
-    dadosUsuario: {
-        nomeUsuario: '',
-        login: '',
-        email: '',
-        numeroContato: '',
-        is_Whatsapp: false,
-        senha: '',
-        cidade: '',
-        estado: '',
-        is_Noivos: true,
-        is_Profissional: false,
-        nomeEmpresa: '',
+    dadosUsuarioDTO: {
+        idUsuario: "",
+        nomeUsuario: "",
+        login: "",
+        senha: "",
+        is_Noivos: "",
+        is_Profissional: "",
+        is_Admin: "",
+        nomeEmpresa: "",
+        email: "",
+        numeroContato: "",
+        is_Whatsapp: "",
+        cidade: "",
+        estado: "",
         is_CNPJ: false,
-        numeroCNPJ: '',
-        is_Admin: false,
-        is_PrimeiroAcesso: true,
+        numeroCNPJ: "",
+        descricaoEmpresa: "",
+        nivelConta: "",
     },
 
     login:{
@@ -22,9 +24,20 @@ module.exports = {
         password: ''
     },
 
-    dadosResumoPerfil: {
-        nomeUsuario: '',
+    dadosResumoPerfilDTO: {
+        idUsuario: "",
+        nome: '',
+        tipoUsuario: "",
+        idProfissional: "",
         cidade: '',
         estado: '',
+        nomeEmpresa: "",
+        descricaoEmpresa: "",
+        email: "",
+        numeroContato: "",
+        is_Whatsapp: "",
+        is_CNPJ: "",
+        numeroCNPJ: "",
+        nivelConta: '',
     }
 }

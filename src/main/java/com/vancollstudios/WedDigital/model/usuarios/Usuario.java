@@ -1,10 +1,12 @@
 package com.vancollstudios.WedDigital.model.usuarios;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity(name = "DADOS_USUARIO")
 public class Usuario {
-
     @Id @GeneratedValue
     private Integer idUsuario;
 
@@ -13,12 +15,6 @@ public class Usuario {
 
     @Column(nullable = false)
     private String email;
-
-    @Column
-    private String numeroContato;
-
-    @Column
-    private Boolean is_Whatsapp;
 
     @Column
     private String login;
@@ -36,21 +32,6 @@ public class Usuario {
     private Boolean is_Admin;
 
     @Column
-    private String nomeEmpresa;
-
-    @Column
-    private String cidade;
-
-    @Column
-    private String estado;
-
-    @Column
-    private Boolean is_CNPJ;
-
-    @Column
-    private String numeroCNPJ;
-
-    @Column
     private String dataCriacao;
 
     @Column
@@ -60,9 +41,6 @@ public class Usuario {
     private Boolean is_Validado;
 
     @Column
-    private Integer nivelConta;
-
-    @Column
     private String ultimoAcesso;
 
     @Column
@@ -70,6 +48,9 @@ public class Usuario {
 
     @Column
     private String dataExpiracao;
+
+    @Column
+    private Integer nivelConta;
 
     @Column
     private Integer randomToken;
@@ -96,22 +77,6 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNumeroContato() {
-        return numeroContato;
-    }
-
-    public void setNumeroContato(String numeroContato) {
-        this.numeroContato = numeroContato;
-    }
-
-    public Boolean getIs_Whatsapp() {
-        return is_Whatsapp;
-    }
-
-    public void setIs_Whatsapp(Boolean is_Whatsapp) {
-        this.is_Whatsapp = is_Whatsapp;
     }
 
     public String getLogin() {
@@ -152,46 +117,6 @@ public class Usuario {
 
     public void setIs_Admin(Boolean is_Admin) {
         this.is_Admin = is_Admin;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Boolean getIs_CNPJ() {
-        return is_CNPJ;
-    }
-
-    public void setIs_CNPJ(Boolean is_CNPJ) {
-        this.is_CNPJ = is_CNPJ;
-    }
-
-    public String getNumeroCNPJ() {
-        return numeroCNPJ;
-    }
-
-    public void setNumeroCNPJ(String numeroCNPJ) {
-        this.numeroCNPJ = numeroCNPJ;
     }
 
     public String getDataCriacao() {
@@ -242,19 +167,19 @@ public class Usuario {
         this.dataExpiracao = dataExpiracao;
     }
 
-    public Integer getRandomToken() {
-        return randomToken;
-    }
-
-    public void setRandomToken(Integer randomToken) {
-        this.randomToken = randomToken;
-    }
-
     public Integer getNivelConta() {
         return nivelConta;
     }
 
     public void setNivelConta(Integer nivelConta) {
         this.nivelConta = nivelConta;
+    }
+
+    public Integer getRandomToken() {
+        return randomToken;
+    }
+
+    public void setRandomToken(Integer randomToken) {
+        this.randomToken = randomToken;
     }
 }

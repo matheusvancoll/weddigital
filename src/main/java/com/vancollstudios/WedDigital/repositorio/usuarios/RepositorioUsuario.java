@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface RepositorioUsuario extends CrudRepository<Usuario, Integer> {
 
-    Optional<Object> findAllByIdUsuario(Integer idUsuario);
+    Optional<Usuario> findAllByIdUsuario(Integer idUsuario);
     Optional<Usuario> findByLogin(String login);
     Optional<Usuario> findAllByLoginOrEmail(String login, String email);
 }

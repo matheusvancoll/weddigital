@@ -6,8 +6,6 @@ export default function ContactUs() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-
-    
     emailjs.sendForm('service_dbbp6yf', 'template_44kjgsh', form.current, 'nRkUn8RqboquqFSTd')
       .then((result) => {
           alert("DEU BOM")
@@ -27,6 +25,12 @@ export default function ContactUs() {
       <label>Message</label>
       <textarea name="message" />
       <input type="submit" value="Send" />
-    </form>
+
+      <div class="input-group">
+        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
+        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+        </div>
+        <script async src="https://imgbb.com/upload.js"></script>
+        </form>
   );
 };

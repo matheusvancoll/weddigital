@@ -6,10 +6,11 @@ import Teste from '../teste'
 
 import PrivateRouter from './privateRouter'
 import HomePage from '../Homepage'
+import CadastroUsuario from '../Login/CadastroUsuario'
 import Login from '../Login/Login'
 import Perfil from '../Perfil'
-import CadastroUsuario from '../Login/CadastroUsuario'
 import Marketplace from '../Marketplace'
+import Vitrine from '../Marketplace/Vitrine/Vitrine'
 
 export default function Router(props) {
     const { token } = useContext(UserContext)
@@ -33,6 +34,10 @@ export default function Router(props) {
 
             <Route exact path="/teste">
                 <Teste />
+            </Route>
+
+            <Route exact path="/dadosProfissional">
+                <Vitrine />
             </Route>
         </Switch>
     )
