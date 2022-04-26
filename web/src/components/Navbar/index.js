@@ -47,7 +47,7 @@ export default function Navbar() {
 
                 <div className={token ? "isLogado" : ""}>
                     <a href='/login' id='btnLogin'>Acessar</a>
-                    <a href='/cadastro'>Registre-se</a>
+                    <a href='/empresas'>Área Empresa</a>
                 </div>
             </div>
         </navbar>

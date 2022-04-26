@@ -5,17 +5,20 @@ import api from '../../api';
 import UserContext from '../../api/userContext-api/userContext';
 import UsuarioModel from '../Login/UsuarioModel';
 
-import Navbar from '../../components/Navbar';
+import NavbarPerfil from '../../components/Perfil/Navbar'
+import Logo from '../../assets/avatar.png'
+
+
 import FormResumo from '../../components/Perfil/FormResumo';
 import FormDadosGerais from '../../components/Perfil/FormDadosGerais';
-
+import FormFAQProfissional from '../../components/Perfil/FormFAQProfissional';
 
 export default function Perfil() {
-    const [DadosResumoPerfil, setDadosResumoPerfil] = useState(UsuarioModel.dadosResumoPerfilDTO)
-    const [ TabLocation, setTabLocation ] = useState("resumo")
-    const [ IsCarregando, setIsCarregando ] = useState(true)
+    const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilDTO)
     const [ IsDadosInvalido, setIsDadosInvalido ] = useState(false)
-    const [ IsNoivos, setIsNoivos ] = useState(false)
+    const [ TabLocation, setTabLocation ] = useState("Resumo")
+    const [ IsCarregando, setIsCarregando ] = useState(true)
+    const [ SidebarOpen, setSidebarOpen ] = useState(true)
     const { token } = useContext(UserContext)
 
     let dadosToken = token.split('.')
@@ -26,13 +29,9 @@ export default function Perfil() {
         api.get(`usuario/obterdadosperfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
         .then(({data}) => {
             setDadosResumoPerfil(data)
-            console.log("DADOS")
-            console.log(data)
             setIsCarregando(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps
         }).catch(({error}) => {
-            console.log("error")
-            console.log(error)
             setIsCarregando(false)
             setIsDadosInvalido(true)
         })
@@ -42,13 +41,125 @@ export default function Perfil() {
     console.log('DADOS GEt')
     console.log(DadosResumoPerfil)
 
-    function toggleTabs(tabName){ setTabLocation(tabName) }
+    function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
     return (
         <div className='perfil-container'>
-            <Navbar />
+            <NavbarPerfil toggleState={SidebarOpen} toggleMove={toggleSidebar} />
+
+            <section className="sidebar" id={SidebarOpen ? "" : "responsive-sidebar"}>
+                    <div className="sidebar__title">
+                        <div className="sidebar__img">
+                        <img src={Logo} alt="logo"/>
+                        <h1>{DadosResumoPerfil.nomeEmpresa}</h1>
+                        </div>
+                    </div>
+
+                    <div className="sidebar__menu">
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'Resumo' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("Resumo")} >
+                                <i class="fa-solid fa-gauge-high"></i>
+                                <span>Resumo</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'meuPerfil' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("meuPerfil")} >
+                                <i class="fa-solid fa-address-card"></i>
+                                <span>Meu Perfil</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'orcamentos' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("orcamentos")} >
+                                <i class="fa-solid fa-tags"></i>
+                                <span>Orçamentos</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conteudo' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("conteudo")} >
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>Conteúdos</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conquitas' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("conquitas")} >
+                                <i class="fa-solid fa-flag-checkered"></i>
+                                <span>Minhas conquistas</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("convites")} >
+                                <i class="fa-solid fa-share-nodes"></i>
+                                <span>Convites</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'assinatura' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("assinatura")} >
+                                <i class="fa-solid fa-money-check-dollar"></i>
+                                <span>Minha assinatura</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
+                            <a href='#' onClick={() => setTabLocation("comunidade")} >
+                                <i class="fa-solid fa-users-rectangle"></i>
+                                <span>Comunidade Wed</span>
+                            </a>
+                        </div>
+                    </div>
+            </section>
+
+            <div className={SidebarOpen ? 'perfil__container_open perfil__box_content' : "perfil__container_close perfil__box_content"}>
+                {IsCarregando 
+                ? <div className='.container p-4 d-flex justify-content-center'>
+                    <button class="btn btn-primary" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Carregando...
+                    </button>
+                </div> 
+                :<>
+                    {IsDadosInvalido 
+                    ? <div class="alert alert-danger text-center" role="alert">
+                        Oooops! Parece que algo não saiu como o planejado :(
+                        <br></br> 
+                        Por favor, tente novamente
+                    </div> 
+                    : <>
+                        <div className='container-sm forms-container-bttp'>
+                            {TabLocation == 'Resumo' ?
+                            <div >
+                                <FormResumo dadosUsuario={DadosResumoPerfil}/>
+                            </div>
+                            :''
+                            }
+
+                            {TabLocation == 'meuPerfil' ?
+                            <div >
+                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} />
+                            </div>
+                            :''}
+
+                            {TabLocation == 'duvidas' ?
+                            <div >
+                                <p><FormFAQProfissional /></p>
+                            </div>
+                            :''}
+                        </div>
+                    </>
+                    }
+                </>
+                }
+            </div>
             
-            <div className='.container p-4 d-flex justify-content-center'>
+
+
+            
+            {/* <div className='.container p-4 d-flex justify-content-center'>
                 <ul className="nav nav-pills">
                 <li className="nav-item">
                         <a className={TabLocation == 'resumo' ? 'nav-link active' : 'nav-link'} aria-current="page" href='#' onClick={() => toggleTabs("resumo")}>Resumo</a>
@@ -72,46 +183,8 @@ export default function Perfil() {
                         <a className={TabLocation == 'conquistas' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("conquistas")}>Minhas Conquistas</a>
                     </li>
                 </ul>
-            </div>
+            </div> */}
 
-            {IsCarregando 
-            ? <div className='.container p-4 d-flex justify-content-center'>
-                <button class="btn btn-primary" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Carregando...
-                </button>
-            </div> 
-            :<>
-                {IsDadosInvalido 
-                ? <div class="alert alert-danger text-center" role="alert">
-                    Oooops! Parece que algo não saiu como o planejado :(
-                    <br></br> 
-                    Por favor, tente novamente
-                </div> 
-                : <>
-                    <div className='container-sm forms-container-bttp'>
-                        {TabLocation == 'resumo'? 
-                        <div >
-                            <FormResumo dadosUsuario={DadosResumoPerfil}/>
-                        </div>
-                        :''}
-
-                        {TabLocation == 'dadosGerais' ?
-                        <div >
-                            <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} />
-                        </div>
-                        :''}
-
-                        {TabLocation == 'duvidas' ?
-                        <div >
-                            <p>idhnuiff</p>
-                        </div>
-                        :''}
-                    </div>
-                </>
-                }
-            </>
-            }
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import './SidebarMarketplace.css'
 
-import CategoriaSidebar from '../CategoriasSidebar'
+import CategoriaSidebar from './CategoriasSidebar'
 import DadosCategoria from '../../../config.json'
 
 export default function SidebarMarketplace(){

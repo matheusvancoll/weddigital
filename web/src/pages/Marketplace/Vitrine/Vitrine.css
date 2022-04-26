@@ -3,3 +3,7 @@
     display: flex;
     justify-content: space-around;
 }
+
+.vitrine-contato-container{
+    width: 20%;
+}

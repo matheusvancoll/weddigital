@@ -1,0 +1,41 @@
+.navbar {
+    width: calc(100% - 7rem);
+    height: var(--header-height);
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: flex-end;
+    left: 5rem;
+    padding: 0 1rem;
+    background-color: var(--color-dark);
+    color: var(--color-text);
+    transition: .5s;
+    font-size: 1.25rem;
+}
+
+#max-responsive {
+    width: calc(100% - 5rem);
+    left: 5rem;
+}
+
+.navbar__toggle {
+    width: 2rem;
+}
+.navbar__icons a{
+    color: var(--color-text);
+    margin-right: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .navbar {
+        width: calc(100% - 14rem);
+        justify-content: space-between;
+        left: 14rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar__toggle {
+        display: none;
+    }
+}

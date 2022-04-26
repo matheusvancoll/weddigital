@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import UserContext from '../../api/userContext-api/userContext'
+import PrivateRouter from './privateRouter'
 import Teste from '../teste'
 
-import PrivateRouter from './privateRouter'
-import HomePage from '../Homepage'
+import HomepageNoivos from '../Homepage/Noivos'
+import HomepageEmpresa from '../Homepage/Empresas'
+
 import CadastroUsuario from '../Login/CadastroUsuario'
 import Login from '../Login/Login'
 import Perfil from '../Perfil'
@@ -17,10 +19,9 @@ export default function Router(props) {
 
     return(
         <Switch>
-            <Route exact path="/">
-                <HomePage />
-            </Route>
-
+            <Route exact path="/" component={HomepageNoivos} />
+            <Route exact path="/empresas" component={HomepageEmpresa} />
+            
             <Route exact path="/cadastro">
                 <CadastroUsuario />
             </Route>
