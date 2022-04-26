@@ -1,0 +1,18 @@
+.cadastro-usuario-container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.texto-label-acesso{
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.cadastro-usuario-form{
+    padding: 1.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}

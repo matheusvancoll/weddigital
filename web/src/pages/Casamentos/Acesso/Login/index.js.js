@@ -4,7 +4,7 @@ import './Login.css';
 
 import api from '../../api';
 import UserContext from '../../api/userContext-api/userContext';
-import UsuarioModel from "./UsuarioModel";
+import UsuarioModel from "../../../../utils/UsuarioModel";
 import Navbar from '../../components/Navbar';
 
 export default function UserLogin(){

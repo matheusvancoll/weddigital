@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Perfil.css'
 
-import api from '../../api';
-import UserContext from '../../api/userContext-api/userContext';
-import UsuarioModel from '../Login/UsuarioModel';
+import api from '../../../api/';
+import UserContext from '../../../api/userContext-api/userContext';
+import UsuarioModel from '../../../utils/UsuarioModel';
 
-import NavbarPerfil from '../../components/Perfil/Navbar'
-import Logo from '../../assets/avatar.png'
+import NavbarPerfil from '../../../components/Navbar'
+import Logo from '../../../assets/avatar.png'
 
 
-import FormResumo from '../../components/Perfil/FormResumo';
-import FormDadosGerais from '../../components/Perfil/FormDadosGerais';
-import FormFAQProfissional from '../../components/Perfil/FormFAQProfissional';
+import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
+import FormDadosGerais from '../../../components/Perfil/Empresas/FormDadosGerais';
+import FormFAQProfissional from '../../../components/Perfil/Empresas/FormFAQProfissional';
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilDTO)

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import api from "../../../api";
-import UserContext from "../../../api/userContext-api/userContext";
+import api from "../../../../api";
+import UserContext from "../../../../api/userContext-api/userContext";
 
 export default function FormDadosGerais(props){
     const history = useHistory()

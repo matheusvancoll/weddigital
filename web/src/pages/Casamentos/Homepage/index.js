@@ -1,15 +1,17 @@
 import React from 'react'
-import './Homepage-Empresas.css'
+import './Homepage-Noivos.css'
 
 import Navbar from '../../../components/Navbar';
+import ImageHome from '../../../assets/homepage.jpg'
 
 export default function HomePage() {
     return (
         <div className=''>
             <Navbar />
             <p>
-                Empresas
+                Noivos
             </p>
+
             {/* <div className='busca-homepage-container'>
                 <div className='busca-homepage-text'>
                     <p className='busca-homepage-title'>Encontre os melhores <br/> profissionais aqui!</p>

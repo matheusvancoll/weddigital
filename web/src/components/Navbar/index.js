@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom';
 import './Navbar.css'
 
 import UserContext from '../../api/userContext-api/userContext'
 
 import Logo from '../../assets/icon.png'
-export default function Navbar() {
+export default function Navbar(props) {
     const { token, setToken } = useContext(UserContext)
     const history = useHistory()
 
@@ -38,8 +38,12 @@ export default function Navbar() {
                     : <div> </div>
                 }
             </div>
-
-            <div className='navbar-login'>
+            
+            {props.isAreaEmpresa 
+            ? <>
+                <a href='empresas/login' id='btnAreaEmpresa'>Comece agora</a>
+            </>
+            : <div className='navbar-login'>
                 <div className={token ? "" : "isLogado"}>
                     <a href='/perfil' id='btnLogin'>Perfil</a>
                     <a href='/' onClick={onSubmit}>Sair</a>
@@ -50,6 +54,9 @@ export default function Navbar() {
                     <a href='/empresas'>Área Empresa</a>
                 </div>
             </div>
+            }
+
+            
         </navbar>
     )
 }

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100;200;300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
-
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/hk-grotesk.min.css");
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/space-mono.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 :root {
 
 
@@ -15,7 +16,6 @@
     --color-text: #FFFFFF;
 
     /*===== Font and typography =====*/
-    --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
 
     /*===== z index =====*/
@@ -31,9 +31,9 @@
     --color-preto: #000;
     --color-cinza: #D8D8D8;
 
-    --body-font: 'Poppins', sans-serif;
+    --body-font: 'HK Grotesk', sans-serif;
     --normal-font-size: 1rem;
-    --font-logo-WedDigital : 'Indie Flower', cursive;
+    --font-logo-WedDigital : 'Roboto', sans-serif;
 }
 
 /* ===== Estilo Geral ===== */

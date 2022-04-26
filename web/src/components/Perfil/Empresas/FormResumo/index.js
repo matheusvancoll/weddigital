@@ -1,7 +1,6 @@
 import React from "react";
 
-import ImagePerfil from '../../../assets/perfil.jpg'
-import CardCasamentoFornecedor from '../../../pages/Perfil/CardDadosPerfilAnunciosFornecedor'
+import ImagePerfil from '../../../../assets/perfil.jpg'
 
 export default function FormResumo(props){
 
@@ -26,10 +25,6 @@ export default function FormResumo(props){
                             <p>{dadosPerfil ? dadosPerfil.tipoUsuario : ''}</p>
                         </div>
                     </div>
-                </div>
-
-                <div>
-                    <CardCasamentoFornecedor />
                 </div>
             </div>
         </>
