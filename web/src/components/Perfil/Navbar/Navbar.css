@@ -7,7 +7,7 @@
     justify-content: flex-end;
     left: 5rem;
     padding: 0 1rem;
-    background-color: var(--color-dark);
+    background-color: var(--color-roxo);
     color: var(--color-text);
     transition: .5s;
     font-size: 1.25rem;

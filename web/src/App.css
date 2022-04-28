@@ -10,14 +10,14 @@
     --side-width-open: 14rem;
 
     /*===== Colors =====*/
-    --color-preto: #000;
+    --color-preto: #1B1A19;
     --color-dark: #1B1A19;
     --color-text: #FFFFFF;
     --color-branco: #FFF;
     --color-cinza: #D8D8D8;
     --color-bg: #323130;
     --color-contrast: #F7894A;
-    --color-roxo: #6C00BF;
+    --color-roxo: #400072;
     --color-dourado: #FFBC44;
     
     /*===== Font and typography =====*/
@@ -39,6 +39,7 @@
 
 body {
     font-family: var(--body-font);
+    text-shadow: rgba(0, 0, 0, 0.125) 0.1em 0.1em 0.1em
 }
 
 

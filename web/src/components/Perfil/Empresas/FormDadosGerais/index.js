@@ -35,7 +35,7 @@ export default function FormDadosGerais(props){
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
-                history.push('/perfil')
+                history.push('/empresa/perfil')
             }).catch((error) => {
                 setIsErroCadastro(true)
                 setIsCarregandoDados(false)
@@ -61,6 +61,7 @@ export default function FormDadosGerais(props){
                 </div> 
                 : ''
                 }
+
                 <p className="text-center texto-label-titulo">Dados Gerais</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
                 
@@ -192,6 +193,115 @@ export default function FormDadosGerais(props){
                         <button className="btn btn-primary" type="submit" onClick={onSubmit}>Atualizar Dados</button>
                     </div>
                 </form>
+
+                <br></br>
+                <br></br>
+                
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Dados da empresa
+                        </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {/*  */}
+                            <form className="row g-3 needs-validation">
+                                <div className="col-md-12">
+                                    <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
+                                    <input type="text" className="form-control" id="validationCustom01" required
+                                            name="nomeEmpresa" value={DadosCadastro.nomeEmpresa} onChange={onChange} />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="validationTextarea" class="form-label">Descrição da Empresa</label>
+                                    <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus visitantes o que você pode oferecer!" required
+                                                name="descricaoEmpresa" value={DadosCadastro.descricaoEmpresa} onChange={onChange}></textarea>
+                                    <div class="invalid-feedback">
+                                        Please enter a message in the textarea.
+                                    </div>
+                                </div>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
+                                                name="isNoivos" checked={IsCNPJ} value={IsCNPJ}
+                                                onChange={() =>{
+                                                    setIsCNPJ(!IsCNPJ)
+                                                    setDadosCadastro({
+                                                    ...DadosCadastro, 
+                                                    is_CNPJ: !IsCNPJ,
+                                                })
+                                            }}
+                                        />
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">{IsCNPJ ? "Sim" : "Não"}</label>
+                                    </div>
+                                    {IsCNPJ
+                                    ? <>
+                                        <div className="col-md-7">
+                                            <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
+                                            <input type="number" className="form-control" id="validationCustom01" required
+                                                    name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
+                                        </div>
+                                    </> 
+                                    :<></>
+                                    }
+                            </form>
+                            {/*  */}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Accordion Item #2
+                        </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Accordion Item #3
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </> 
             }
         </>

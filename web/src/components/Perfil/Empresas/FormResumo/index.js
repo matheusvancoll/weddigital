@@ -11,7 +11,7 @@ export default function FormResumo(props){
 
     return(
         <>
-            <div className='perfil-infos'>
+            {/* <div className='perfil-infos'>
                 <div className='perfil-dados-usuario'>
                     <div className='perfil-img'>
                         <img src={ImagePerfil}></img>
@@ -26,7 +26,45 @@ export default function FormResumo(props){
                         </div>
                     </div>
                 </div>
+            </div> */}
+
+            {/* <div class="card">
+                <div class="card-header">
+                    Visitas recebidas em sua vitrine
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                    <p>A well-known quote, contained in a blockquote element.</p>
+                    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
+                </div>
+            </div> */}
+            
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total de visitas em sua vitrine: 8</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total de orçamentos recebidos: 5</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            <br></br>
+            <br></br>
+            
+            <p></p>
+            <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12" aria-hidden="true">50 Pontos</a>
+
+
         </>
     )
 }

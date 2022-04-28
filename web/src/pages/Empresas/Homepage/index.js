@@ -13,7 +13,7 @@ export default function HomePage() {
         <div className=''>
             <Navbar isAreaEmpresa={true}/>
             <div className='homepage__container'>
-                <div className='homepage__home_one'>
+                <div className='homepage__home_one' id='inicio'>
                     <div className='home_one__textos'>
                         <h1>
                             <span className='text-roxo'>Sua empresa</span> <br></br>
@@ -32,7 +32,7 @@ export default function HomePage() {
                         <img src={ImagemWed}></img>
                     </div>
                 </div>
-                <div className='homepage__home_two'>
+                <div className='homepage__home_two' id='vantagens'>
                     <div className='home_cards line1'>
                         <CardVantagensEmpresas icon="fa-solid fa-trophy" title="Concorra a prêmios"
                                 description='Para ajudar o seu negócio, nós vamos te presentear em cash através de suas conquintas.'/>
@@ -50,7 +50,7 @@ export default function HomePage() {
                     </div>
                 </div>
 
-                <div className='homepage__home_three'>
+                <div className='homepage__home_three' id='servicos'>
                     <div className='home3_text_title'>
                         <h2>
                             Você está perdendo vários contratos por não ser da Wed

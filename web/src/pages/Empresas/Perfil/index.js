@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './Perfil.css'
+import './PerfilEmpresa.css'
 
 import api from '../../../api/';
 import UserContext from '../../../api/userContext-api/userContext';
@@ -7,7 +7,6 @@ import UsuarioModel from '../../../utils/UsuarioModel';
 
 import NavbarPerfil from '../../../components/Perfil/Navbar'
 import Logo from '../../../assets/avatar.png'
-
 
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
@@ -50,63 +49,63 @@ export default function Perfil() {
             <section className="sidebar" id={SidebarOpen ? "" : "responsive-sidebar"}>
                     <div className="sidebar__title">
                         <div className="sidebar__img">
-                        <img src={Logo} alt="logo"/>
-                        <h1>{DadosResumoPerfil.nomeEmpresa}</h1>
+                            <img src={Logo} alt="logo"/>
+                            <h1>{DadosResumoPerfil.nomeEmpresa}</h1>
                         </div>
                     </div>
 
                     <div className="sidebar__menu">
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'Resumo' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("Resumo")} >
+                            <a href='#Resumo' onClick={() => setTabLocation("Resumo")} >
                                 <i class="fa-solid fa-gauge-high"></i>
                                 <span>Resumo</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'meuPerfil' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("meuPerfil")} >
+                            <a href='#meuPerfil' onClick={() => setTabLocation("meuPerfil")} >
                                 <i class="fa-solid fa-address-card"></i>
                                 <span>Meu Perfil</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'orcamentos' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("orcamentos")} >
+                            <a href='#orcamentos' onClick={() => setTabLocation("orcamentos")} >
                                 <i class="fa-solid fa-tags"></i>
                                 <span>Orçamentos</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conteudo' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("conteudo")} >
+                            <a href='#conteudo' onClick={() => setTabLocation("conteudo")} >
                                 <i class="fa-solid fa-graduation-cap"></i>
                                 <span>Conteúdos</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conquitas' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("conquitas")} >
+                            <a href='#conquitas' onClick={() => setTabLocation("conquitas")} >
                                 <i class="fa-solid fa-flag-checkered"></i>
                                 <span>Minhas conquistas</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("convites")} >
+                            <a href='#convites' onClick={() => setTabLocation("convites")} >
                                 <i class="fa-solid fa-share-nodes"></i>
                                 <span>Convites</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'assinatura' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("assinatura")} >
+                            <a href='#assinatura' onClick={() => setTabLocation("assinatura")} >
                                 <i class="fa-solid fa-money-check-dollar"></i>
                                 <span>Minha assinatura</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
-                            <a href='#' onClick={() => setTabLocation("comunidade")} >
+                            <a href='#comunidade' onClick={() => setTabLocation("comunidade")} >
                                 <i class="fa-solid fa-users-rectangle"></i>
                                 <span>Comunidade Wed</span>
                             </a>

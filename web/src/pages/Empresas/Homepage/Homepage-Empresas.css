@@ -23,7 +23,7 @@
 .home_one__textos h1{
     margin-bottom: 2rem;
     font-size: 4.5rem;
-    line-height: 4rem;
+    line-height: 4.5rem;
 }
 .text-roxo{ color: var(--color-roxo); }
 .text-preto{ color: var(--color-dourado); }
@@ -79,11 +79,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 6rem;
+    margin: 2rem 0;
 }
 
 .home3_text_title{
-    margin: 1.75rem 0;
+    margin: 8rem 0 4rem 0;
+    
     width: 50%;
     display: flex;
     flex-direction: column;
