@@ -55,7 +55,7 @@ export default function CadastroUsuario(){
 
     return(
         <>
-            <Navbar />
+            <Navbar isAreaEmpresa={true}/>
             <div className="container-sm cadastro-usuario-container">
                 {IsUsuarioExistente
                     ? <div class="alert alert-danger" role="alert">

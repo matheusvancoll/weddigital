@@ -46,7 +46,7 @@ export default function UserLogin(){
 
     return (
         <>
-            <Navbar />
+            <Navbar isAreaEmpresa={true}/>
             <div className="container-sm login-usuario-container">
                 {IsDadosInvalido
                 ? <div class="alert alert-danger" role="alert">

@@ -1,0 +1,16 @@
+.card__servicos__contaier{
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+
+}
+
+.card_servicos_icon{
+    margin: 1rem;
+    font-size: 4rem;
+    color: var(--color-roxo);
+}
+
+.card_text{
+    font-size: 1.25rem;
+}

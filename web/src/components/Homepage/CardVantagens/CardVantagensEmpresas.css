@@ -1,0 +1,26 @@
+.card__homepage_container{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card__icon{
+    font-size: 6rem;
+    line-height: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-dourado);
+}
+
+.card_title, .card_description{
+    color: var(--color-branco);
+}
+
+.card_title{
+    font-size: 2.25rem;
+}
+.card_description{
+    font-size: 1.25rem;
+}

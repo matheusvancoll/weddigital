@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100;200;300&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/hk-grotesk.min.css");
-@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/space-mono.min.css");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+
 :root {
 
 
@@ -10,30 +10,25 @@
     --side-width-open: 14rem;
 
     /*===== Colors =====*/
+    --color-preto: #000;
     --color-dark: #1B1A19;
+    --color-text: #FFFFFF;
+    --color-branco: #FFF;
+    --color-cinza: #D8D8D8;
     --color-bg: #323130;
     --color-contrast: #F7894A;
-    --color-text: #FFFFFF;
-
-    /*===== Font and typography =====*/
-    --normal-font-size: 1rem;
-
-    /*===== z index =====*/
-    --z-fixed: 100;
-
-
-
-
-
     --color-roxo: #6C00BF;
     --color-dourado: #FFBC44;
-    --color-branco: #FFF;
-    --color-preto: #000;
-    --color-cinza: #D8D8D8;
-
+    
+    /*===== Font and typography =====*/
+    --normal-font-size: 1rem;
+    
+    /*===== z index =====*/
+    --z-fixed: 100;
+    
     --body-font: 'HK Grotesk', sans-serif;
     --normal-font-size: 1rem;
-    --font-logo-WedDigital : 'Roboto', sans-serif;
+    --font-logo-WedDigital : 'Dancing Script', cursive;
 }
 
 /* ===== Estilo Geral ===== */

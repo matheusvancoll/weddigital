@@ -1,0 +1,116 @@
+.homepage__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === HOMEPAGE - 1 */
+.homepage__home_one{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.home_one__textos{
+    margin-left: 1.75rem;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.home_one__textos h1{
+    margin-bottom: 2rem;
+    font-size: 4.5rem;
+    line-height: 4rem;
+}
+.text-roxo{ color: var(--color-roxo); }
+.text-preto{ color: var(--color-dourado); }
+
+.home_one__textos h4{
+    width: 25rem;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.75rem;
+}
+
+.button_quero_crescer{
+    width: 15rem;
+    padding: 1rem 0;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 1.25rem;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+    text-decoration: none;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.button_quero_crescer:hover{
+    width: 17rem;
+    color: var(--color-dourado);
+}
+
+.home_one__imagem img{
+    width: 50rem;
+    border-radius: 15px;
+    margin: 0 3rem;
+}
+
+/* === HOMEPAGE - 2 */
+.homepage__home_two{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-roxo);
+    
+}
+
+.home_cards{ display: flex;}
+.line1{ width: 80%; }
+.line2{ width: 40%; }
+
+/* === HOMEPAGE - 3 */
+.homepage__home_three{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 6rem;
+}
+
+.home3_text_title{
+    margin: 1.75rem 0;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.home3_text_title h2{
+    font-size: 3.25rem;
+    line-height: 3.25rem;
+}
+
+.home3_text_title p{
+    width: 70%;
+    font-size: 1.25rem;
+}
+
+.home3_text_side{ 
+    display: flex; 
+    align-items: center;
+}
+
+
+.home3__imagem img{
+    width: 50rem;
+    border-radius: 15px;
+    margin: 0 3rem;
+}
+

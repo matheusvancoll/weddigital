@@ -40,9 +40,10 @@ export default function Navbar(props) {
             </div>
             
             {props.isAreaEmpresa 
-            ? <>
-                <a href='empresas/login' id='btnAreaEmpresa'>Comece agora</a>
-            </>
+            ? <div>
+                <a href='/empresas/cadastro' id='btnAreaEmpresa'>CADASTRO GRATIS</a>
+                <a href='/empresas/login' id='btnLoginEmpresa'>Login</a>
+            </div>
             : <div className='navbar-login'>
                 <div className={token ? "" : "isLogado"}>
                     <a href='/perfil' id='btnLogin'>Perfil</a>
