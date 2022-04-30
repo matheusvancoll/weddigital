@@ -45,7 +45,7 @@ export default function FormResumo(props){
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Total de visitas em sua vitrine: 8</h5>
+                            <h5 class="card-title">Total de visitas em sua vitrine: {}</h5>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export default function FormResumo(props){
             <br></br>
             
             <p></p>
-            <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12" aria-hidden="true">50 Pontos</a>
+            <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-12" aria-hidden="true">{dadosPerfil.pontosAcumulados} Pontos</a>
 
 
         </>

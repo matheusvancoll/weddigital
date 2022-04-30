@@ -11,7 +11,7 @@ export default function Navbar(props) {
 
     let dadosToken = token.split('.')
     let tipoUsuario = dadosToken[0]
-    let possuiUsuario = dadosToken ? true : false
+    let possuiUsuario = dadosToken != "" ? true : false
     
     function onSubmit(ev){
         ev.preventDefault()
@@ -62,7 +62,7 @@ export default function Navbar(props) {
                     {possuiUsuario
                         ? 
                             <>
-                                <a href='/empresa/perfil' id='btnLogin'>Perfil</a>
+                                <a href='/empresas/perfil' id='btnLogin'>Perfil</a>
                                 <a href='/empresas' onClick={onSubmit}>Sair</a>
                             </>
                         :
@@ -77,7 +77,7 @@ export default function Navbar(props) {
                 : 
                     <>
                         <div className={token ? "" : "isLogado"}>
-                            <a href='/perfil' id='btnLogin'>Perfil</a>
+                            <a href={tipoUsuario == 'profissional' ? '/empresas/perfil' : '/perfil'} id='btnLogin'>Perfil</a>
                             <a href='/' onClick={onSubmit}>Sair</a>
                         </div>
 

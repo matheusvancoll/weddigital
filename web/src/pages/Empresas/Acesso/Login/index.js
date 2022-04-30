@@ -3,9 +3,10 @@ import { useHistory } from 'react-router-dom';
 import './LoginEmpresa.css';
 
 import api from '../../../../api';
-import UserContext from '../../../../api/userContext-api/userContext';
-import UsuarioModel from "../../../../utils/UsuarioModel";
 import Navbar from '../../../../components/Navbar';
+import UsuarioModel from "../../../../utils/UsuarioModel";
+import LoginInvalido from '../../../../components/ModalError/LoginInvalido'
+import UserContext from '../../../../api/userContext-api/userContext';
 
 export default function UserLogin(){
     const [IsDadosInvalido, setIsDadosInvalido] = useState(false)
@@ -49,9 +50,7 @@ export default function UserLogin(){
             <Navbar isAreaEmpresa={true}/>
             <div className="container-sm login-usuario-container">
                 {IsDadosInvalido
-                ? <div class="alert alert-danger" role="alert">
-                    Login ou senha inválidos!
-                </div>
+                ? <LoginInvalido />
                 :""}
 
                 {IsCarregandoDados

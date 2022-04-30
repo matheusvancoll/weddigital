@@ -27,7 +27,7 @@ export default function Router(props) {
             <Route exact path="/empresas" component={HomepageEmpresa} />
             <Route exact path="/empresas/cadastro" component={CadastroEmpresa} />
             <Route exact path="/empresas/login" component={LoginEmpresa} />
-            <PrivateRouter exact path="/empresa/perfil" component={PerfilEmpresa} />
+            <PrivateRouter exact path="/empresas/perfil" component={PerfilEmpresa} />
             
             <Route exact path="/" component={HomepageNoivos} />
             {/* <Route exact path="/cadastro" component={CadastroNoivos} />

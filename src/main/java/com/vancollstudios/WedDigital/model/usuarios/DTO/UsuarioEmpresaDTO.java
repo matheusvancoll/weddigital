@@ -1,6 +1,6 @@
 package com.vancollstudios.WedDigital.model.usuarios.DTO;
 
-public class UsuarioDTO {
+public class UsuarioEmpresaDTO {
     private Integer idUsuario;
     private String nomeUsuario;
     private String email;
@@ -8,15 +8,15 @@ public class UsuarioDTO {
     private Boolean is_Whatsapp;
     private String login;
     private String senha;
-    private Boolean is_Noivos;
-    private Boolean is_Profissional;
-    private Boolean is_Admin;
     private String nomeEmpresa;
     private String cidade;
     private String estado;
     private Boolean is_CNPJ;
     private String numeroCNPJ;
     private Integer nivelConta;
+    private Boolean is_CadastroPorConvite;
+    private Integer idUsuarioConvite;
+    private Integer tokenUsuarioConvite;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -74,30 +74,6 @@ public class UsuarioDTO {
         this.senha = senha;
     }
 
-    public Boolean getIs_Noivos() {
-        return is_Noivos;
-    }
-
-    public void setIs_Noivos(Boolean is_Noivos) {
-        this.is_Noivos = is_Noivos;
-    }
-
-    public Boolean getIs_Profissional() {
-        return is_Profissional;
-    }
-
-    public void setIs_Profissional(Boolean is_Profissional) {
-        this.is_Profissional = is_Profissional;
-    }
-
-    public Boolean getIs_Admin() {
-        return is_Admin;
-    }
-
-    public void setIs_Admin(Boolean is_Admin) {
-        this.is_Admin = is_Admin;
-    }
-
     public String getNomeEmpresa() {
         return nomeEmpresa;
     }
@@ -144,5 +120,29 @@ public class UsuarioDTO {
 
     public void setNivelConta(Integer nivelConta) {
         this.nivelConta = nivelConta;
+    }
+
+    public Boolean getIs_CadastroPorConvite() {
+        return is_CadastroPorConvite;
+    }
+
+    public void setIs_CadastroPorConvite(Boolean is_CadastroPorConvite) {
+        this.is_CadastroPorConvite = is_CadastroPorConvite;
+    }
+
+    public Integer getIdUsuarioConvite() {
+        return idUsuarioConvite;
+    }
+
+    public void setIdUsuarioConvite(Integer idUsuarioConvite) {
+        this.idUsuarioConvite = idUsuarioConvite;
+    }
+
+    public Integer getTokenUsuarioConvite() {
+        return tokenUsuarioConvite;
+    }
+
+    public void setTokenUsuarioConvite(Integer tokenUsuarioConvite) {
+        this.tokenUsuarioConvite = tokenUsuarioConvite;
     }
 }

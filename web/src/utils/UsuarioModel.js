@@ -1,12 +1,9 @@
 module.exports = {
-    dadosUsuarioDTO: {
+    dadosUsuarioEmpresaDTO: {
         idUsuario: "",
         nomeUsuario: "",
         login: "",
         senha: "",
-        is_Noivos: "",
-        is_Profissional: "",
-        is_Admin: "",
         nomeEmpresa: "",
         email: "",
         numeroContato: "",
@@ -17,6 +14,9 @@ module.exports = {
         numeroCNPJ: "",
         descricaoEmpresa: "",
         nivelConta: "",
+        is_CadastroPorConvite: false,
+        idUsuarioConvite: "",
+        tokenUsuarioConvite: ""
     },
 
     login:{
@@ -24,9 +24,9 @@ module.exports = {
         password: ''
     },
 
-    dadosResumoPerfilDTO: {
+    dadosResumoPerfilProfissionalDTO: {
         idUsuario: "",
-        nome: '',
+        nomeUsuario: '',
         tipoUsuario: "",
         idProfissional: "",
         cidade: '',
@@ -39,5 +39,15 @@ module.exports = {
         is_CNPJ: "",
         numeroCNPJ: "",
         nivelConta: '',
+        tokenConvite: 1201987719,
+
+        casamentosBemSucedidos: 0,
+        classificacao: null,
+        pontosAcumulados: 0,
+        
+        valorMinimo: "",
+        formasPagamento: "",
+        maisDeUmEventoPorDia: false,
+        trabalhaSozinho: false
     }
 }

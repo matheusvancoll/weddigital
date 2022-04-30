@@ -1,20 +1,21 @@
 import React, { useContext, useState } from "react";
+import InputMask from 'react-input-mask';
 import { useHistory } from "react-router-dom";
 
 import api from "../../../../api";
+import ErroCarregarDados from "../../../ModalError/ErroCarregarDados";
 import UserContext from "../../../../api/userContext-api/userContext";
 
 export default function FormDadosGerais(props){
-    const history = useHistory()
     const { token, setToken } = useContext(UserContext)
+    const history = useHistory()
     const [DadosCadastro, setDadosCadastro] = useState(props.dadosResumoPerfil)
     const [IsErroCadastro, setIsErroCadastro] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
-    const [IsWhatsapp, setIsWhatsapp] = useState(DadosCadastro.is_Whatsapp)
     const [IsCNPJ, setIsCNPJ] = useState(DadosCadastro.is_CNPJ)
-    
-    console.log("FormDadosGerais")
-    console.log(DadosCadastro)
+    const [IsWhatsapp, setIsWhatsapp] = useState(DadosCadastro.is_Whatsapp)
+    const [IsMaisDeUmEventoPorDia, setIsMaisDeUmEventoPorDia] = useState(DadosCadastro.maisDeUmEventoPorDia)
+    const [IsTrabalhaSozinho, setIsTrabalhaSozinho] = useState(DadosCadastro.trabalhaSozinho)
 
     let idUsuario = props.idUsuario
 
@@ -54,14 +55,10 @@ export default function FormDadosGerais(props){
             :
             <>
                 {IsErroCadastro 
-                ? <div class="alert alert-danger text-center" role="alert">
-                    Oooops! Parece que algo não saiu como o planejado :(
-                        <br></br> 
-                        Por favor, tente novamente
-                </div> 
+                ? <ErroCarregarDados /> 
                 : ''
                 }
-
+{/* ==== DADOS GERAIS ==== */}
                 <p className="text-center texto-label-titulo">Dados Gerais</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
                 
@@ -76,14 +73,11 @@ export default function FormDadosGerais(props){
                         <label for="validationTextarea" class="form-label">Descrição da Empresa</label>
                         <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus visitantes o que você pode oferecer!" required
                                     name="descricaoEmpresa" value={DadosCadastro.descricaoEmpresa} onChange={onChange}></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a message in the textarea.
-                        </div>
                     </div>
                     <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="isNoivos" checked={IsCNPJ} value={IsCNPJ}
+                                    name="isCNPJ" checked={IsCNPJ} value={IsCNPJ}
                                     onChange={() =>{
                                         setIsCNPJ(!IsCNPJ)
                                         setDadosCadastro({
@@ -98,26 +92,25 @@ export default function FormDadosGerais(props){
                         ? <>
                             <div className="col-md-7">
                                 <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
-                                <input type="number" className="form-control" id="validationCustom01" required
-                                        name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
+                                <InputMask className="form-control" id="validationCustom01" required
+                                            mask="99.999.999/9999-99" maskChar=" "
+                                            name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
                             </div>
                         </> 
                         :<></>
                         }
                 </form>
                 
-                <div>
-                    <br></br>
-                    <br></br>
-                </div>
-                
+                <div> <br></br> <br></br> </div>
+
+{/* ==== CONTATO ==== */}
                 <p className="text-center texto-label-titulo">Contato</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
                 <form className="row g-3 needs-validation cadastro-usuario-form">
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Nome</label>
                         <input type="text" className="form-control" id="validationCustom01" required
-                                name="nome" value={DadosCadastro.nome} onChange={onChange} />
+                                name="nomeUsuario" value={DadosCadastro.nomeUsuario} onChange={onChange} />
                     </div>
                     <div className="col-md-7">
                         <label for="validationCustom01" className="form-label">Cidade*</label>
@@ -129,8 +122,7 @@ export default function FormDadosGerais(props){
                         <label for="validationCustom04" className="form-label">Estado*</label>
                         <select className="form-select" id="validationCustom04" required 
                                 name="estado" value={DadosCadastro.estado} onChange={onChange} >
-                                <option selected disabled value="..">Selecione</option>
-                                <option value="AC">Acre</option>
+                                {/* <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AP">Amapá</option>
                                 <option value="AM">Amazonas</option>
@@ -153,11 +145,15 @@ export default function FormDadosGerais(props){
                                 <option value="RS">Rio Grande do Sul</option>
                                 <option value="RO">Rondônia</option>
                                 <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
+                                <option value="SC">Santa Catarina</option> */}
                                 <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
-                                <option value="EX">Estrangeiro</option>
+                                <option value="SP-CE">São Paulo - Centro</option>
+                                <option value="SP-ZL">São Paulo - Zona Leste</option>
+                                <option value="SP-ZN">São Paulo - Zona Norte</option>
+                                <option value="SP-ZO">São Paulo - Zona Oeste</option>
+                                <option value="SP-ZS">São Paulo - Zona Sul</option>
+                                {/* <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option> */}
                             </select>
                         </div>
 
@@ -169,8 +165,9 @@ export default function FormDadosGerais(props){
                         
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Contato*</label>
-                            <input type="text" className="form-control" id="validationCustom01" required
-                                    name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange} />
+                            <InputMask className="form-control" id="validationCustom01" required
+                                        mask="(99) 99999999" maskChar=" "
+                                        name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange}/>
                         </div>
 
                         <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
@@ -187,121 +184,79 @@ export default function FormDadosGerais(props){
                                 />
                             <label class="form-check-label" for="flexSwitchCheckDefault">{IsWhatsapp ? "Sim" : "Não"}</label>
                         </div>
+                </form>
 
-                        
-                    <div className="col-12">
-                        <button className="btn btn-primary" type="submit" onClick={onSubmit}>Atualizar Dados</button>
+{/* ==== FAQ ==== */}
+                <p className="text-center texto-label-titulo">Perguntas relevantes</p>
+                <form className="row g-3 needs-validation cadastro-usuario-form">
+                    <div className="col-md-12">
+                        <label for="validationCustom01" className="form-label">Valor a partir de</label>
+                        <InputMask className="form-control" id="validationCustom01" required
+                                        mask="R$ 999999" maskChar=" "
+                                        name="valorMinimo" value={DadosCadastro.valorMinimo} onChange={onChange}/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="validationTextarea" class="form-label">Formas de pagamento</label>
+                        <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus clientes como eles conseguem te pagar" required
+                                    name="formasPagamento" value={DadosCadastro.formasPagamento} onChange={onChange}></textarea>
+                    </div>
+
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Sua empresa realiza mais de um evento por dia?</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
+                                name="maisDeUmEventoPorDia" checked={IsMaisDeUmEventoPorDia} value={IsMaisDeUmEventoPorDia}
+                                onChange={() =>{
+                                    setIsMaisDeUmEventoPorDia(!IsMaisDeUmEventoPorDia)
+                                    setDadosCadastro({
+                                    ...DadosCadastro, 
+                                   maisDeUmEventoPorDia: !IsMaisDeUmEventoPorDia,
+                                })
+                            }}
+                        />
+                        <label class="form-check-label" for="flexSwitchCheckDefault">{IsMaisDeUmEventoPorDia ? "Sim" : "Não"}</label>
+                        </div>
+
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Você trabalha sozinho(a)?</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
+                                name="trabalhaSozinho" checked={IsTrabalhaSozinho} value={IsTrabalhaSozinho}
+                                onChange={() =>{
+                                    setIsTrabalhaSozinho(!IsTrabalhaSozinho)
+                                    setDadosCadastro({
+                                    ...DadosCadastro, 
+                                    trabalhaSozinho: !IsTrabalhaSozinho,
+                                })
+                            }}
+                        />
+                        <label class="form-check-label" for="flexSwitchCheckDefault">{IsTrabalhaSozinho ? "Sim" : "Não"}</label>
                     </div>
                 </form>
 
-                <br></br>
-                <br></br>
-                
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Dados da empresa
-                        </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            {/*  */}
-                            <form className="row g-3 needs-validation">
-                                <div className="col-md-12">
-                                    <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
-                                    <input type="text" className="form-control" id="validationCustom01" required
-                                            name="nomeEmpresa" value={DadosCadastro.nomeEmpresa} onChange={onChange} />
-                                </div>
+                <div> <br></br> <br></br> </div>
 
-                                <div class="mb-3">
-                                    <label for="validationTextarea" class="form-label">Descrição da Empresa</label>
-                                    <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus visitantes o que você pode oferecer!" required
-                                                name="descricaoEmpresa" value={DadosCadastro.descricaoEmpresa} onChange={onChange}></textarea>
-                                    <div class="invalid-feedback">
-                                        Please enter a message in the textarea.
-                                    </div>
-                                </div>
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                                name="isNoivos" checked={IsCNPJ} value={IsCNPJ}
-                                                onChange={() =>{
-                                                    setIsCNPJ(!IsCNPJ)
-                                                    setDadosCadastro({
-                                                    ...DadosCadastro, 
-                                                    is_CNPJ: !IsCNPJ,
-                                                })
-                                            }}
-                                        />
-                                        <label class="form-check-label" for="flexSwitchCheckDefault">{IsCNPJ ? "Sim" : "Não"}</label>
-                                    </div>
-                                    {IsCNPJ
-                                    ? <>
-                                        <div className="col-md-7">
-                                            <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
-                                            <input type="number" className="form-control" id="validationCustom01" required
-                                                    name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
-                                        </div>
-                                    </> 
-                                    :<></>
-                                    }
-                            </form>
-                            {/*  */}
-                        </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
-                        </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Accordion Item #3
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-12">
+                    <button className="btn btn-primary" type="submit" onClick={onSubmit}>Atualizar Dados</button>
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <div> <br></br> <br></br> </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             </> 
             }
         </>

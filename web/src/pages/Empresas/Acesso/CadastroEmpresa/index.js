@@ -1,17 +1,19 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import InputMask from 'react-input-mask';
 import './CadastroEmpresa.css'
 
 import api from '../../../../api/'
 import Navbar from '../../../../components/Navbar'
-import UserContext from '../../../../api/userContext-api/userContext'
 import UsuarioModel from '../../../../utils/UsuarioModel';
+import UserContext from '../../../../api/userContext-api/userContext'
+import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
 
 export default function CadastroUsuario(){
     const history = useHistory()
     const { token, setToken } = useContext(UserContext)
 
-    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioDTO)
+    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioEmpresaDTO)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
@@ -27,8 +29,6 @@ export default function CadastroUsuario(){
         })
     }
 
-    console.log(DadosCadastro)
-
     function onSubmit(ev){
         ev.preventDefault();
         setIsCarregandoDados(true)
@@ -41,11 +41,29 @@ export default function CadastroUsuario(){
             return
         }
 
-        api.post('usuario/novoUsuario', DadosCadastro)
+        let urlDados = window.location.href.split('_')
+        let idUsuarioConviteUrl = null;
+        let tokenUsuarioConviteUrl = null;
+
+        if(urlDados.length > 1){
+            idUsuarioConviteUrl = urlDados[1]
+            tokenUsuarioConviteUrl = urlDados[2]
+        }
+
+        if(idUsuarioConviteUrl != null && tokenUsuarioConviteUrl != undefined){
+            setDadosCadastro({
+                ...DadosCadastro, 
+                is_CadastroPorConvite: true,
+                idUsuarioConvite: idUsuarioConviteUrl,
+                tokenUsuarioConvite: tokenUsuarioConviteUrl,
+            })
+        }
+
+        api.post('usuario/empresa/novoUsuario', DadosCadastro)
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
-                history.push('/perfil')
+                history.push('/empresas/perfil')
             }).catch((error) => {
                 setIsUsuarioExistente(true)
                 setIsCarregandoDados(false)
@@ -58,9 +76,7 @@ export default function CadastroUsuario(){
             <Navbar isAreaEmpresa={true}/>
             <div className="container-sm cadastro-usuario-container">
                 {IsUsuarioExistente
-                    ? <div class="alert alert-danger" role="alert">
-                        Oooops! Parece que o Email ou Login informado já está cadastrado
-                    </div>
+                    ? <CadastroInvalido />
                     :""
                 }
 
@@ -105,122 +121,108 @@ export default function CadastroUsuario(){
                                     onChange={validarSenha}/>
                         </div>
 
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Estou acessando como:</label>
+                        <div className="col-md-12">
+                            <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
+                            <input type="text" className="form-control" id="validationCustom01" required
+                                    name="nomeEmpresa" value={DadosCadastro.nomeEmpresa} onChange={onChange} />
+                        </div>
+                        
+                        <div className="col-md-7">
+                            <label for="validationCustom01" className="form-label">Cidade*</label>
+                            <input type="text" className="form-control" id="validationCustom01" required
+                                    name="cidade" value={DadosCadastro.cidade} onChange={onChange} />
+                        </div>
+
+                        <div className="col-md-5">
+                            <label for="validationCustom04" className="form-label">Estado*</label>
+                            <select className="form-select" id="validationCustom04" required
+                                    name="estado" value={DadosCadastro.estado} onChange={onChange} >
+                                <option selected disabled>Selecione</option>
+                                {/* <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option> */}
+                                <option value="SP">São Paulo</option>
+                                <option value="SP-CE">São Paulo - Centro</option>
+                                <option value="SP-ZL">São Paulo - Zona Leste</option>
+                                <option value="SP-ZN">São Paulo - Zona Norte</option>
+                                <option value="SP-ZO">São Paulo - Zona Oeste</option>
+                                <option value="SP-ZS">São Paulo - Zona Sul</option>
+                                {/* <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option> */}
+                            </select>
+                        </div>
+
+                        <div className="col-md-7">
+                            <label for="validationCustom01" className="form-label">Contato*</label>
+                            <InputMask className="form-control" id="validationCustom01" required
+                                        mask="(99) 99999999" maskChar=" "
+                                        name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange}/>
+                        </div>
+
+                        <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="isNoivos" value="false" 
+                                    name="isWhatsapp" value="false" 
                                     onChange={() =>{
-                                        setIsNoivos(!IsNoivos)
+                                        setIsWhatsapp(!IsWhatsapp)
                                         setDadosCadastro({
                                             ...DadosCadastro, 
-                                            is_Noivos: !IsNoivos,
-                                            is_Profissional: IsNoivos
+                                            is_Whatsapp: !IsWhatsapp,
                                         })
                                     }}
                                     />
-                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsNoivos ? "Noivos" : "Profissional"}</label>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsWhatsapp ? "Sim" : "Não"}</label>
                         </div>
 
-                        {IsNoivos 
-                        ? ""
-                        : <>
-                            <div className="col-md-12">
-                                <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
-                                <input type="text" className="form-control" id="validationCustom01" required
-                                        name="nomeEmpresa" value={DadosCadastro.nomeEmpresa} onChange={onChange} />
-                            </div>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
+                                    name="isCNPJ" checked={IsCNPJ} value={IsCNPJ}
+                                    onChange={() =>{
+                                        setIsCNPJ(!IsCNPJ)
+                                        setDadosCadastro({
+                                            ...DadosCadastro, 
+                                            is_CNPJ: !IsCNPJ,
+                                        })
+                                    }}
+                                />
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsCNPJ ? "Sim" : "Não"}</label>
+                        </div>
 
-                            <div className="col-md-7">
-                                <label for="validationCustom01" className="form-label">Cidade*</label>
-                                <input type="text" className="form-control" id="validationCustom01" required
-                                        name="cidade" value={DadosCadastro.cidade} onChange={onChange} />
-                            </div>
-
-                            <div className="col-md-5">
-                                <label for="validationCustom04" className="form-label">Estado*</label>
-                                <select className="form-select" id="validationCustom04" required
-                                        name="estado" value={DadosCadastro.estado} onChange={onChange} >
-                                    <option selected disabled>Selecione</option>
-                                    <option value="AC">Acre</option>
-                                    <option value="AL">Alagoas</option>
-                                    <option value="AP">Amapá</option>
-                                    <option value="AM">Amazonas</option>
-                                    <option value="BA">Bahia</option>
-                                    <option value="CE">Ceará</option>
-                                    <option value="DF">Distrito Federal</option>
-                                    <option value="ES">Espírito Santo</option>
-                                    <option value="GO">Goiás</option>
-                                    <option value="MA">Maranhão</option>
-                                    <option value="MT">Mato Grosso</option>
-                                    <option value="MS">Mato Grosso do Sul</option>
-                                    <option value="MG">Minas Gerais</option>
-                                    <option value="PA">Pará</option>
-                                    <option value="PB">Paraíba</option>
-                                    <option value="PR">Paraná</option>
-                                    <option value="PE">Pernambuco</option>
-                                    <option value="PI">Piauí</option>
-                                    <option value="RJ">Rio de Janeiro</option>
-                                    <option value="RN">Rio Grande do Norte</option>
-                                    <option value="RS">Rio Grande do Sul</option>
-                                    <option value="RO">Rondônia</option>
-                                    <option value="RR">Roraima</option>
-                                    <option value="SC">Santa Catarina</option>
-                                    <option value="SP">São Paulo</option>
-                                    <option value="SE">Sergipe</option>
-                                    <option value="TO">Tocantins</option>
-                                    <option value="EX">Estrangeiro</option>
-                                </select>
-                            </div>
-
-                            <div className="col-md-7">
-                                <label for="validationCustom01" className="form-label">Contato*</label>
-                                <input type="text" className="form-control" id="validationCustom01" required
-                                        name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange} />
-                            </div>
-
-                            <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                        name="isNoivos" value="false" 
-                                        onChange={() =>{
-                                            setIsWhatsapp(!IsWhatsapp)
-                                            setDadosCadastro({
-                                                ...DadosCadastro, 
-                                                is_Whatsapp: !IsWhatsapp,
-                                            })
-                                        }}
-                                        />
-                                <label class="form-check-label" for="flexSwitchCheckDefault">{IsWhatsapp ? "Sim" : "Não"}</label>
-                            </div>
-
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                        name="isNoivos" value="false" 
-                                        onChange={() =>{
-                                            setIsCNPJ(!IsCNPJ)
-                                            setDadosCadastro({
-                                                ...DadosCadastro, 
-                                                is_CNPJ: !IsCNPJ,
-                                            })
-                                        }}
-                                        />
-                                <label class="form-check-label" for="flexSwitchCheckDefault">{IsCNPJ ? "Sim" : "Não"}</label>
-                            </div>
-
-                            {IsCNPJ
-                            ? <>
-                                <div className="col-md-7">
-                                    <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
-                                    <input type="number" className="form-control" id="validationCustom01" required
-                                            name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
-                                </div>
-                            </> 
+                        {IsCNPJ
+                            ? 
+                                <>
+                                    <div className="col-md-7">
+                                        <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
+                                        <InputMask className="form-control" id="validationCustom01" required
+                                                    mask="99.999.999/9999-99" maskChar=" "
+                                                    name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
+                                    </div>
+                                </> 
                             :<></>
-                            }              
-                        </>
-                        }
-            
+                        }              
+                        
                         <div className="col-12">
                             <div className="form-check">
                                 <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />

@@ -3,8 +3,8 @@ package com.vancollstudios.WedDigital.controlador.usuarios;
 import com.vancollstudios.WedDigital.controlador.casamentos.ControladorCasamento;
 import com.vancollstudios.WedDigital.model.casamentos.Casamento;
 import com.vancollstudios.WedDigital.model.usuarios.*;
-import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilDTO;
-import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioDTO;
+import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
+import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Column;
+import java.math.BigDecimal;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -43,97 +45,10 @@ public class ControladorUsuario {
 //    }
 
 
-    @PostMapping(path = "/api/usuario/novoUsuario")
-    public ResponseEntity<String> criarNovoUsuario(@RequestBody UsuarioDTO novoUsuarioDTO){
-        Boolean usuarioExistente = isUsuarioExistente(novoUsuarioDTO.getLogin(), novoUsuarioDTO.getEmail());
-        Usuario novoUsuario = new Usuario();
-        if(!usuarioExistente){
-            Date dataAtual = new Date();
-            String dataCriacao = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dataAtual);
-            cal.add(Calendar.MONTH, 3);
-            String dataExpiracao = Util.converterDataParaStringSemHora(cal.getTime(), "dd/MM/yyyy");
-
-            novoUsuario.setNomeUsuario(novoUsuarioDTO.getNomeUsuario());
-            novoUsuario.setEmail(novoUsuarioDTO.getEmail());
-            novoUsuario.setLogin(novoUsuarioDTO.getLogin());
-            novoUsuario.setIs_Noivos(novoUsuarioDTO.getIs_Noivos());
-            novoUsuario.setIs_Profissional(novoUsuarioDTO.getIs_Profissional());
-            novoUsuario.setIs_PrimeiroAcesso(true);
-            novoUsuario.setDataCriacao(dataCriacao);
-            novoUsuario.setDataExpiracao(dataExpiracao);
-            novoUsuario.setIs_Validado(false);
-
-            novoUsuario.setSenha(passwordEncoder.encode(novoUsuarioDTO.getSenha()));
-            novoUsuario.setIs_SenhaExpirada(false);
-            Random tokenGenerated = new Random();
-            Integer tokenRandom = tokenGenerated.nextInt();
-
-            if(tokenRandom < 0){
-                tokenRandom = tokenRandom * -1;
-            }
-
-            novoUsuario.setRandomToken(tokenRandom);
-        }else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("exist");
-        }
-
-        Integer idNovoUsuario =  ResponseEntity.ok(repositorioUsuario.save(novoUsuario)).getBody().getIdUsuario();
-
-        if(novoUsuario.getIs_Profissional()){
-            Profissional novoProfissional = popularDadosProfissional(novoUsuarioDTO, idNovoUsuario);
-            ResponseEntity.ok(repositorioProfissional.save(novoProfissional));
-        }
-
-        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
-
-        return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
-    }
-
-    public Profissional popularDadosProfissional(UsuarioDTO novoUsuarioParam, Integer idUsuarioParam){
-        Profissional profissional = new Profissional();
-
-        profissional.setIdUsuario(idUsuarioParam);
-        profissional.setNomeEmpresa(novoUsuarioParam.getNomeEmpresa());
-        profissional.setEmail(novoUsuarioParam.getEmail());
-        profissional.setNumeroContato(novoUsuarioParam.getNumeroContato());
-        profissional.setIs_Whatsapp(novoUsuarioParam.getIs_Whatsapp());
-        profissional.setCidade(novoUsuarioParam.getCidade());
-        profissional.setEstado(novoUsuarioParam.getEstado());
-        profissional.setIs_CNPJ(novoUsuarioParam.getIs_CNPJ());
-        profissional.setNumeroCNPJ(novoUsuarioParam.getNumeroCNPJ());
-        profissional.setNivelConta(novoUsuarioParam.getNivelConta());
-
-        return profissional;
-    }
-
-    public DadosResumoPerfilDTO popularDadosResumoPerfil(Usuario usuarioParam, Profissional profissionalParam, Casamento casamentoParam){
-        DadosResumoPerfilDTO dadosResumoPerfilDTO = new DadosResumoPerfilDTO();
-        String tipoUsuario = "";
-
-        dadosResumoPerfilDTO.setIdUsuario(profissionalParam.getIdUsuario());
-        dadosResumoPerfilDTO.setNome(usuarioParam.getNomeUsuario());
-        dadosResumoPerfilDTO.setIdProfissional(profissionalParam.getIdProfissional());
-        dadosResumoPerfilDTO.setCidade(profissionalParam.getCidade());
-        dadosResumoPerfilDTO.setEstado(profissionalParam.getEstado());
-        dadosResumoPerfilDTO.setNomeEmpresa(profissionalParam.getNomeEmpresa());
-        dadosResumoPerfilDTO.setDescricaoEmpresa(profissionalParam.getDescricaoEmpresa());
-        dadosResumoPerfilDTO.setEmail(profissionalParam.getEmail());
-        dadosResumoPerfilDTO.setNumeroContato(profissionalParam.getNumeroContato());
-        dadosResumoPerfilDTO.setIs_Whatsapp(profissionalParam.getIs_Whatsapp());
-        dadosResumoPerfilDTO.setIs_CNPJ(profissionalParam.getIs_CNPJ());
-        dadosResumoPerfilDTO.setNumeroCNPJ(profissionalParam.getNumeroCNPJ());
-        dadosResumoPerfilDTO.setNivelConta(profissionalParam.getNivelConta());
-
-        if(usuarioParam.getIs_Noivos()){ tipoUsuario = "noivos"; }
-        else{ tipoUsuario = "profissional"; }
-
-        dadosResumoPerfilDTO.setTipoUsuario(tipoUsuario);
-
-        return dadosResumoPerfilDTO;
-    }
-
+    /**
+     * Função para validar entrada do usuario
+     *
+     */
     @GetMapping(path = "/api/usuario/validarAcesso")
     public ResponseEntity<String> validarAcesso(@RequestParam String login, @RequestParam String senha){
         Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByLoginOrEmail(login, login);
@@ -161,9 +76,160 @@ public class ControladorUsuario {
         return ResponseEntity.status(status).body(tokenAcesso);
     }
 
-    @GetMapping(path = "/api/usuario/obterdadosperfil")
-    public ResponseEntity<DadosResumoPerfilDTO> obterDadosResumoPerfilPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer tokenUsuario){
-        DadosResumoPerfilDTO dadosResumoPerfilDTO = new DadosResumoPerfilDTO();
+    // -----------------------------------------------------------------------------------------------------------------
+    // ---------- EMPRESA ----------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Função para cadastrar novos Profissionais
+     *
+     */
+    @PostMapping(path = "/api/usuario/empresa/novoUsuario")
+    public ResponseEntity<String> criarNovoUsuario(@RequestBody UsuarioEmpresaDTO novoUsuarioEmpresaDTO){
+        Boolean usuarioExistente = isUsuarioExistente(novoUsuarioEmpresaDTO.getLogin(), novoUsuarioEmpresaDTO.getEmail());
+        Usuario novoUsuario = new Usuario();
+        Integer tokenRandom = 0;
+        if(!usuarioExistente){
+            Date dataAtual = new Date();
+            String dataCriacao = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataAtual);
+            cal.add(Calendar.MONTH, 3);
+            String dataExpiracao = Util.converterDataParaStringSemHora(cal.getTime(), "dd/MM/yyyy");
+
+            novoUsuario.setNomeUsuario(novoUsuarioEmpresaDTO.getNomeUsuario());
+            novoUsuario.setEmail(novoUsuarioEmpresaDTO.getEmail());
+            novoUsuario.setLogin(novoUsuarioEmpresaDTO.getLogin());
+            novoUsuario.setIs_Profissional(true);
+            novoUsuario.setIs_Noivos(false);
+            novoUsuario.setIs_PrimeiroAcesso(true);
+            novoUsuario.setIs_Validado(false);
+            novoUsuario.setDataCriacao(dataCriacao);
+            novoUsuario.setDataExpiracao(dataExpiracao);
+
+            novoUsuario.setSenha(passwordEncoder.encode(novoUsuarioEmpresaDTO.getSenha()));
+            novoUsuario.setIs_SenhaExpirada(false);
+            Random tokenSecurityGenerated = new Random();
+            tokenRandom = tokenSecurityGenerated.nextInt();
+
+            if(tokenRandom < 0){
+                tokenRandom = tokenRandom * -1;
+            }
+
+            novoUsuario.setRandomToken(tokenRandom);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("exist");
+        }
+
+        Integer idNovoUsuario =  ResponseEntity.ok(repositorioUsuario.save(novoUsuario)).getBody().getIdUsuario();
+
+        Profissional novoProfissional = popularDadosProfissional(novoUsuarioEmpresaDTO, idNovoUsuario);
+
+        String tokenConviteUrl = tokenRandom + "_" + idNovoUsuario;
+        novoProfissional.setTokenConvite(tokenRandom);
+        novoProfissional.setTokenConviteUrl(tokenConviteUrl);
+
+        if(novoUsuarioEmpresaDTO.getIs_CadastroPorConvite() != null && novoUsuarioEmpresaDTO.getIs_CadastroPorConvite()){
+            Boolean isConviteValido = validarTokenConviteProfissional(novoUsuarioEmpresaDTO.getIdUsuarioConvite(), novoUsuarioEmpresaDTO.getTokenUsuarioConvite());
+            if(isConviteValido){
+                novoProfissional.setIs_CadastroPorConvite(true);
+                novoProfissional.setIdUsuarioConvite(novoUsuarioEmpresaDTO.getIdUsuarioConvite());
+            }
+        }else{
+            novoProfissional.setIs_CadastroPorConvite(false);
+        }
+
+        ResponseEntity.ok(repositorioProfissional.save(novoProfissional));
+
+        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
+
+        return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
+    }
+
+    /**
+     * Preenche os dados do Profissional
+     * através dos parâmetros recebidos
+     *
+     */
+    public Profissional popularDadosProfissional(UsuarioEmpresaDTO novoUsuarioEmpresaParam, Integer idUsuarioParam){
+        Profissional profissional = new Profissional();
+
+        profissional.setIdUsuario(idUsuarioParam);
+        profissional.setNomeEmpresa(novoUsuarioEmpresaParam.getNomeEmpresa());
+        profissional.setEmail(novoUsuarioEmpresaParam.getEmail());
+        profissional.setNumeroContato(novoUsuarioEmpresaParam.getNumeroContato());
+        profissional.setIs_Whatsapp(novoUsuarioEmpresaParam.getIs_Whatsapp());
+        profissional.setCidade(novoUsuarioEmpresaParam.getCidade());
+        profissional.setEstado(novoUsuarioEmpresaParam.getEstado());
+        profissional.setIs_CNPJ(novoUsuarioEmpresaParam.getIs_CNPJ());
+        profissional.setNumeroCNPJ(novoUsuarioEmpresaParam.getNumeroCNPJ());
+        profissional.setNivelConta(novoUsuarioEmpresaParam.getNivelConta());
+        profissional.setPontosAcumulados(0);
+        profissional.setCasamentosBemSucedidos(0);
+
+        if(novoUsuarioEmpresaParam.getIs_CadastroPorConvite() != null && novoUsuarioEmpresaParam.getIs_CadastroPorConvite()){
+            profissional.setIs_CadastroPorConvite(novoUsuarioEmpresaParam.getIs_CadastroPorConvite());
+            profissional.setIdUsuarioConvite(novoUsuarioEmpresaParam.getIdUsuario());
+        }
+
+        return profissional;
+    }
+
+    /**
+     * Verifica se o convite do usuário é válido
+     *
+     */
+    public Boolean validarTokenConviteProfissional(Integer idProfissionalParam, Integer tokenProfissionalParam){
+        Boolean isTokenValido = false;
+        Optional<Profissional> profissionalOptional = repositorioProfissional.findAllByIdUsuario(idProfissionalParam);
+        if(profissionalOptional == null || !profissionalOptional.isPresent()){
+            isTokenValido = false;
+        }
+        Profissional profissional = profissionalOptional.get();
+        if(profissional.getTokenConvite() == tokenProfissionalParam){
+            isTokenValido = true;
+        }
+
+        return isTokenValido;
+    }
+
+    public DadosResumoPerfilProfissionalDTO popularDadosResumoPerfilProfissional(Usuario usuarioParam, Profissional profissionalParam){
+        DadosResumoPerfilProfissionalDTO dadosResumoPerfilProfissionalDTO = new DadosResumoPerfilProfissionalDTO();
+        String tipoUsuario = "";
+
+        dadosResumoPerfilProfissionalDTO.setIdUsuario(profissionalParam.getIdUsuario());
+        dadosResumoPerfilProfissionalDTO.setNomeUsuario(usuarioParam.getNomeUsuario());
+        dadosResumoPerfilProfissionalDTO.setIdProfissional(profissionalParam.getIdProfissional());
+        dadosResumoPerfilProfissionalDTO.setCidade(profissionalParam.getCidade());
+        dadosResumoPerfilProfissionalDTO.setEstado(profissionalParam.getEstado());
+        dadosResumoPerfilProfissionalDTO.setNomeEmpresa(profissionalParam.getNomeEmpresa());
+        dadosResumoPerfilProfissionalDTO.setDescricaoEmpresa(profissionalParam.getDescricaoEmpresa());
+        dadosResumoPerfilProfissionalDTO.setEmail(profissionalParam.getEmail());
+        dadosResumoPerfilProfissionalDTO.setNumeroContato(profissionalParam.getNumeroContato());
+        dadosResumoPerfilProfissionalDTO.setIs_Whatsapp(profissionalParam.getIs_Whatsapp());
+        dadosResumoPerfilProfissionalDTO.setIs_CNPJ(profissionalParam.getIs_CNPJ());
+        dadosResumoPerfilProfissionalDTO.setNumeroCNPJ(profissionalParam.getNumeroCNPJ());
+        dadosResumoPerfilProfissionalDTO.setNivelConta(profissionalParam.getNivelConta());
+        dadosResumoPerfilProfissionalDTO.setPontosAcumulados(profissionalParam.getPontosAcumulados());
+        dadosResumoPerfilProfissionalDTO.setCasamentosBemSucedidos(profissionalParam.getCasamentosBemSucedidos());
+        dadosResumoPerfilProfissionalDTO.setValorMinimo(profissionalParam.getValorMinimo());
+        dadosResumoPerfilProfissionalDTO.setMaisDeUmEventoPorDia(profissionalParam.getMaisDeUmEventoPorDia());
+        dadosResumoPerfilProfissionalDTO.setFormasDePagamento(profissionalParam.getFormasPagamento());
+        dadosResumoPerfilProfissionalDTO.setTrabalhaSozinho(profissionalParam.getTrabalhaSozinho());
+        dadosResumoPerfilProfissionalDTO.setClassificacao(profissionalParam.getClassificacao());
+        dadosResumoPerfilProfissionalDTO.setTokenConvite(profissionalParam.getTokenConvite());
+
+        if(usuarioParam.getIs_Noivos()){ tipoUsuario = "noivos"; }
+        else{ tipoUsuario = "profissional"; }
+
+        dadosResumoPerfilProfissionalDTO.setTipoUsuario(tipoUsuario);
+
+        return dadosResumoPerfilProfissionalDTO;
+    }
+
+    @GetMapping(path = "/api/usuario/empresa/obterDadosPerfil")
+    public ResponseEntity<DadosResumoPerfilProfissionalDTO> obterDadosResumoPerfilPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer tokenUsuario){
+        DadosResumoPerfilProfissionalDTO dadosResumoPerfilProfissionalDTO = new DadosResumoPerfilProfissionalDTO();
         Usuario usuario = new Usuario();
         Profissional profissional;
 
@@ -185,14 +251,14 @@ public class ControladorUsuario {
         if(usuario != null && dadosProfissional != null && dadosProfissional.getBody() != null){
             usuario = (Usuario) dadosUsuario.getBody();
             profissional = (Profissional) dadosProfissional.getBody();
-            dadosResumoPerfilDTO = popularDadosResumoPerfil(usuario, profissional, null);
+            dadosResumoPerfilProfissionalDTO = popularDadosResumoPerfilProfissional(usuario, profissional);
         }
 
-        return ResponseEntity.ok().body(dadosResumoPerfilDTO);
+        return ResponseEntity.ok().body(dadosResumoPerfilProfissionalDTO);
     }
 
     @PutMapping(path = "/api/dadosPerfil/atualizarDados/{idUsuario}")
-    public String atualizarDadosUsuarioPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario, @RequestBody DadosResumoPerfilDTO dadosAtualizados){
+    public String atualizarDadosUsuarioPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
         Usuario usuarioAtualizado = new Usuario();
 
         ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
@@ -205,7 +271,7 @@ public class ControladorUsuario {
         Profissional profissionalAtualizado = new Profissional();
 
         usuarioAtualizado.setIdUsuario(dadosAtualizados.getIdUsuario());
-        usuarioAtualizado.setNomeUsuario(dadosAtualizados.getNome());
+        usuarioAtualizado.setNomeUsuario(dadosAtualizados.getNomeUsuario());
         usuarioAtualizado.setEmail(dadosAtualizados.getEmail());
 
         profissionalAtualizado.setIdUsuario(dadosAtualizados.getIdUsuario());
@@ -219,6 +285,10 @@ public class ControladorUsuario {
         profissionalAtualizado.setIs_Whatsapp(dadosAtualizados.getIs_Whatsapp());
         profissionalAtualizado.setIs_CNPJ(dadosAtualizados.getIs_CNPJ());
         profissionalAtualizado.setNumeroCNPJ(dadosAtualizados.getNumeroCNPJ());
+        profissionalAtualizado.setValorMinimo(dadosAtualizados.getValorMinimo());
+        profissionalAtualizado.setFormasPagamento(dadosAtualizados.getFormasDePagamento());
+        profissionalAtualizado.setMaisDeUmEventoPorDia(dadosAtualizados.getMaisDeUmEventoPorDia());
+        profissionalAtualizado.setTrabalhaSozinho(dadosAtualizados.getTrabalhaSozinho());
 
         repositorioProfissional.save(profissionalAtualizado);
         repositorioUsuario.save(usuarioAtualizado);
@@ -254,5 +324,11 @@ public class ControladorUsuario {
     }
 
 
+
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // ---------- NOIVOS -----------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
 
 }

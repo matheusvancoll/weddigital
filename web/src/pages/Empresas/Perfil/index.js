@@ -13,7 +13,7 @@ import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerai
 import FormFAQProfissional from '../../../components/Perfil//Empresas/FormFAQProfissional';
 
 export default function Perfil() {
-    const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilDTO)
+    const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
     const [ IsDadosInvalido, setIsDadosInvalido ] = useState(false)
     const [ TabLocation, setTabLocation ] = useState("Resumo")
     const [ IsCarregando, setIsCarregando ] = useState(true)
@@ -25,7 +25,7 @@ export default function Perfil() {
     let tokenUsuario = dadosToken[5]
 
     useEffect(() => {
-        api.get(`usuario/obterdadosperfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
+        api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
         .then(({data}) => {
             setDadosResumoPerfil(data)
             setIsCarregando(false)
@@ -36,9 +36,6 @@ export default function Perfil() {
         })
     }, [])
     
-
-    console.log('DADOS GEt')
-    console.log(DadosResumoPerfil)
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
@@ -123,7 +120,7 @@ export default function Perfil() {
                 </div> 
                 :<>
                     {IsDadosInvalido 
-                    ? <div class="alert alert-danger text-center" role="alert">
+                    ? <div class="container-sm alert alert-danger text-center w-25 " role="alert">
                         Oooops! Parece que algo não saiu como o planejado :(
                         <br></br> 
                         Por favor, tente novamente

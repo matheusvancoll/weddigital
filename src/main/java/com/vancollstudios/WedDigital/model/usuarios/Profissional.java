@@ -1,17 +1,19 @@
 package com.vancollstudios.WedDigital.model.usuarios;
 
-import org.w3c.dom.Text;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Entity(name = "DADOS_PROFISSIONAL")
 public class Profissional {
 
     @Id @GeneratedValue
     private Integer idProfissional;
+
+    @Column
+    private Integer idUsuario;
 
     @Column(nullable = false)
     private String nomeEmpresa;
@@ -41,10 +43,44 @@ public class Profissional {
     private String descricaoEmpresa;
 
     @Column
+    private BigDecimal valorMinimo;
+
+    @Column
+    private Boolean maisDeUmEventoPorDia;
+
+    @Column
+    private String formasPagamento;
+
+    @Column
+    private Boolean trabalhaSozinho;
+
+    @Column
     private Integer nivelConta;
 
     @Column
-    private Integer idUsuario;
+    private Integer pontosAcumulados;
+
+    @Column
+    private Double classificacao;
+
+    @Column
+    private Integer visitasVitrine;
+
+    @Column
+    private Integer casamentosBemSucedidos;
+
+    @Column
+    private Integer tokenConvite;
+
+    @Column
+    private String tokenConviteUrl;
+
+    @Column
+    private Boolean is_CadastroPorConvite;
+
+    @Column
+    private Integer idUsuarioConvite;
+
 
     public Integer getIdProfissional() {
         return idProfissional;
@@ -140,5 +176,101 @@ public class Profissional {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public BigDecimal getValorMinimo() {
+        return valorMinimo;
+    }
+
+    public void setValorMinimo(BigDecimal valorMinimo) {
+        this.valorMinimo = valorMinimo;
+    }
+
+    public Boolean getMaisDeUmEventoPorDia() {
+        return maisDeUmEventoPorDia;
+    }
+
+    public void setMaisDeUmEventoPorDia(Boolean maisDeUmEventoPorDia) {
+        this.maisDeUmEventoPorDia = maisDeUmEventoPorDia;
+    }
+
+    public String getFormasPagamento() {
+        return formasPagamento;
+    }
+
+    public void setFormasPagamento(String formasPagamento) {
+        this.formasPagamento = formasPagamento;
+    }
+
+    public Boolean getTrabalhaSozinho() {
+        return trabalhaSozinho;
+    }
+
+    public void setTrabalhaSozinho(Boolean trabalhaSozinho) {
+        this.trabalhaSozinho = trabalhaSozinho;
+    }
+
+    public Integer getPontosAcumulados() {
+        return pontosAcumulados;
+    }
+
+    public void setPontosAcumulados(Integer pontosAcumulados) {
+        this.pontosAcumulados = pontosAcumulados;
+    }
+
+    public Double getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(Double classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    public Integer getCasamentosBemSucedidos() {
+        return casamentosBemSucedidos;
+    }
+
+    public void setCasamentosBemSucedidos(Integer casamentosBemSucedidos) {
+        this.casamentosBemSucedidos = casamentosBemSucedidos;
+    }
+
+    public Integer getTokenConvite() {
+        return tokenConvite;
+    }
+
+    public void setTokenConvite(Integer tokenConvite) {
+        this.tokenConvite = tokenConvite;
+    }
+
+    public String getTokenConviteUrl() {
+        return tokenConviteUrl;
+    }
+
+    public void setTokenConviteUrl(String tokenConviteUrl) {
+        this.tokenConviteUrl = tokenConviteUrl;
+    }
+
+    public Integer getVisitasVitrine() {
+        return visitasVitrine;
+    }
+
+    public void setVisitasVitrine(Integer visitasVitrine) {
+        this.visitasVitrine = visitasVitrine;
+    }
+
+    public Boolean getIs_CadastroPorConvite() {
+        return is_CadastroPorConvite;
+    }
+
+    public void setIs_CadastroPorConvite(Boolean is_CadastroPorConvite) {
+        this.is_CadastroPorConvite = is_CadastroPorConvite;
+    }
+
+    public Integer getIdUsuarioConvite() {
+        return idUsuarioConvite;
+    }
+
+    public void setIdUsuarioConvite(Integer idUsuarioConvite) {
+        this.idUsuarioConvite = idUsuarioConvite;
     }
 }

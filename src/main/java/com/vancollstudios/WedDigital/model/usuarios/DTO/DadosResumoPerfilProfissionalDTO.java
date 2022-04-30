@@ -1,9 +1,11 @@
 package com.vancollstudios.WedDigital.model.usuarios.DTO;
 
-public class DadosResumoPerfilDTO {
+import java.math.BigDecimal;
+
+public class DadosResumoPerfilProfissionalDTO {
 
     private Integer idUsuario;
-    private String nome;
+    private String nomeUsuario;
     private String tipoUsuario;
     private Integer idProfissional;
     private String cidade;
@@ -15,6 +17,15 @@ public class DadosResumoPerfilDTO {
     private Boolean is_Whatsapp;
     private Boolean is_CNPJ;
     private String numeroCNPJ;
+
+    private BigDecimal valorMinimo;
+    private Boolean maisDeUmEventoPorDia;
+    private String formasDePagamento;
+    private Boolean trabalhaSozinho;
+    private Integer pontosAcumulados;
+    private Double classificacao;
+    private Integer casamentosBemSucedidos;
+    private Integer tokenConvite;
     private Integer nivelConta;
 
     public Integer getIdUsuario() {
@@ -25,12 +36,12 @@ public class DadosResumoPerfilDTO {
         this.idUsuario = idUsuario;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public String getTipoUsuario() {
@@ -127,5 +138,69 @@ public class DadosResumoPerfilDTO {
 
     public void setNivelConta(Integer nivelConta) {
         this.nivelConta = nivelConta;
+    }
+
+    public BigDecimal getValorMinimo() {
+        return valorMinimo;
+    }
+
+    public void setValorMinimo(BigDecimal valorMinimo) {
+        this.valorMinimo = valorMinimo;
+    }
+
+    public Boolean getMaisDeUmEventoPorDia() {
+        return maisDeUmEventoPorDia;
+    }
+
+    public void setMaisDeUmEventoPorDia(Boolean maisDeUmEventoPorDia) {
+        this.maisDeUmEventoPorDia = maisDeUmEventoPorDia;
+    }
+
+    public String getFormasDePagamento() {
+        return formasDePagamento;
+    }
+
+    public void setFormasDePagamento(String formasDePagamento) {
+        this.formasDePagamento = formasDePagamento;
+    }
+
+    public Boolean getTrabalhaSozinho() {
+        return trabalhaSozinho;
+    }
+
+    public void setTrabalhaSozinho(Boolean trabalhaSozinho) {
+        this.trabalhaSozinho = trabalhaSozinho;
+    }
+
+    public Integer getPontosAcumulados() {
+        return pontosAcumulados;
+    }
+
+    public void setPontosAcumulados(Integer pontosAcumulados) {
+        this.pontosAcumulados = pontosAcumulados;
+    }
+
+    public Double getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(Double classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    public Integer getCasamentosBemSucedidos() {
+        return casamentosBemSucedidos;
+    }
+
+    public void setCasamentosBemSucedidos(Integer casamentosBemSucedidos) {
+        this.casamentosBemSucedidos = casamentosBemSucedidos;
+    }
+
+    public Integer getTokenConvite() {
+        return tokenConvite;
+    }
+
+    public void setTokenConvite(Integer tokenConvite) {
+        this.tokenConvite = tokenConvite;
     }
 }
