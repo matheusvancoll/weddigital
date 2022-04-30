@@ -39,7 +39,7 @@ module.exports = {
         is_CNPJ: "",
         numeroCNPJ: "",
         nivelConta: '',
-        tokenConvite: 1201987719,
+        tokenConvite: 0,
 
         casamentosBemSucedidos: 0,
         classificacao: null,

@@ -43,7 +43,7 @@ public class Profissional {
     private String descricaoEmpresa;
 
     @Column
-    private BigDecimal valorMinimo;
+    private String valorMinimo;
 
     @Column
     private Boolean maisDeUmEventoPorDia;
@@ -178,11 +178,11 @@ public class Profissional {
         this.idUsuario = idUsuario;
     }
 
-    public BigDecimal getValorMinimo() {
+    public String getValorMinimo() {
         return valorMinimo;
     }
 
-    public void setValorMinimo(BigDecimal valorMinimo) {
+    public void setValorMinimo(String valorMinimo) {
         this.valorMinimo = valorMinimo;
     }
 

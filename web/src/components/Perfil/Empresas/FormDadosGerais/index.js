@@ -36,7 +36,7 @@ export default function FormDadosGerais(props){
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
-                history.push('/empresa/perfil')
+                history.push('/empresas/perfil')
             }).catch((error) => {
                 setIsErroCadastro(true)
                 setIsCarregandoDados(false)

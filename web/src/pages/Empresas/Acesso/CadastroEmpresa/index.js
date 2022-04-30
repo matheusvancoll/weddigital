@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import InputMask from 'react-input-mask';
+import emailjs from 'emailjs-com'
 import './CadastroEmpresa.css'
 
 import api from '../../../../api/'
@@ -15,11 +16,13 @@ export default function CadastroUsuario(){
 
     const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioEmpresaDTO)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
+    const [IsSucessoCadastro, setIsSucessoCadastro] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsWhatsapp, setIsWhatsapp] = useState(false)
     const [IsNoivos, setIsNoivos] = useState(true)
     const [IsCNPJ, setIsCNPJ] = useState(false)
+    const form = useRef();
 
     function onChange(ev){
         const { value, name } = ev.target
@@ -28,6 +31,19 @@ export default function CadastroUsuario(){
             [name]: value,
         })
     }
+
+    function enviarEmailConfirmacaoCadastro(e){
+        e.preventDefault();
+        emailjs.sendForm('service_dbbp6yf', 'template_44kjgsh', form.current, 'nRkUn8RqboquqFSTd')
+        .then((result) => {
+            alert("DEU BOM")
+            console.log(result.text)
+        }, (error) => {
+            alert("DEU ERRO")
+            console.log(error.text)
+        })
+    }
+
 
     function onSubmit(ev){
         ev.preventDefault();
@@ -63,12 +79,16 @@ export default function CadastroUsuario(){
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
+                setIsSucessoCadastro(true)
                 history.push('/empresas/perfil')
             }).catch((error) => {
                 setIsUsuarioExistente(true)
                 setIsCarregandoDados(false)
                 window.scrollTo(0,0)
+                return
             })
+        
+        enviarEmailConfirmacaoCadastro(ev)
     }
 
     return(
@@ -87,7 +107,7 @@ export default function CadastroUsuario(){
                     </button>
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
-                    <form className="row g-3 needs-validation cadastro-usuario-form">
+                    <form className="row g-3 needs-validation cadastro-usuario-form" ref={form}>
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>
                                 <input type="text" className="form-control" id="validationCustom01" required
@@ -183,7 +203,7 @@ export default function CadastroUsuario(){
                         <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="isWhatsapp" value="false" 
+                                    name="is_Whatsapp" value="false" 
                                     onChange={() =>{
                                         setIsWhatsapp(!IsWhatsapp)
                                         setDadosCadastro({
@@ -198,7 +218,7 @@ export default function CadastroUsuario(){
                         <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="isCNPJ" checked={IsCNPJ} value={IsCNPJ}
+                                    name="is_CNPJ" checked={IsCNPJ} value={IsCNPJ}
                                     onChange={() =>{
                                         setIsCNPJ(!IsCNPJ)
                                         setDadosCadastro({

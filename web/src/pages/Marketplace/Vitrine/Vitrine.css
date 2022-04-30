@@ -1,9 +1,122 @@
-.fotos-dados-container{
-    margin-top: 2rem;
+/* === PÁGINA VITRINE === */
+.vitrine-page__container{
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 
-.vitrine-contato-container{
-    width: 20%;
+.text_nome_empresa{
+    margin-top: 3rem;
+}
+
+.link-pedir-orcamento{
+    margin-left: 1rem;
+}
+
+/* === FOTOS E CONTATO === */
+.vitrine01-principal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0rem 1.5rem;
+    margin-top: 2rem;
+    background-color: var(--color-roxo);
+}
+
+/* === CARD CONTATO === */
+.contato__vitrine{
+    margin-bottom: 2rem;
+}
+
+.pedir-orcamento-modal{
+    margin-top: 2rem;
+}
+
+.color-roxo{
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
+}
+
+.color-roxo:hover{
+    background-color: var(--color-dourado);
+}
+
+.input-pedido-orcamento{
+    margin: 1rem 0;
+}
+
+
+
+/* === CARD INFORMAÇÕES COMPLEMENTARES === */
+.vitrine02-complementares{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-roxo);
+}
+
+.vitrine-informacoes-complementares__container{
+    width: 92%;
+}
+
+
+/* === CARD OPINIOES === */
+.vitrine-opinioes__container{
+    width: 92%;
+    margin-top: 2rem;
+}
+
+.depoimento_noivos__container{
+    padding-bottom: 2rem;
+}
+
+/* === BOTAO VOLTAR === */
+.vitrine-button-voltar{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 0;
+    background-color: var(--color-roxo);
+}
+.vitrine-button-voltar a{
+    text-decoration: none;
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    font-size: 1.25rem;
+    padding: 0.25rem 2.75rem;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+.vitrine-button-voltar a:hover{
+    background-color: var(--color-branco);
+    color: var(--color-roxo);
+    padding: 0.25rem 3.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .vitrine01-principal{
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .fotos__vitrine{
+        max-width: 60rem;
+    }
+    
+    .contato__vitrine{
+        width: 30%;
+        margin: 0;
+    }
+
+    .vitrine02-complementares{
+        padding: 2rem 0;
+    }
 }

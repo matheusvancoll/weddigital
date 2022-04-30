@@ -18,7 +18,7 @@ public class DadosResumoPerfilProfissionalDTO {
     private Boolean is_CNPJ;
     private String numeroCNPJ;
 
-    private BigDecimal valorMinimo;
+    private String valorMinimo;
     private Boolean maisDeUmEventoPorDia;
     private String formasDePagamento;
     private Boolean trabalhaSozinho;
@@ -140,11 +140,11 @@ public class DadosResumoPerfilProfissionalDTO {
         this.nivelConta = nivelConta;
     }
 
-    public BigDecimal getValorMinimo() {
+    public String getValorMinimo() {
         return valorMinimo;
     }
 
-    public void setValorMinimo(BigDecimal valorMinimo) {
+    public void setValorMinimo(String valorMinimo) {
         this.valorMinimo = valorMinimo;
     }
 

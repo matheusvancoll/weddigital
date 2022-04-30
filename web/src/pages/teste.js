@@ -19,18 +19,10 @@ export default function ContactUs() {
   return (
     <form ref={form} onSubmit={sendEmail}>
       <label>Name</label>
-      <input type="text" name="user_name" />
+      <input type="text" name="usuario_cadastrado" />
       <label>Email</label>
-      <input type="email" name="emailparam" />
-      <label>Message</label>
-      <textarea name="message" />
+      <input type="email" name="emailDestinoParam" />
       <input type="submit" value="Send" />
-
-      <div class="input-group">
-        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
-        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
-        </div>
-        <script async src="https://imgbb.com/upload.js"></script>
         </form>
   );
 };

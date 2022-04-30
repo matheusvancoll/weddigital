@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import UserContext from '../../api/userContext-api/userContext'
@@ -15,11 +15,11 @@ import HomepageNoivos from '../Casamentos/Homepage'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
 // import Marketplace from '../Marketplace'
-// import Vitrine from '../Marketplace/Vitrine/Vitrine'
+import Vitrine from '../Marketplace/Vitrine/Vitrine'
 // import Perfil from '../noivos/Perfil'
-// import Teste from '../teste'
+import Teste from '../teste'
 
-export default function Router(props) {
+export default function Router() {
     const { token } = useContext(UserContext)
 
     return(
@@ -30,9 +30,13 @@ export default function Router(props) {
             <PrivateRouter exact path="/empresas/perfil" component={PerfilEmpresa} />
             
             <Route exact path="/" component={HomepageNoivos} />
+            <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
+
             {/* <Route exact path="/cadastro" component={CadastroNoivos} />
             <Route exact path="/login" component={LoginNoivos} /> */}
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
+
+            <Route exact path="/teste" component={Teste} />
         </Switch>
     )
 }

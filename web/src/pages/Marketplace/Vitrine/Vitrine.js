@@ -3,8 +3,10 @@ import './Vitrine.css'
 
 import Navbar from "../../../components/Navbar";
 
-import FotosVitrine from "./FotosVitrine";
-import CardDadosContato from "./CardDadosContato";
+import FotosVitrine from "./FotosVitrine/FotosVitrine";
+import CardDadosContato from "./InformacoesProfissional/CardDadosContato";
+import PrincipaisPerguntas from './InformacoesProfissional/CardPrincipaisPerguntas'
+import CardDepoimentos from './DepoimentosSobreProfissional/CardOpinioes'
 
 export default function Vitrine(){
     return(
@@ -30,16 +32,36 @@ export default function Vitrine(){
                 </div>
             </div>
 
-            <div className="fotos-dados-container">
-                <FotosVitrine />
-                <CardDadosContato />
+            <div className="vitrine-page__container">
+                <div className="container text_nome_empresa">
+                    <h1>Nome da Empresa 
+                        <a href="#pedirOrcamento" className="link-pedir-orcamento">
+                            <span class="badge bg color-roxo">Pedir Orçamento</span>
+                        </a>
+                    </h1>
+                    <h6>Casamentos bem sucedidos: <span class="badge color-roxo">14</span></h6>
+                    <h6>Classificação geral: <span class="badge color-roxo">4.7</span></h6>
+                </div>
+
+                <div className="vitrine01-principal">
+                    <div className="fotos__vitrine">
+                        <FotosVitrine />
+                    </div>
+
+                    <div className="contato__vitrine">
+                        <CardDadosContato />
+                    </div>
+                </div>
+                
+                <div className="vitrine02-complementares">
+                    <PrincipaisPerguntas />
+                    <CardDepoimentos />
+                </div>
             </div>
 
-            <div className="empresa-dados-container">
-                <CardDadosContato />
+            <div className="vitrine-button-voltar">
+                    <a href="/">Voltar</a>
             </div>
-
-
         </>
     )
 }

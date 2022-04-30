@@ -268,6 +268,7 @@ public class ControladorUsuario {
         if(dadosUsuario != null && dadosUsuario.getBody() != null){
             usuarioAtualizado = (Usuario) dadosUsuario.getBody();
         }
+
         Profissional profissionalAtualizado = new Profissional();
 
         usuarioAtualizado.setIdUsuario(dadosAtualizados.getIdUsuario());
