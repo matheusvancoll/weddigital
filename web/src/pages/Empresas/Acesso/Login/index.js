@@ -33,7 +33,7 @@ export default function UserLogin(){
         .then((response) => {
             setToken(response.data)
             setIsCarregandoDados(false)
-            history.push('/empresa/perfil')
+            history.push('/empresas/perfil')
         }).catch((error) => {
             setIsCarregandoDados(false)
             setIsDadosInvalido(true)

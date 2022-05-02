@@ -22,6 +22,7 @@ export default function Perfil() {
 
     let dadosToken = token.split('.')
     let idUsuario = dadosToken[1]
+    let nivelUsuario = dadosToken[3]
     let tokenUsuario = dadosToken[5]
 
     useEffect(() => {
@@ -87,12 +88,16 @@ export default function Perfil() {
                             </a>
                         </div>
 
-                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
-                            <a href='#convites' onClick={() => setTabLocation("convites")} >
-                                <i class="fa-solid fa-share-nodes"></i>
-                                <span>Convites</span>
-                            </a>
-                        </div>
+                        {nivelUsuario == null
+                        ? 
+                            <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
+                                <a href='#convites' onClick={() => setTabLocation("convites")} >
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <span>Convites</span>
+                                </a>
+                            </div>
+                        :' '
+                        }
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'assinatura' ? "active" : ""}>
                             <a href='#assinatura' onClick={() => setTabLocation("assinatura")} >
@@ -101,12 +106,13 @@ export default function Perfil() {
                             </a>
                         </div>
 
-                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
+                        {/* <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
                             <a href='#comunidade' onClick={() => setTabLocation("comunidade")} >
                                 <i class="fa-solid fa-users-rectangle"></i>
                                 <span>Comunidade Wed</span>
                             </a>
-                        </div>
+                        </div> */}
+
                     </div>
             </section>
 

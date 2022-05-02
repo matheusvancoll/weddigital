@@ -4,6 +4,8 @@ import { Switch, Route } from 'react-router-dom'
 import UserContext from '../../api/userContext-api/userContext'
 import PrivateRouter from './privateRouter'
 
+import TermoDeUso from '../CondicoesLegais/TermoDeUso'
+
 import HomepageEmpresa from '../Empresas/Homepage'
 import CadastroEmpresa from '../Empresas/Acesso/CadastroEmpresa'
 import LoginEmpresa from '../Empresas/Acesso/Login'
@@ -37,6 +39,8 @@ export default function Router() {
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
 
             <Route exact path="/teste" component={Teste} />
+
+            <Route exact path='/termos-de-uso' component={TermoDeUso} />
         </Switch>
     )
 }

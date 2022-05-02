@@ -248,7 +248,7 @@ export default function CadastroUsuario(){
                                 <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
                                 
                                 <label className="form-check-label" for="invalidCheck">
-                                    Declaro que li e aceito os termos de uso
+                                    Declaro que li e aceito os <a href="/termos-de-uso">termos de uso</a>
                                 </label>
                                 {IsAcordoChecked
                                 ? ""

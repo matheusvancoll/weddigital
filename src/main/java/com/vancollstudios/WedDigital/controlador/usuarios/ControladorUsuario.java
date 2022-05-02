@@ -1,11 +1,12 @@
 package com.vancollstudios.WedDigital.controlador.usuarios;
 
 import com.vancollstudios.WedDigital.controlador.casamentos.ControladorCasamento;
-import com.vancollstudios.WedDigital.model.casamentos.Casamento;
 import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
+import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioNoivosDTO;
 import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
+import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import com.vancollstudios.WedDigital.util.Util;
@@ -15,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Column;
-import java.math.BigDecimal;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,6 +27,9 @@ public class ControladorUsuario {
 
     @Autowired
     RepositorioProfissional repositorioProfissional;
+
+    @Autowired
+    RepositorioNoivos repositorioNoivos;
 
     @Autowired
     RepositorioCasamento repositorioCasamento;
@@ -85,7 +87,7 @@ public class ControladorUsuario {
      *
      */
     @PostMapping(path = "/api/usuario/empresa/novoUsuario")
-    public ResponseEntity<String> criarNovoUsuario(@RequestBody UsuarioEmpresaDTO novoUsuarioEmpresaDTO){
+    public ResponseEntity<String> criarNovoUsuarioEmpresa(@RequestBody UsuarioEmpresaDTO novoUsuarioEmpresaDTO){
         Boolean usuarioExistente = isUsuarioExistente(novoUsuarioEmpresaDTO.getLogin(), novoUsuarioEmpresaDTO.getEmail());
         Usuario novoUsuario = new Usuario();
         Integer tokenRandom = 0;
@@ -166,6 +168,7 @@ public class ControladorUsuario {
         profissional.setNivelConta(novoUsuarioEmpresaParam.getNivelConta());
         profissional.setPontosAcumulados(0);
         profissional.setCasamentosBemSucedidos(0);
+        profissional.setVisitasVitrine(0);
 
         if(novoUsuarioEmpresaParam.getIs_CadastroPorConvite() != null && novoUsuarioEmpresaParam.getIs_CadastroPorConvite()){
             profissional.setIs_CadastroPorConvite(novoUsuarioEmpresaParam.getIs_CadastroPorConvite());
@@ -324,7 +327,22 @@ public class ControladorUsuario {
         }
     }
 
+    public Profissional obterProfissionalPorId(Integer idProfissionalParam){
+        ResponseEntity profissionalEncontrato = repositorioProfissional.findAllByIdUsuario(idProfissionalParam)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
 
+
+        Profissional profissional = new Profissional();
+
+        if(profissionalEncontrato != null && profissionalEncontrato.getBody() != null){
+            profissional = (Profissional) profissionalEncontrato.getBody();
+        }else{
+            profissional = null;
+        }
+
+        return profissional;
+    }
 
 
 
@@ -332,4 +350,59 @@ public class ControladorUsuario {
     // ---------- NOIVOS -----------------------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------------------------------------
 
+    @PostMapping(path = "/api/usuario/noivos/novoUsuario")
+    public ResponseEntity<String> criarNovoUsuarioNoivos(@RequestBody UsuarioNoivosDTO novoUsuarioNoivosDTO){
+        Boolean usuarioExistente = isUsuarioExistente(novoUsuarioNoivosDTO.getLogin(), novoUsuarioNoivosDTO.getEmail());
+        Usuario novoUsuario = new Usuario();
+        Integer tokenRandom = 0;
+        if(!usuarioExistente){
+            Date dataAtual = new Date();
+            String dataCriacao = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataAtual);
+            cal.add(Calendar.MONTH, 3);
+            String dataExpiracao = Util.converterDataParaStringSemHora(cal.getTime(), "dd/MM/yyyy");
+
+            novoUsuario.setNomeUsuario(novoUsuarioNoivosDTO.getNomeUsuario());
+            novoUsuario.setEmail(novoUsuarioNoivosDTO.getEmail());
+            novoUsuario.setLogin(novoUsuarioNoivosDTO.getLogin());
+            novoUsuario.setIs_Profissional(false);
+            novoUsuario.setIs_Noivos(true);
+            novoUsuario.setIs_PrimeiroAcesso(true);
+            novoUsuario.setIs_Validado(false);
+            novoUsuario.setDataCriacao(dataCriacao);
+            novoUsuario.setDataExpiracao(dataExpiracao);
+
+            novoUsuario.setSenha(passwordEncoder.encode(novoUsuarioNoivosDTO.getSenha()));
+            novoUsuario.setIs_SenhaExpirada(false);
+            Random tokenSecurityGenerated = new Random();
+            tokenRandom = tokenSecurityGenerated.nextInt();
+
+            if(tokenRandom < 0){
+                tokenRandom = tokenRandom * -1;
+            }
+
+            novoUsuario.setRandomToken(tokenRandom);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("exist");
+        }
+
+        Noivos novoNoivos = new Noivos();
+        Integer idNovoUsuario =  ResponseEntity.ok(repositorioUsuario.save(novoUsuario)).getBody().getIdUsuario();
+
+        if(novoUsuarioNoivosDTO.getIs_CadastroPorConvite() != null && novoUsuarioNoivosDTO.getIs_CadastroPorConvite()){
+            Boolean isConviteValido = validarTokenConviteProfissional(novoUsuarioNoivosDTO.getIdUsuarioConvite(), novoUsuarioNoivosDTO.getTokenUsuarioConvite());
+            if(isConviteValido){
+                novoNoivos.setIs_CadastroPorConvite(true);
+                novoNoivos.setIdUsuarioConvite(novoUsuarioNoivosDTO.getIdUsuarioConvite());
+            }
+        }else{
+            novoNoivos.setIs_CadastroPorConvite(false);
+        }
+
+        ResponseEntity.ok(repositorioNoivos.save(novoNoivos));
+        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
+
+        return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
+    }
 }

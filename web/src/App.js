@@ -6,6 +6,9 @@ import UserProvider from './api/userContext-api/userProvider';
 
 function App() {
 
+    let key = 'token';
+    localStorage.setItem(key, '""');
+
     return (
         <BrowserRouter>
             <UserProvider>
