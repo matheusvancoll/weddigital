@@ -83,6 +83,7 @@ export default function Navbar(props) {
 
                         <div className={token ? "isLogado" : ""}>
                             <a href='/login' id='btnLogin'>Acessar</a>
+                            <a href='/cadastro' id='btnLogin'>Cadastro</a>
                             <a href='/empresas'>Área Empresa</a>
                         </div>
                     </>

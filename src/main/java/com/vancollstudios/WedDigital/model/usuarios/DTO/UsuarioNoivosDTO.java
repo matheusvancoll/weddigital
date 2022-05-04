@@ -6,6 +6,10 @@ public class UsuarioNoivosDTO {
     private String email;
     private String login;
     private String senha;
+    private String cidade;
+    private String estado;
+    private String dataCasamento;
+    private Boolean is_Noiva;
     private Boolean is_CadastroPorConvite;
     private Integer idUsuarioConvite;
 
@@ -73,5 +77,37 @@ public class UsuarioNoivosDTO {
 
     public void setTokenUsuarioConvite(Integer tokenUsuarioConvite) {
         this.tokenUsuarioConvite = tokenUsuarioConvite;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getDataCasamento() {
+        return dataCasamento;
+    }
+
+    public void setDataCasamento(String dataCasamento) {
+        this.dataCasamento = dataCasamento;
+    }
+
+    public Boolean getIs_Noiva() {
+        return is_Noiva;
+    }
+
+    public void setIs_Noiva(Boolean is_Noiva) {
+        this.is_Noiva = is_Noiva;
     }
 }

@@ -19,6 +19,20 @@ module.exports = {
         tokenUsuarioConvite: ""
     },
 
+    dadosUsuarioNoivDTO: {
+        idUsuario: "",
+        nomeUsuario: "",
+        login: "",
+        senha: "",
+        email: "",
+        cidade: "",
+        estado: "",
+        dataCasamento: "",
+        isNoiva: true,
+        is_CadastroPorConvite: false,
+        idUsuarioConvite: ""
+    },
+
     login:{
         user: '', 
         password: ''

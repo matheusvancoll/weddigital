@@ -387,8 +387,8 @@ public class ControladorUsuario {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("exist");
         }
 
-        Noivos novoNoivos = new Noivos();
         Integer idNovoUsuario =  ResponseEntity.ok(repositorioUsuario.save(novoUsuario)).getBody().getIdUsuario();
+        Noivos novoNoivos = popularDadosNoivos(novoUsuarioNoivosDTO, idNovoUsuario);
 
         if(novoUsuarioNoivosDTO.getIs_CadastroPorConvite() != null && novoUsuarioNoivosDTO.getIs_CadastroPorConvite()){
             Boolean isConviteValido = validarTokenConviteProfissional(novoUsuarioNoivosDTO.getIdUsuarioConvite(), novoUsuarioNoivosDTO.getTokenUsuarioConvite());
@@ -404,5 +404,30 @@ public class ControladorUsuario {
         String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
+    }
+
+    public Noivos popularDadosNoivos(UsuarioNoivosDTO usuarioNoivosDTO, Integer idNoivosParam){
+        Noivos noivos = new Noivos();
+        noivos.setIdUsuario(idNoivosParam);
+        noivos.setNomeNoiv(usuarioNoivosDTO.getNomeUsuario());
+        if(usuarioNoivosDTO.getIs_Noiva()){
+            noivos.setIs_Noiva(true);
+        }else{
+            noivos.setIs_Noiva(false);
+        }
+
+        noivos.setEmail(usuarioNoivosDTO.getEmail());
+        noivos.setCidade(usuarioNoivosDTO.getCidade());
+        noivos.setEstado(usuarioNoivosDTO.getEstado());
+        noivos.setDataCasamento(usuarioNoivosDTO.getDataCasamento());
+
+        if(usuarioNoivosDTO.getIs_CadastroPorConvite() != null && usuarioNoivosDTO.getIs_CadastroPorConvite()){
+            noivos.setIs_CadastroPorConvite(true);
+            noivos.setIdUsuarioConvite(usuarioNoivosDTO.getIdUsuarioConvite());
+        }else{
+            noivos.setIs_CadastroPorConvite(false);
+        }
+
+        return noivos;
     }
 }

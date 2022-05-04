@@ -9,6 +9,7 @@ import Navbar from '../../../../components/Navbar'
 import UsuarioModel from '../../../../utils/UsuarioModel';
 import UserContext from '../../../../api/userContext-api/userContext'
 import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
+import Utils from "../../../../utils/Utils";
 
 export default function CadastroUsuario(){
     const history = useHistory()
@@ -19,6 +20,7 @@ export default function CadastroUsuario(){
     const [IsSucessoCadastro, setIsSucessoCadastro] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
+    const [IsSenhaValida, setIsSenhaValida] = useState(true)
     const [IsWhatsapp, setIsWhatsapp] = useState(false)
     const [IsNoivos, setIsNoivos] = useState(true)
     const [IsCNPJ, setIsCNPJ] = useState(false)
@@ -49,6 +51,14 @@ export default function CadastroUsuario(){
         ev.preventDefault();
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
+        IsSenhaValida(true)
+
+        if(!validarSenha()){
+            setIsSenhaValida(false)
+            setIsCarregandoDados(false)
+            return
+        }
+
         let termosUso = document.getElementById('invalidCheck').checked
 
         if(!termosUso){
@@ -131,13 +141,13 @@ export default function CadastroUsuario(){
 
                         <div className="col-md-6">
                             <label for="validationCustom03" className="form-label">Senha*</label>
-                            <input type="password" className="form-control" id="validationCustom03" required 
+                            <input type="password" className="form-control" id="validationSenha1" required 
                                         name="senha" value={DadosCadastro.senha} onChange={onChange} />
                         </div>
 
                         <div className="col-md-6">
                             <label for="validationCustom05" className="form-label">Confirmar senha*</label>
-                            <input type="password" className="form-control" id="validationCustom05" required 
+                            <input type="password" className="form-control" id="validationSenha2" required 
                                     onChange={validarSenha}/>
                         </div>
 
@@ -270,5 +280,19 @@ export default function CadastroUsuario(){
 }
 
 function validarSenha(){
-    
+    let senha1 = document.getElementById('validationSenha1').value
+    let senha2 = document.getElementById('validationSenha2').value
+    let isSenhaIgual = Utils.verificarIgualdadeSenha(senha1, senha2)
+
+    if(isSenhaIgual){
+        let isSenhaIntegra = Utils.verificarIntegridadeSenha(senha1)
+        
+        if(isSenhaIntegra){
+            return true
+        }else{
+            return false
+        }
+    }else{
+        return false
+    }
 }

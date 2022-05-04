@@ -15,6 +15,12 @@ public class Noivos {
     private Integer idUsuario;
 
     @Column
+    private String nomeNoiv;
+
+    @Column
+    private Boolean Is_Noiva;
+
+    @Column
     private String email;
 
     @Column
@@ -149,5 +155,21 @@ public class Noivos {
 
     public void setIdUsuarioConvite(Integer idUsuarioConvite) {
         this.idUsuarioConvite = idUsuarioConvite;
+    }
+
+    public String getNomeNoiv() {
+        return nomeNoiv;
+    }
+
+    public void setNomeNoiv(String nomeNoiv) {
+        this.nomeNoiv = nomeNoiv;
+    }
+
+    public Boolean getIs_Noiva() {
+        return Is_Noiva;
+    }
+
+    public void setIs_Noiva(Boolean is_Noiva) {
+        Is_Noiva = is_Noiva;
     }
 }

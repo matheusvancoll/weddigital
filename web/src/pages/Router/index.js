@@ -12,7 +12,7 @@ import LoginEmpresa from '../Empresas/Acesso/Login'
 import PerfilEmpresa from '../Empresas/Perfil/'
 
 import HomepageNoivos from '../Casamentos/Homepage'
-// import CadastroNoivos from '../Casamentos/Acesso/CadastroNoivos'
+import CadastroNoivos from '../Casamentos/Acesso/CadastroNoivos/index.js'
 // import LoginNoivos from '../Casamentos/Acesso/Login'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
@@ -34,8 +34,8 @@ export default function Router() {
             <Route exact path="/" component={HomepageNoivos} />
             <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
 
-            {/* <Route exact path="/cadastro" component={CadastroNoivos} />
-            <Route exact path="/login" component={LoginNoivos} /> */}
+            <Route exact path="/cadastro" component={CadastroNoivos} />
+            {/* <Route exact path="/login" component={LoginNoivos} />  */}
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
 
             <Route exact path="/teste" component={Teste} />
