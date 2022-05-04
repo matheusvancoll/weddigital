@@ -158,6 +158,7 @@ public class ControladorUsuario {
 
         profissional.setIdUsuario(idUsuarioParam);
         profissional.setNomeEmpresa(novoUsuarioEmpresaParam.getNomeEmpresa());
+        profissional.setSegmento(novoUsuarioEmpresaParam.getSegmento());
         profissional.setEmail(novoUsuarioEmpresaParam.getEmail());
         profissional.setNumeroContato(novoUsuarioEmpresaParam.getNumeroContato());
         profissional.setIs_Whatsapp(novoUsuarioEmpresaParam.getIs_Whatsapp());

@@ -51,9 +51,9 @@ export default function CadastroUsuario(){
         ev.preventDefault();
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
-        IsSenhaValida(true)
 
         if(!validarSenha()){
+            console.log("TRAVOU")
             setIsSenhaValida(false)
             setIsCarregandoDados(false)
             return
@@ -151,6 +151,14 @@ export default function CadastroUsuario(){
                                     onChange={validarSenha}/>
                         </div>
 
+                        {IsSenhaValida
+                            ? ""
+                            :<div class=".text-danger">
+                                <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br> 
+                                pelo menos, uma letra maiúscula e um número!</p>
+                            </div>
+                        }
+
                         <div className="col-md-12">
                             <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
                             <input type="text" className="form-control" id="validationCustom01" required
@@ -167,7 +175,6 @@ export default function CadastroUsuario(){
                             <label for="validationCustom04" className="form-label">Estado*</label>
                             <select className="form-select" id="validationCustom04" required
                                     name="estado" value={DadosCadastro.estado} onChange={onChange} >
-                                <option selected disabled>Selecione</option>
                                 {/* <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AP">Amapá</option>
@@ -210,10 +217,31 @@ export default function CadastroUsuario(){
                                         name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange}/>
                         </div>
 
+                        <div className="col-md-5">
+                            <label for="validationCustom04" className="form-label">Segmento da empresa*</label>
+                            <select className="form-select" id="validationCustom04" required
+                                    name="segmento" value={DadosCadastro.segmento} onChange={onChange} >
+                                <option value="recepcao">Recepção</option>
+                                <option value="fotografia">Fotografia</option>
+                                <option value="Filmagem">Filmagem</option>
+                                <option value="fotografiaFilmagem">Fotografia e Filmagem</option>
+                                <option value="musico">Músico / Banda</option>
+                                <option value="decoracao">Decoração</option>
+                                <option value="cerimonialista">Cerimonialista</option>
+                                <option value="floricultura">Floricultura</option>
+                                <option value="bolo">Bolo de casamento</option>
+                                <option value="doces">Doces</option>
+                                <option value="salgados">Salgados</option>
+                                <option value="buffet">Buffet</option>
+                                <option value="joias">Joalheria</option>
+                                <option value="roupas">Roupas</option>
+                            </select>
+                        </div>
+
                         <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="is_Whatsapp" value="false" 
+                                    name="is_Whatsapp" checked={IsWhatsapp} value="false" 
                                     onChange={() =>{
                                         setIsWhatsapp(!IsWhatsapp)
                                         setDadosCadastro({

@@ -19,9 +19,9 @@ export default function ContactUs() {
   return (
     <form ref={form} onSubmit={sendEmail}>
       <label>Name</label>
-      <input type="text" name="usuario_cadastrado" />
+      <input type="text" name="nomeUsuario" />
       <label>Email</label>
-      <input type="email" name="emailDestinoParam" />
+      <input type="email" name="email" />
       <input type="submit" value="Send" />
         </form>
   );

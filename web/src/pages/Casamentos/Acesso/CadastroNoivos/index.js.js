@@ -113,12 +113,12 @@ export default function CadastroUsuario(){
                         </div>
 
                         {IsSenhaValida
-                                ? ""
-                                : <div class=".text-danger">
-                                    <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br> 
-                                    pelo menos, uma letra maiúscula e um número!</p>
-                                </div>
-                                }
+                            ? ""
+                            :<div class=".text-danger">
+                                <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br> 
+                                pelo menos, uma letra maiúscula e um número!</p>
+                            </div>
+                        }
 
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Cidade*</label>

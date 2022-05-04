@@ -12,12 +12,13 @@ public class DadosResumoPerfilProfissionalDTO {
     private String estado;
     private String nomeEmpresa;
     private String descricaoEmpresa;
+    private String segmentoPrimario;
+    private String segmentoSecundario;
     private String email;
     private String numeroContato;
     private Boolean is_Whatsapp;
     private Boolean is_CNPJ;
     private String numeroCNPJ;
-
     private String valorMinimo;
     private Boolean maisDeUmEventoPorDia;
     private String formasDePagamento;
@@ -194,6 +195,22 @@ public class DadosResumoPerfilProfissionalDTO {
 
     public void setCasamentosBemSucedidos(Integer casamentosBemSucedidos) {
         this.casamentosBemSucedidos = casamentosBemSucedidos;
+    }
+
+    public String getSegmentoPrimario() {
+        return segmentoPrimario;
+    }
+
+    public void setSegmentoPrimario(String segmentoPrimario) {
+        this.segmentoPrimario = segmentoPrimario;
+    }
+
+    public String getSegmentoSecundario() {
+        return segmentoSecundario;
+    }
+
+    public void setSegmentoSecundario(String segmentoSecundario) {
+        this.segmentoSecundario = segmentoSecundario;
     }
 
     public Integer getTokenConvite() {

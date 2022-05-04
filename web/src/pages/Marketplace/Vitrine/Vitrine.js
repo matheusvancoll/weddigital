@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Vitrine.css'
 
+import api from '../../../api'
+import VitrineModel from "../../../utils/VitrineModel";
 import Navbar from "../../../components/Navbar";
+
 
 import FotosVitrine from "./FotosVitrine/FotosVitrine";
 import CardDadosContato from "./InformacoesProfissional/CardDadosContato";
@@ -9,6 +12,30 @@ import PrincipaisPerguntas from './InformacoesProfissional/CardPrincipaisPergunt
 import CardDepoimentos from './DepoimentosSobreProfissional/CardOpinioes'
 
 export default function Vitrine(){
+    const [ DadosVitrine, setDadosVitrine ] = useState(VitrineModel.dadosVitrineDTO)
+    const [ IsCarregando, setIsCarregando ] = useState(false)
+
+    let urlParam = window.location.href.split('=')
+    let idProfissionalURL = null;
+    
+    if(urlParam.length > 1){
+        idProfissionalURL = urlParam[1]
+    }
+
+    useEffect(() => {
+        api.get(`detalhesProfissional/${idProfissionalURL}`)
+        .then(({data}) => {
+            setDadosVitrine(data)
+            setIsCarregando(false)
+            //eslint-disable-next-line react-hooks/exhaustive-deps
+        }).catch(({error}) => {
+            setIsCarregando(false)
+        })
+    }, [])
+
+    console.log("DadosVitrine")
+    console.log(DadosVitrine)
+
     return(
         <>
             <Navbar />
@@ -34,13 +61,13 @@ export default function Vitrine(){
 
             <div className="vitrine-page__container">
                 <div className="container text_nome_empresa">
-                    <h1>Nome da Empresa 
+                    <h1>{DadosVitrine.nomeEmpresa}
                         <a href="#pedirOrcamento" className="link-pedir-orcamento">
                             <span class="badge bg color-roxo">Pedir Orçamento</span>
                         </a>
                     </h1>
-                    <h6>Casamentos bem sucedidos: <span class="badge color-roxo">14</span></h6>
-                    <h6>Classificação geral: <span class="badge color-roxo">4.7</span></h6>
+                    <h6>Casamentos bem sucedidos: <span class="badge color-roxo">{DadosVitrine.casamentosBemSucedidos}</span></h6>
+                    <h6>Classificação geral: <span class="badge color-roxo">{DadosVitrine.classificacaoProfissional ? DadosVitrine.classificacaoProfissional : "N/D"}</span></h6>
                 </div>
 
                 <div className="vitrine01-principal">
@@ -49,13 +76,15 @@ export default function Vitrine(){
                     </div>
 
                     <div className="contato__vitrine">
-                        <CardDadosContato />
+                        <CardDadosContato  numeroContato={DadosVitrine.numeroContato} emailContato={DadosVitrine.emailContato} descricaoEmpresa={DadosVitrine.descricaoEmpresa} />
                     </div>
                 </div>
                 
                 <div className="vitrine02-complementares">
-                    <PrincipaisPerguntas />
-                    <CardDepoimentos />
+                    <PrincipaisPerguntas valorMinimo={DadosVitrine.valorMinimo} formasPagamento={DadosVitrine.formasPagamento} 
+                                        maisDeUmDia={DadosVitrine.realizaMaisDeUmEventoPorDia} trabalhaSozinho={DadosVitrine.trabalhaSozinho} />
+                                        
+                    <CardDepoimentos dadosVitrineDTO={DadosVitrine}/>
                 </div>
             </div>
 

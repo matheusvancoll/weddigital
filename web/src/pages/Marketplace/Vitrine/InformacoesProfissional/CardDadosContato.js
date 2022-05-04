@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
+import VitrineModel from "../../../../utils/VitrineModel";
 
-export default function CardDadosContato(){
+export default function CardDadosContato(props){
+    let numero = props.numeroContato
+    let email = props.emailContato
+    let descricao = props.descricaoEmpresa
 
     return(
         <>
@@ -9,16 +13,16 @@ export default function CardDadosContato(){
                 <h5 class="card-header">Sobre este profissional:</h5>
                 <div class="card-body">
                     <label for="validationCustom01" className="form-label">Contato</label>
-                    <input class="form-control" type="text" value="(85) 9 8888-9857" aria-label="Disabled input example" disabled readonly />
+                    <input class="form-control" type="text" value={numero} aria-label="Disabled input example" disabled readonly />
                     <br></br>
                     
                     <label for="validationCustom01" className="form-label">Email</label>
-                    <input class="form-control" type="text" value="empresashow@hotmail.com.br" aria-label="Disabled input example" disabled readonly />
+                    <input class="form-control" type="email" value={email} aria-label="Disabled input example" disabled readonly />
                     <br></br>
 
                     <label for="validationCustom01" className="form-label">Descrição da empresa</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                    value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." aria-label="Disabled input example" disabled readonly />
+                    value={descricao} aria-label="Disabled input example" disabled readonly />
                     <br></br>
 
                     <div>

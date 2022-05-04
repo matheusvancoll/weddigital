@@ -26,19 +26,23 @@ export default function Router() {
 
     return(
         <Switch>
+            {/* EMPRESAS */}
             <Route exact path="/empresas" component={HomepageEmpresa} />
             <Route exact path="/empresas/cadastro" component={CadastroEmpresa} />
             <Route exact path="/empresas/login" component={LoginEmpresa} />
             <PrivateRouter exact path="/empresas/perfil" component={PerfilEmpresa} />
             
+            {/* NOIVOS */}
             <Route exact path="/" component={HomepageNoivos} />
-            <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
-
             <Route exact path="/cadastro" component={CadastroNoivos} />
             {/* <Route exact path="/login" component={LoginNoivos} />  */}
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
 
+            {/* OUTROS */}
+            <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
+            <Route exact path="/buscar-profissional/detalhes=:idProfissional" component={Vitrine} />
             <Route exact path="/teste" component={Teste} />
+            
 
             <Route exact path='/termos-de-uso' component={TermoDeUso} />
         </Switch>

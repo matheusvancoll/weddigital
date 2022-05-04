@@ -43,6 +43,9 @@ public class Profissional {
     private String descricaoEmpresa;
 
     @Column
+    private String segmento;
+
+    @Column
     private String valorMinimo;
 
     @Column
@@ -136,6 +139,14 @@ public class Profissional {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getSegmento() {
+        return segmento;
+    }
+
+    public void setSegmento(String segmento) {
+        this.segmento = segmento;
     }
 
     public Boolean getIs_CNPJ() {

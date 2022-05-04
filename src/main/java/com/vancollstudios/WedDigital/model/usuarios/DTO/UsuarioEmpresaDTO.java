@@ -9,6 +9,7 @@ public class UsuarioEmpresaDTO {
     private String login;
     private String senha;
     private String nomeEmpresa;
+    private String segmento;
     private String cidade;
     private String estado;
     private Boolean is_CNPJ;
@@ -80,6 +81,14 @@ public class UsuarioEmpresaDTO {
 
     public void setNomeEmpresa(String nomeEmpresa) {
         this.nomeEmpresa = nomeEmpresa;
+    }
+
+    public String getSegmento() {
+        return segmento;
+    }
+
+    public void setSegmento(String segmento) {
+        this.segmento = segmento;
     }
 
     public String getCidade() {
