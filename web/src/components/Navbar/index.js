@@ -32,7 +32,7 @@ export default function Navbar(props) {
                 {props.isAreaEmpresa
                 ?
                     <>
-                        <a href='#inicio'>Início</a>
+                        <a href='/#inicio'>Início</a>
                         <a href='#vantagens'>Vantagens</a>
                         <a href='#servicos'>Serviços</a>
                         <a href='#premios'>Prêmios</a>
@@ -42,7 +42,9 @@ export default function Navbar(props) {
                     <> 
                         {tipoUsuario == 'profissional' 
                         ? <div>
-                            <a href='perfil'>Meu Portifólio</a>
+                            <a href='/#inicio'>Início</a>
+                            <a href='/#sorteio'>Sorteio</a>
+                            <a href='/#dicas-wed'>Dicas</a>
                         </div>
                         : tipoUsuario == 'noivos' 
                         ? <div>

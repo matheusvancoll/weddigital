@@ -43,10 +43,9 @@
     background-color: var(--color-dourado);
 }
 
-.input-pedido-orcamento{
-    margin: 1rem 0;
+.label-pedido-orcamento{
+    margin-top: 1rem;
 }
-
 
 
 /* === CARD INFORMAÇÕES COMPLEMENTARES === */

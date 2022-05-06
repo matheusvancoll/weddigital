@@ -13,7 +13,7 @@ import CardDepoimentos from './DepoimentosSobreProfissional/CardOpinioes'
 
 export default function Vitrine(){
     const [ DadosVitrine, setDadosVitrine ] = useState(VitrineModel.dadosVitrineDTO)
-    const [ IsCarregando, setIsCarregando ] = useState(false)
+    const [ IsCarregando, setIsCarregando ] = useState(true)
 
     let urlParam = window.location.href.split('=')
     let idProfissionalURL = null;
@@ -32,9 +32,6 @@ export default function Vitrine(){
             setIsCarregando(false)
         })
     }, [])
-
-    console.log("DadosVitrine")
-    console.log(DadosVitrine)
 
     return(
         <>
@@ -59,7 +56,14 @@ export default function Vitrine(){
                 </div>
             </div>
 
-            <div className="vitrine-page__container">
+            {IsCarregando 
+            ? <div className='.container p-4 d-flex justify-content-center'>
+                <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
+                </button>
+            </div> 
+            : <div className="vitrine-page__container">
                 <div className="container text_nome_empresa">
                     <h1>{DadosVitrine.nomeEmpresa}
                         <a href="#pedirOrcamento" className="link-pedir-orcamento">
@@ -76,17 +80,27 @@ export default function Vitrine(){
                     </div>
 
                     <div className="contato__vitrine">
-                        <CardDadosContato  numeroContato={DadosVitrine.numeroContato} emailContato={DadosVitrine.emailContato} descricaoEmpresa={DadosVitrine.descricaoEmpresa} />
+                        <CardDadosContato  
+                            numeroContato={DadosVitrine.numeroContato}
+                            emailContato={DadosVitrine.emailContato}
+                            descricaoEmpresa={DadosVitrine.descricaoEmpresa}
+                            nomeEmpresa={DadosVitrine.nomeEmpresa}
+                        />
                     </div>
                 </div>
-                
+            
                 <div className="vitrine02-complementares">
-                    <PrincipaisPerguntas valorMinimo={DadosVitrine.valorMinimo} formasPagamento={DadosVitrine.formasPagamento} 
-                                        maisDeUmDia={DadosVitrine.realizaMaisDeUmEventoPorDia} trabalhaSozinho={DadosVitrine.trabalhaSozinho} />
+                    <PrincipaisPerguntas 
+                        valorMinimo={DadosVitrine.valorMinimo} 
+                        formasPagamento={DadosVitrine.formasPagamento}
+                        maisDeUmDia={DadosVitrine.realizaMaisDeUmEventoPorDia} 
+                        trabalhaSozinho={DadosVitrine.trabalhaSozinho} 
+                    />
                                         
-                    <CardDepoimentos dadosVitrineDTO={DadosVitrine}/>
+                    <CardDepoimentos />
                 </div>
             </div>
+            }
 
             <div className="vitrine-button-voltar">
                     <a href="/">Voltar</a>

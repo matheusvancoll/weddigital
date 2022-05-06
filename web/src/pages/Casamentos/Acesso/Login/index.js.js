@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 
-import api from '../../api';
-import UserContext from '../../api/userContext-api/userContext';
+import api from '../../../../api';
+import UserContext from '../../../../api/userContext-api/userContext';
 import UsuarioModel from "../../../../utils/UsuarioModel";
 import Navbar from '../../components/Navbar';
 

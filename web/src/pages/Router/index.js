@@ -16,9 +16,8 @@ import CadastroNoivos from '../Casamentos/Acesso/CadastroNoivos/index.js'
 // import LoginNoivos from '../Casamentos/Acesso/Login'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
-// import Marketplace from '../Marketplace'
+import Marketplace from '../Marketplace'
 import Vitrine from '../Marketplace/Vitrine/Vitrine'
-// import Perfil from '../noivos/Perfil'
 import Teste from '../teste'
 
 export default function Router() {
@@ -42,8 +41,6 @@ export default function Router() {
             <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
             <Route exact path="/buscar-profissional/detalhes=:idProfissional" component={Vitrine} />
             <Route exact path="/teste" component={Teste} />
-            
-
             <Route exact path='/termos-de-uso' component={TermoDeUso} />
         </Switch>
     )

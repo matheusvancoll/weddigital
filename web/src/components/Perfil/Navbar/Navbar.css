@@ -1,5 +1,5 @@
 .navbar {
-    width: calc(100% - 7rem);
+    width: calc(100% - 5rem);
     height: var(--header-height);
     display: flex;
     position: fixed;
@@ -24,6 +24,7 @@
 .navbar__icons a{
     color: var(--color-text);
     margin-right: 1rem;
+    text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {

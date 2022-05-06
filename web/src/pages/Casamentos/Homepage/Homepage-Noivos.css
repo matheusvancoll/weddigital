@@ -1,95 +1,125 @@
-.homepage-container{
-    border-bottom: 1px solid black;
-}
-
-/* ===== BUSCA ===== */
-.busca-homepage-container{
-    display: flex;
-    justify-content: space-between; 
-    border-bottom: 1px solid black;
-}
-.busca-homepage-text{
-    width: 100%;
+.home-noivos__container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    border-radius: 1px;
-    margin-right: -5rem;
-    z-index:1
 }
-.busca-homepage-title{
-    margin-bottom: 1rem;
-    text-align: center;
-    font-size: 1.2rem;
+
+.area1-text-h1{
+    margin: 0 2rem;
+    font-size: 3rem;
+    line-height: 3rem;
 }
-.busca-homepage-pesquisa{
-    width: 15rem;
+
+.area1-description-h4{
+    margin: 0 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+
+
+
+.area1-search{
     display: flex;
-    justify-content: center;
-}
-.busca-homepage-pesquisa input{
-    width: 12rem;
-    height: 2rem;
-    margin-bottom: 1rem;
-    margin-left: 0.5rem;
-    background-color: var(--color-cinza);
-    border-radius: 5px 0px 0px 5px;
-    border: none;
-}
-.busca-homepage-pesquisa a{
-    width: 6rem;
-    height: 2rem;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2.5rem;
     text-align: center;
-    line-height: 2rem;
-    font-size: 1.25rem;
-    border-radius: 0 5px 5px 0;
+}
+.area1-description a{
     border: none;
     text-decoration: none;
     background-color: var(--color-roxo);
     color: var(--color-branco);
+    padding: 0.75rem 1.75rem;
+    transition: 0.5s;
+    border-radius: 5px;
 }
-.busca-homepage-texto-complementar{
-    font-size: 0.75rem;
+.area1-description a:hover{
+    color: var(--color-dourado);
+    padding: 0.75rem 2.25rem;
 }
 
-/* ===== IMAGEM ===== */
-.busca-homepage-img{
-    width: 460px;
+
+
+.area1-icons{
+    margin: 3rem 0;
+    display: flex;
+    justify-content: space-around;
+    font-size: 2rem;
 }
 
 
-/* ===== CATEGORIAS ===== */
-.categoria-homepage-container{
+.home-noivos-area2{
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--color-roxo);
+    color: var(--color-branco);
 }
 
-@media only screen and (min-width: 768px) {
-    .busca-homepage-img{
-        width: 600px;
+.area2-part1, .area2-part2{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.area2-h4{
+    color: var(--color-dourado);
+    font-size: 3rem;
+    margin-top: 1rem;
+    line-height: 3rem;
+}
+
+.area2-part1 a{
+    border: none;
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    padding: 0.75rem 1.75rem;
+    margin-top: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.area2-part1 a:hover{
+    padding: 0.75rem 2.25rem;
+}
+
+
+
+.home-noivos-area3{
+    text-align: center;
+}
+
+.text-dicas{
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin: 0 2rem;
+}
+
+@media only screen and (min-width: 768px){
+    .area1-text-title{
+        text-align: center;
+    }
+    .area1-text-h1{
+        font-size: 4.5rem;
+        line-height: 4.5rem;
     }
 
-    .busca-homepage-title{
-        font-size: 2.75rem;
+    .area1-description{
+        width: 75%;
     }
 
-    .busca-homepage-pesquisa{
-        width: 100%;
-    }
-    .busca-homepage-pesquisa input{
-        width: 25rem;
-        height: 2.5rem;
-    }
-    .busca-homepage-pesquisa a{
-        width: 8rem;
-        height: 2.5rem;
+    .area2-part1, .area2-part2{
+        width: 50%;
     }
     
-    .categoria-homepage-container{
-        height: 6rem;
-        padding: 0.5rem 1rem;
-        flex-direction: row;
+    .home-noivos-area3{
+        width: 70%;
     }
 }

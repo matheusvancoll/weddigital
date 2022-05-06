@@ -3,9 +3,35 @@ import InputMask from 'react-input-mask';
 import VitrineModel from "../../../../utils/VitrineModel";
 
 export default function CardDadosContato(props){
+    const [ NomeNoiv, setNomeNoiv ] = useState('')
+    const [ QtdConvidados, setQtdConvidados ] = useState('')
+    const [ DataCasamento, setDataCasamento ] = useState('')
+
     let numero = props.numeroContato
     let email = props.emailContato
     let descricao = props.descricaoEmpresa
+    let nomeEmpresa = props.nomeEmpresa
+
+
+    function enviarPedidoOrcamento(){
+        
+        console.log("TESTE SLOJD")
+    }
+
+    function onChanceData(ev){
+        const { value, name } = ev.target
+        setDataCasamento(value)
+    }
+
+    function onNomeNoiv(ev){
+        const { value, name } = ev.target
+        setNomeNoiv(value)
+    }
+
+    function onQtdConvidados(ev){
+        const { value, name } = ev.target
+        setQtdConvidados(value)
+    }
 
     return(
         <>
@@ -40,25 +66,38 @@ export default function CardDadosContato(props){
                                 </div>
                                 
                                 <div class="modal-body">
-                                    <input class="form-control input-pedido-orcamento" type="text" placeholder="Seu nome" />
+                                    <label for="validationCustom01" className="label-pedido-orcamento">Seu nome:</label>
+                                    <input class="form-control input-pedido-orcamento" 
+                                            type="text"
+                                            value={NomeNoiv}
+                                            onChange={onNomeNoiv}
+                                            />
                                     
+                                    <label for="validationCustom01" className="label-pedido-orcamento">Data do casamento:</label>
                                     <InputMask className="form-control" id="validationCustom01" required
                                         mask="99/99/9999" maskChar=" "
-                                        name="numeroContato"/>
+                                        name="numeroContato"
+                                        value={DataCasamento}
+                                        onChange={onChanceData}
+                                        />
                                         
-                                    <input class="form-control input-pedido-orcamento" type="text" placeholder="Data de casamento" />
-                                    <input class="form-control input-pedido-orcamento" type="text" placeholder="Quantidade de pessoas" />
+                                    <label for="validationCustom01" className="label-pedido-orcamento">Quantidade de convidados:</label>
+                                    <input class="form-control input-pedido-orcamento" 
+                                            type="text"
+                                            value={QtdConvidados}
+                                            onChange={onQtdConvidados}
+                                            />
 
                                     <label for="validationCustom01" className="form-label">Sua mensagem ficará assim:</label>
                                     
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" aria-label="Disabled input example" disabled readonly
-                                    value={'olá Profissional X, me chamo Fulana e gostaria de obter um orçamento para meu casamento previsto para: 12/12/2025. Com 45 convidados'} />
+                                    value={`Olá ${nomeEmpresa}, me chamo ${NomeNoiv} e gostaria de obter um orçamento para meu casamento previsto para: ${DataCasamento}. Com ${QtdConvidados} convidados`} />
 
                                 </div>
                                 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn color-roxo">Solicitar</button>
+                                    <button type="button" class="btn color-roxo" onClick={enviarPedidoOrcamento}>Solicitar</button>
                                 </div>
                             </div>
                         </div>

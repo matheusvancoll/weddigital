@@ -132,7 +132,7 @@ export default function Perfil() {
                         Por favor, tente novamente
                     </div> 
                     : <>
-                        <div className='container-sm forms-container-bttp'>
+                        <>
                             {TabLocation == 'Resumo' ?
                             <div >
                                 <FormResumo dadosUsuario={DadosResumoPerfil}/>
@@ -151,7 +151,7 @@ export default function Perfil() {
                                 <p><FormFAQProfissional /></p>
                             </div>
                             :''}
-                        </div>
+                        </>
                     </>
                     }
                 </>

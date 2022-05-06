@@ -2,7 +2,9 @@ package com.vancollstudios.WedDigital.controlador.vitrine;
 
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoVitrineDTO;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
+import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
+import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +18,17 @@ public class ControladorVitrine {
     @Autowired
     RepositorioProfissional repositorioProfissional;
 
+    @Autowired
+    RepositorioUsuario repositorioUsuario;
+
     @GetMapping(path = "/api/detalhesProfissional/{idProfissional}")
     public DadosResumoVitrineDTO obterDadosVitrineProfissional(@PathVariable("idProfissional") Integer idProfissional){
+
         DadosResumoVitrineDTO dadosResumoVitrineDTO = new DadosResumoVitrineDTO();
         Profissional profissional = new Profissional();
 
         Optional<Profissional> profissionalOptional = repositorioProfissional.findByidProfissional(idProfissional);
+
         if(profissionalOptional != null || profissionalOptional.isPresent()){
             profissional = profissionalOptional.get();
         }
@@ -34,6 +41,7 @@ public class ControladorVitrine {
         }else{
             dadosResumoVitrineDTO.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
         }
+
         dadosResumoVitrineDTO.setClassificacaoProfissional(profissional.getClassificacao());
         dadosResumoVitrineDTO.setNumeroContato(profissional.getNumeroContato());
         dadosResumoVitrineDTO.setEmailContato(profissional.getEmail());
@@ -42,7 +50,25 @@ public class ControladorVitrine {
         dadosResumoVitrineDTO.setFormasPagamento(profissional.getFormasPagamento());
         dadosResumoVitrineDTO.setRealizaMaisDeUmEventoPorDia(profissional.getMaisDeUmEventoPorDia());
         dadosResumoVitrineDTO.setTrabalhaSozinho(profissional.getTrabalhaSozinho());
+        if(profissional.getVisitasVitrine() == null){
+            profissional.setVisitasVitrine(1);
+        }else{
+            profissional.setVisitasVitrine(profissional.getVisitasVitrine()+1);
+        }
+
+        repositorioProfissional.save(profissional);
 
         return dadosResumoVitrineDTO;
+    }
+
+    @GetMapping(path = "/api/obterEmailUsuario/{idUsuario}")
+    public String obterEmailUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario){
+        String emailUsuario = "";
+        Optional<Usuario> usuario = repositorioUsuario.findAllByIdUsuario(idUsuario);
+        if(usuario != null && usuario.get() != null){
+            emailUsuario = usuario.get().getEmail();
+        }
+
+        return emailUsuario;
     }
 }

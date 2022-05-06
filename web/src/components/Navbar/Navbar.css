@@ -46,7 +46,6 @@
 
 /* ===== LOGIN ===== */
 .navbar-login{
-    width: 20rem;
     margin-right: 0.8rem;
 }
 .navbar-login a{
@@ -99,4 +98,10 @@
 
 .isLogado{
     display: none;
+}
+
+
+
+@media only screen and (min-width: 768px) {
+
 }

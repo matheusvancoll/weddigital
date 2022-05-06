@@ -1,11 +1,10 @@
 package com.vancollstudios.WedDigital.controlador.usuarios;
 
-import com.vancollstudios.WedDigital.controlador.casamentos.ControladorCasamento;
 import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioNoivosDTO;
-import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
+//import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,12 +28,6 @@ public class ControladorUsuario {
 
     @Autowired
     RepositorioNoivos repositorioNoivos;
-
-    @Autowired
-    RepositorioCasamento repositorioCasamento;
-
-    @Autowired
-    ControladorCasamento controladorCasamento;
 
     @Autowired
     PasswordEncoder passwordEncoder;

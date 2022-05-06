@@ -42,9 +42,10 @@ body {
     text-shadow: rgba(0, 0, 0, 0.125) 0.1em 0.1em 0.1em
 }
 
+.text-roxo{ color: var(--color-roxo); }
+.text-preto{ color: var(--color-dourado); }
 
-
-* Move content based sidebar toggle */
+/* Move content based sidebar toggle */
 #close-sidebar {
     margin-left: -9rem;
 }

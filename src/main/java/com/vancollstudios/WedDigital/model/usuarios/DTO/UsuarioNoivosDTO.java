@@ -12,7 +12,6 @@ public class UsuarioNoivosDTO {
     private Boolean is_Noiva;
     private Boolean is_CadastroPorConvite;
     private Integer idUsuarioConvite;
-
     private Integer tokenUsuarioConvite;
 
     public Integer getIdUsuario() {

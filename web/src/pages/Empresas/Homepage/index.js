@@ -10,7 +10,7 @@ import CardServicosOferecidos from '../../../components/Homepage/CardVantagens/C
 
 export default function HomePage() {
     return (
-        <div className=''>
+        <>
             <Navbar isAreaEmpresa={true}/>
             <div className='homepage__container'>
                 <div className='homepage__home_one' id='inicio'>
@@ -103,7 +103,7 @@ export default function HomePage() {
                 </div>
 
             </div>
-        </div>
+        </>
     )
 }
 

@@ -11,6 +11,5 @@ import java.util.Optional;
 @RestController
 public interface RepositorioCasamento extends CrudRepository<Casamento, Integer> {
     Optional<Object> findAllByIdCasamento(Integer idUsuario);
-
     Optional<Object> findAllByIdUsuario(Integer idUsuario);
 }

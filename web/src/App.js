@@ -7,7 +7,10 @@ import UserProvider from './api/userContext-api/userProvider';
 function App() {
 
     let key = 'token';
-    localStorage.setItem(key, '""');
+    var aValue = localStorage.getItem(key);
+    if(aValue == null){
+        localStorage.setItem(key, '""');
+    }
 
     return (
         <BrowserRouter>
