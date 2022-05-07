@@ -71,7 +71,7 @@ export default function Navbar(props) {
                             <>
                                 <div>
                                     <a href='/empresas/cadastro' id='btnAreaEmpresa'>CADASTRO GRATIS</a>
-                                    <a href='/empresas/login' id='btnLoginEmpresa'>Login</a>
+                                    <a href='/login' id='btnLoginEmpresa'>Login</a>
                                 </div>
                             </>
                         }

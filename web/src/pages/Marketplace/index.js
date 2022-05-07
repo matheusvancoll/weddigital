@@ -5,36 +5,41 @@ import api from '../../api/index'
 
 import Navbar from '../../components/Navbar'
 import SidebarMarketplace from '../../components/Marketplace/SidebarMarketplace'
-import CardAnuncioMarketplace from '../../components/Marketplace/CardAnuncioMarketplace'
+import CardAnuncioMarketplace from '../../components/Marketplace/CardProfissionalMarketplace'
+import CarregandoPlaceholder from '../../components/ModalError/CarregandoPlaceholder'
 
 
 export default function Marketplace(){
-    const [Anuncios, setAnuncios] = useState([])
+    const [Profissionais, setProfissionais] = useState([])
+    const [IsCarregandoDados, setIsCarregandoDados] = useState(true)
     
     useEffect(() => {
-        api.get("anuncio/buscarTodos").then(({data}) => {
-            setAnuncios(data)
+        api.get("profissionais/listarTodos/").then(({data}) => {
+            setProfissionais(data)
+            setIsCarregandoDados(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps
         })
     }, [])
     
     
-    let listaOpcoes = Anuncios
-    let listaCardProdutosMarketplace = []
+    let listaProfissionais = Profissionais
+    let listaCardProfissionaisMarketplace = []
 
-    for (let i = 0; i < listaOpcoes.length; i++) {
-        listaCardProdutosMarketplace.push(<CardAnuncioMarketplace dadosProduto={listaOpcoes[i]} />)
+    for (let i = 0; i < listaProfissionais.length; i++) {
+        listaCardProfissionaisMarketplace.push(<CardAnuncioMarketplace dadosProfissionais={listaProfissionais[i]} />)
     }
-
 
     return(
         <div className='marketplace-container'>
             <Navbar />
             <div className='marketplace-corpo-produtos'>
                 <SidebarMarketplace />
-                <div className='lista-produtos-marketplace'>
-                    {listaCardProdutosMarketplace}
-                </div>
+                {IsCarregandoDados ? <CarregandoPlaceholder /> :
+                <>
+                    <div className='lista-produtos-marketplace'>
+                            {listaCardProfissionaisMarketplace}
+                    </div>
+                </>}
             </div>
         </div>
     )

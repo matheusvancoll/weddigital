@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './Login.css';
+import './LoginEmpresa.css';
 
-import api from '../../../../api';
-import UserContext from '../../../../api/userContext-api/userContext';
-import UsuarioModel from "../../../../utils/UsuarioModel";
+import api from '../../api';
 import Navbar from '../../components/Navbar';
+import UsuarioModel from "../../utils/UsuarioModel";
+import LoginInvalido from '../..//components/ModalError/LoginInvalido'
+import UserContext from '../../api/userContext-api/userContext';
+import CarregandoPlaceholder from '../../components/ModalError/CarregandoPlaceholder';
 
-export default function UserLogin(){
+export default function UserLogin({ isEmpresa }){
     const [IsDadosInvalido, setIsDadosInvalido] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [DadosUser, setDadosUSer] = useState(UsuarioModel.login)
-    const { setToken, setTipo } = useContext(UserContext)
+    const { setToken } = useContext(UserContext)
     const history = useHistory()
 
     function onChange(ev){
@@ -23,6 +25,19 @@ export default function UserLogin(){
         })
     }
 
+    function pushPerfil(respondeData){
+        let dadosToken = respondeData.split('.')
+        let tipoUsuario = dadosToken[0]
+
+        if(tipoUsuario == "profissional"){
+            history.push('/empresas/perfil')
+        }else{
+            if(tipoUsuario == "noivos"){
+                history.push('/perfil')
+            }
+        }
+    }
+    
     function onSubmit(ev){
         ev.preventDefault();
         setIsCarregandoDados(true)
@@ -32,7 +47,7 @@ export default function UserLogin(){
         .then((response) => {
             setToken(response.data)
             setIsCarregandoDados(false)
-            history.push('/perfil')
+            pushPerfil(response.data)
         }).catch((error) => {
             setIsCarregandoDados(false)
             setIsDadosInvalido(true)
@@ -46,19 +61,14 @@ export default function UserLogin(){
 
     return (
         <>
-            <Navbar />
+            <Navbar isAreaEmpresa={isEmpresa}/>
             <div className="container-sm login-usuario-container">
                 {IsDadosInvalido
-                ? <div class="alert alert-danger" role="alert">
-                    Login ou senha inválidos!
-                </div>
+                ? <LoginInvalido />
                 :""}
 
                 {IsCarregandoDados
-                ? <button class="btn btn-primary" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Carregando...
-                </button>
+                ? <CarregandoPlaceholder />
                 :<div className="container-sm login-usuario-container">
                     <p className="text-center texto-label-acesso">Login</p>
                     <form>

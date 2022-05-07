@@ -10,6 +10,7 @@ import FotosVitrine from "./FotosVitrine/FotosVitrine";
 import CardDadosContato from "./InformacoesProfissional/CardDadosContato";
 import PrincipaisPerguntas from './InformacoesProfissional/CardPrincipaisPerguntas'
 import CardDepoimentos from './DepoimentosSobreProfissional/CardOpinioes'
+import CarregandoPlaceholder from "../../../components/ModalError/CarregandoPlaceholder";
 
 export default function Vitrine(){
     const [ DadosVitrine, setDadosVitrine ] = useState(VitrineModel.dadosVitrineDTO)
@@ -58,10 +59,7 @@ export default function Vitrine(){
 
             {IsCarregando 
             ? <div className='.container p-4 d-flex justify-content-center'>
-                <button class="btn btn-primary" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Carregando...
-                </button>
+                <CarregandoPlaceholder />
             </div> 
             : <div className="vitrine-page__container">
                 <div className="container text_nome_empresa">
@@ -103,7 +101,7 @@ export default function Vitrine(){
             }
 
             <div className="vitrine-button-voltar">
-                    <a href="/">Voltar</a>
+                    <a href="/buscar-profissional">Voltar</a>
             </div>
         </>
     )

@@ -17,7 +17,7 @@ export default function HomePage() {
                     <div className='area1-search'>
                         <div className='area1-description'>
                             <h4 className='text-roxo area1-description-h4'>Concorra a R$ 1.000 e aprenda tudo sobre o seu casamento com fornecedores de forma rápida e segura</h4>
-                            <a href='/' className='teste'>LOCALIZAR FORNECEDORES</a>
+                            <a href='/buscar-profissional' className='teste'>LOCALIZAR FORNECEDORES</a>
                         </div>
                     </div>
 

@@ -10,19 +10,18 @@ import UsuarioModel from '../../../../utils/UsuarioModel';
 import UserContext from '../../../../api/userContext-api/userContext'
 import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
 import Utils from "../../../../utils/Utils";
+import CarregandoPlaceholder from "../../../../components/ModalError/CarregandoPlaceholder";
 
 export default function CadastroUsuario(){
     const history = useHistory()
-    const { token, setToken } = useContext(UserContext)
+    const { setToken } = useContext(UserContext)
 
     const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioEmpresaDTO)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
-    const [IsSucessoCadastro, setIsSucessoCadastro] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
     const [IsWhatsapp, setIsWhatsapp] = useState(false)
-    const [IsNoivos, setIsNoivos] = useState(true)
     const [IsCNPJ, setIsCNPJ] = useState(false)
     const form = useRef();
 
@@ -89,7 +88,6 @@ export default function CadastroUsuario(){
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
-                setIsSucessoCadastro(true)
                 history.push('/empresas/perfil')
             }).catch((error) => {
                 setIsUsuarioExistente(true)
@@ -111,10 +109,7 @@ export default function CadastroUsuario(){
                 }
 
                 {IsCarregandoDados
-                    ? <button class="btn btn-primary" type="button" disabled>
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Carregando...
-                    </button>
+                    ? <CarregandoPlaceholder />
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
                     <form className="row g-3 needs-validation cadastro-usuario-form" ref={form}>

@@ -8,14 +8,13 @@ import TermoDeUso from '../CondicoesLegais/TermoDeUso'
 
 import HomepageEmpresa from '../Empresas/Homepage'
 import CadastroEmpresa from '../Empresas/Acesso/CadastroEmpresa'
-import LoginEmpresa from '../Empresas/Acesso/Login'
 import PerfilEmpresa from '../Empresas/Perfil/'
 
 import HomepageNoivos from '../Casamentos/Homepage'
 import CadastroNoivos from '../Casamentos/Acesso/CadastroNoivos/index.js'
-// import LoginNoivos from '../Casamentos/Acesso/Login'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
+import Login from '../Login'
 import Marketplace from '../Marketplace'
 import Vitrine from '../Marketplace/Vitrine/Vitrine'
 import Teste from '../teste'
@@ -28,16 +27,18 @@ export default function Router() {
             {/* EMPRESAS */}
             <Route exact path="/empresas" component={HomepageEmpresa} />
             <Route exact path="/empresas/cadastro" component={CadastroEmpresa} />
-            <Route exact path="/empresas/login" component={LoginEmpresa} />
+            <Route exact path="/empresas/login"> <Login isEmpresa={true}/> </Route>
             <PrivateRouter exact path="/empresas/perfil" component={PerfilEmpresa} />
             
             {/* NOIVOS */}
             <Route exact path="/" component={HomepageNoivos} />
             <Route exact path="/cadastro" component={CadastroNoivos} />
-            {/* <Route exact path="/login" component={LoginNoivos} />  */}
+            <Route exact path="/login"> <Login /> </Route>
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
 
             {/* OUTROS */}
+            <Route exact path="/buscar-profissional" component={Marketplace} />
+
             <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
             <Route exact path="/buscar-profissional/detalhes=:idProfissional" component={Vitrine} />
             <Route exact path="/teste" component={Teste} />

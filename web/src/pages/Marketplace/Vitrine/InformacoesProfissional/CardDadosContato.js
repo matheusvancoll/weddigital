@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import InputMask from 'react-input-mask';
 import VitrineModel from "../../../../utils/VitrineModel";
 

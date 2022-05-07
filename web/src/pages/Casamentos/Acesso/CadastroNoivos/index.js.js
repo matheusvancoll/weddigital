@@ -9,6 +9,8 @@ import UsuarioModel from '../../../../utils/UsuarioModel'
 import Utils from "../../../../utils/Utils";
 
 import Navbar from '../../../../components/Navbar'
+import CarregandoPlaceholder from "../../../../components/ModalError/CarregandoPlaceholder";
+import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
 
 export default function CadastroUsuario(){
     const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioNoivDTO)
@@ -16,7 +18,7 @@ export default function CadastroUsuario(){
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
-    const { token, setToken } = useContext(UserContext)
+    const { setToken } = useContext(UserContext)
     const [IsNoiva, setIsNoiva] = useState(true)
     const history = useHistory()
     
@@ -65,17 +67,12 @@ export default function CadastroUsuario(){
             <Navbar />
             <div className="container-sm cadastro-usuario-container">
                 {IsUsuarioExistente
-                    ? <div class="alert alert-danger" role="alert">
-                        Oooops! Parece que o Email ou Login informado já está cadastrado
-                    </div>
+                    ? <CadastroInvalido />
                     :""
                 }
 
                 {IsCarregandoDados
-                    ? <button class="btn btn-primary" type="button" disabled>
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Carregando...
-                    </button>
+                    ? <CarregandoPlaceholder />
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
                     <form className="row g-3 needs-validation cadastro-usuario-form">

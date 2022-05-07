@@ -1,19 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './LoginEmpresa.css';
+import './LoginNoivos.css';
 
 import api from '../../../../api';
-import Navbar from '../../../../components/Navbar';
-import UsuarioModel from "../../../../utils/UsuarioModel";
-import LoginInvalido from '../../../../components/ModalError/LoginInvalido'
 import UserContext from '../../../../api/userContext-api/userContext';
-import CarregandoPlaceholder from '../../../../components/ModalError/CarregandoPlaceholder';
+import UsuarioModel from "../../../../utils/UsuarioModel";
+import Navbar from '../../../../components/Navbar';
 
 export default function UserLogin(){
     const [IsDadosInvalido, setIsDadosInvalido] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [DadosUser, setDadosUSer] = useState(UsuarioModel.login)
-    const { setToken } = useContext(UserContext)
+    const { setToken, setTipo } = useContext(UserContext)
     const history = useHistory()
 
     function onChange(ev){
@@ -34,7 +32,7 @@ export default function UserLogin(){
         .then((response) => {
             setToken(response.data)
             setIsCarregandoDados(false)
-            history.push('/empresas/perfil')
+            history.push('/perfil')
         }).catch((error) => {
             setIsCarregandoDados(false)
             setIsDadosInvalido(true)
@@ -48,14 +46,19 @@ export default function UserLogin(){
 
     return (
         <>
-            <Navbar isAreaEmpresa={true}/>
+            <Navbar />
             <div className="container-sm login-usuario-container">
                 {IsDadosInvalido
-                ? <LoginInvalido />
+                ? <div class="alert alert-danger" role="alert">
+                    Login ou senha inválidos!
+                </div>
                 :""}
 
                 {IsCarregandoDados
-                ? <CarregandoPlaceholder />
+                ? <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
+                </button>
                 :<div className="container-sm login-usuario-container">
                     <p className="text-center texto-label-acesso">Login</p>
                     <form>
