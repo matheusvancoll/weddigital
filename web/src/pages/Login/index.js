@@ -5,9 +5,9 @@ import './LoginEmpresa.css';
 import api from '../../api';
 import Navbar from '../../components/Navbar';
 import UsuarioModel from "../../utils/UsuarioModel";
-import LoginInvalido from '../..//components/ModalError/LoginInvalido'
+import LoginInvalido from '../../components/Modal/LoginInvalido'
 import UserContext from '../../api/userContext-api/userContext';
-import CarregandoPlaceholder from '../../components/ModalError/CarregandoPlaceholder';
+import CarregandoPlaceholder from '../../components/Modal/CarregandoPlaceholder';
 
 export default function UserLogin({ isEmpresa }){
     const [IsDadosInvalido, setIsDadosInvalido] = useState(false)

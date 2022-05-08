@@ -8,9 +8,9 @@ import api from '../../../../api/'
 import Navbar from '../../../../components/Navbar'
 import UsuarioModel from '../../../../utils/UsuarioModel';
 import UserContext from '../../../../api/userContext-api/userContext'
-import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
+import CadastroInvalido from "../../../../components/Modal/CardAnuncioPlaceholder";
 import Utils from "../../../../utils/Utils";
-import CarregandoPlaceholder from "../../../../components/ModalError/CarregandoPlaceholder";
+import CarregandoPlaceholder from "../../../../components/Modal/CarregandoPlaceholder";
 
 export default function CadastroUsuario(){
     const history = useHistory()

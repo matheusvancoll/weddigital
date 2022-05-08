@@ -5,6 +5,7 @@ import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfiss
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioNoivosDTO;
 //import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
+import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
@@ -28,6 +29,9 @@ public class ControladorUsuario {
 
     @Autowired
     RepositorioNoivos repositorioNoivos;
+
+    @Autowired
+    RepositorioOrcamento repositorioOrcamento;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -161,6 +165,7 @@ public class ControladorUsuario {
         profissional.setNivelConta(novoUsuarioEmpresaParam.getNivelConta());
         profissional.setPontosAcumulados(0);
         profissional.setCasamentosBemSucedidos(0);
+        profissional.setOrcamentosRecebidos(0);
         profissional.setVisitasVitrine(0);
 
         if(novoUsuarioEmpresaParam.getIs_CadastroPorConvite() != null && novoUsuarioEmpresaParam.getIs_CadastroPorConvite()){
@@ -207,13 +212,15 @@ public class ControladorUsuario {
         dadosResumoPerfilProfissionalDTO.setNumeroCNPJ(profissionalParam.getNumeroCNPJ());
         dadosResumoPerfilProfissionalDTO.setNivelConta(profissionalParam.getNivelConta());
         dadosResumoPerfilProfissionalDTO.setPontosAcumulados(profissionalParam.getPontosAcumulados());
-        dadosResumoPerfilProfissionalDTO.setCasamentosBemSucedidos(profissionalParam.getCasamentosBemSucedidos());
         dadosResumoPerfilProfissionalDTO.setValorMinimo(profissionalParam.getValorMinimo());
         dadosResumoPerfilProfissionalDTO.setMaisDeUmEventoPorDia(profissionalParam.getMaisDeUmEventoPorDia());
         dadosResumoPerfilProfissionalDTO.setFormasDePagamento(profissionalParam.getFormasPagamento());
         dadosResumoPerfilProfissionalDTO.setTrabalhaSozinho(profissionalParam.getTrabalhaSozinho());
-        dadosResumoPerfilProfissionalDTO.setClassificacao(profissionalParam.getClassificacao());
         dadosResumoPerfilProfissionalDTO.setTokenConvite(profissionalParam.getTokenConvite());
+        dadosResumoPerfilProfissionalDTO.setCasamentosBemSucedidos(profissionalParam.getCasamentosBemSucedidos());
+        dadosResumoPerfilProfissionalDTO.setClassificacao(profissionalParam.getClassificacao());
+        dadosResumoPerfilProfissionalDTO.setOrcamentosRecebidos(profissionalParam.getOrcamentosRecebidos());
+        dadosResumoPerfilProfissionalDTO.setVisitasVitrine(profissionalParam.getVisitasVitrine());
 
         if(usuarioParam.getIs_Noivos()){ tipoUsuario = "noivos"; }
         else{ tipoUsuario = "profissional"; }

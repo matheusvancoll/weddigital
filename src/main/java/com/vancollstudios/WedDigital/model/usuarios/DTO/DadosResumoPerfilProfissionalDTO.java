@@ -26,6 +26,8 @@ public class DadosResumoPerfilProfissionalDTO {
     private Integer pontosAcumulados;
     private Double classificacao;
     private Integer casamentosBemSucedidos;
+    private Integer orcamentosRecebidos;
+    private Integer visitasVitrine;
     private Integer tokenConvite;
     private Integer nivelConta;
 
@@ -211,6 +213,22 @@ public class DadosResumoPerfilProfissionalDTO {
 
     public void setSegmentoSecundario(String segmentoSecundario) {
         this.segmentoSecundario = segmentoSecundario;
+    }
+
+    public Integer getVisitasVitrine() {
+        return visitasVitrine;
+    }
+
+    public void setVisitasVitrine(Integer visitasVitrine) {
+        this.visitasVitrine = visitasVitrine;
+    }
+
+    public Integer getOrcamentosRecebidos() {
+        return orcamentosRecebidos;
+    }
+
+    public void setOrcamentosRecebidos(Integer orcamentosRecebidos) {
+        this.orcamentosRecebidos = orcamentosRecebidos;
     }
 
     public Integer getTokenConvite() {

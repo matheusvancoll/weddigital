@@ -9,8 +9,8 @@ import UsuarioModel from '../../../../utils/UsuarioModel'
 import Utils from "../../../../utils/Utils";
 
 import Navbar from '../../../../components/Navbar'
-import CarregandoPlaceholder from "../../../../components/ModalError/CarregandoPlaceholder";
-import CadastroInvalido from "../../../../components/ModalError/CadastroInvalido";
+import CarregandoPlaceholder from "../../../../components/Modal/CarregandoPlaceholder";
+import CadastroInvalido from "../../../../components/Modal/CardAnuncioPlaceholder";
 
 export default function CadastroUsuario(){
     const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioNoivDTO)

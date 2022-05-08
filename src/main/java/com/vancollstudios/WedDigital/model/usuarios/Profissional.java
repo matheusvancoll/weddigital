@@ -70,6 +70,9 @@ public class Profissional {
     private Integer visitasVitrine;
 
     @Column
+    private Integer orcamentosRecebidos;
+
+    @Column
     private Integer casamentosBemSucedidos;
 
     @Column
@@ -235,6 +238,14 @@ public class Profissional {
 
     public void setClassificacao(Double classificacao) {
         this.classificacao = classificacao;
+    }
+
+    public Integer getOrcamentosRecebidos() {
+        return orcamentosRecebidos;
+    }
+
+    public void setOrcamentosRecebidos(Integer orcamentosRecebidos) {
+        this.orcamentosRecebidos = orcamentosRecebidos;
     }
 
     public Integer getCasamentosBemSucedidos() {

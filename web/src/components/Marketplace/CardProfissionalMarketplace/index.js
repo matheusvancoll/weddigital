@@ -5,23 +5,31 @@ import Imagem from '../../../assets/recepcao.jpeg'
 
 export default function CardProdutoMarketplace(props){
 
-    let classificação = props.dadosProfissionais.classificacao
-    if(classificação === 0 || classificação == null || classificação == undefined){ classificação = "✩✩✩✩✩" }
-    if(classificação >= 1){ classificação = "⭐✩✩✩✩" }
-    if(classificação >= 2){ classificação = "⭐⭐✩✩✩" }
-    if(classificação >= 3){ classificação = "⭐⭐⭐✩✩" }
-    if(classificação >= 4){ classificação = "⭐⭐⭐⭐☆" }
-    if(classificação == 5){ classificação = "⭐⭐⭐⭐⭐" }
+    let nomeEmpresa = props.dadosProfissionais.nomeEmpresa
+    let segmento = props.dadosProfissionais.segmento
+    let valorMinimo = props.dadosProfissionais.valorMinimo
+    let cidade = props.dadosProfissionais.cidade
+    let estado = props.dadosProfissionais.estado
+    let classificacao = props.dadosProfissionais.classificacao
+    let casamentosBemSucedidos = props.dadosProfissionais.casamentosBemSucedidos
+    let idProfissional = props.dadosProfissionais.idProfissional
+
+    // if(classificacao === 0 || classificacao == null || classificacao == undefined){ classificacao = "✩✩✩✩✩" }
+    // if(classificacao >= 1){ classificacao = "⭐✩✩✩✩" }
+    // if(classificacao >= 2){ classificacao = "⭐⭐✩✩✩" }
+    // if(classificacao >= 3){ classificacao = "⭐⭐⭐✩✩" }
+    // if(classificacao >= 4){ classificacao = "⭐⭐⭐⭐☆" }
+    // if(classificacao == 5){ classificacao = "⭐⭐⭐⭐⭐" }
 
     return(
         <div className='card-anuncio-marketplace-container'>
-            <img src={Imagem} class="card-img-top" alt="..." />
+            <img src={Imagem} class="card-img-top image-profissional" alt="..." />
             <div class="card-body">
-                <h5 class="card-title">{props.dadosProfissionais.nomeEmpresa}</h5>
-                <p class="card-text">{props.dadosProfissionais.segmento} | A partir de: {props.dadosProfissionais.valorMinimo}</p>
-                <p class="card-text">{props.dadosProfissionais.cidade}, {props.dadosProfissionais.estado}</p>
-                <p class="card-text">Classificacao: {props.dadosProfissionais.classificacao} <br></br> Casamentos bem sucedidos: {props.dadosProfissionais.casamentosBemSucedidos}</p>
-                <a href={"/buscar-profissional/detalhes=" + props.dadosProfissionais.idProfissional}>Contato</a>
+                <h5 class="card-title">{nomeEmpresa}</h5>
+                <p class="card-text">{segmento} | A partir de: {valorMinimo}</p>
+                <p class="card-text">{cidade}, {estado}</p>
+                <p class="card-text">Classificacao: {classificacao ? classificacao : "N/D"} <br></br> Casamentos bem sucedidos: {casamentosBemSucedidos}</p>
+                <a href={"/buscar-profissional/detalhes=" + idProfissional}>Detalhes</a>
             </div>
         </div>
     )

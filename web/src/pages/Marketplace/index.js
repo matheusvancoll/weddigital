@@ -6,8 +6,7 @@ import api from '../../api/index'
 import Navbar from '../../components/Navbar'
 import SidebarMarketplace from '../../components/Marketplace/SidebarMarketplace'
 import CardAnuncioMarketplace from '../../components/Marketplace/CardProfissionalMarketplace'
-import CarregandoPlaceholder from '../../components/ModalError/CarregandoPlaceholder'
-
+import CardAnuncioPlaceholder from '../../components/Modal/CardAnuncioPlaceholder'
 
 export default function Marketplace(){
     const [Profissionais, setProfissionais] = useState([])
@@ -34,12 +33,21 @@ export default function Marketplace(){
             <Navbar />
             <div className='marketplace-corpo-produtos'>
                 <SidebarMarketplace />
-                {IsCarregandoDados ? <CarregandoPlaceholder /> :
-                <>
-                    <div className='lista-produtos-marketplace'>
-                            {listaCardProfissionaisMarketplace}
+
+                {IsCarregandoDados 
+                ? <>
+                    <div className='placeholder-lista-profissionais'>
+                        <CardAnuncioPlaceholder />
+                        <CardAnuncioPlaceholder />
+                        <CardAnuncioPlaceholder />
                     </div>
-                </>}
+                </>
+                :<>
+                    <div className='lista-produtos-marketplace'>
+                        {listaCardProfissionaisMarketplace}
+                    </div>
+                </>
+                }
             </div>
         </div>
     )

@@ -2,6 +2,14 @@ import React from 'react'
 import './Homepage-Noivos.css'
 
 import Navbar from '../../../components/Navbar'
+import CardIconsServicosCasamento from '../../../components/Homepage/CardIconsServicosCasamento'
+
+import IconBusca  from '../../../assets/icons/pesquisa.png'
+import IconAssistindo  from '../../../assets/icons/assistindo.png'
+import IconDinheiro  from '../../../assets/icons/pagamento.png'
+import IconPlanejamento  from '../../../assets/icons/planejamento.png'
+import IconInspiracoes  from '../../../assets/icons/luminaria.png'
+import IconComunidade  from '../../../assets/icons/comunidade.png'
 
 export default function HomePage() {
     return (
@@ -22,12 +30,12 @@ export default function HomePage() {
                     </div>
 
                     <div className='area1-icons'>
-                        <i class="fa-solid fa-chart-line"></i>
-                        <i class="fa-solid fa-hashtag"></i>
-                        <i class="fa-solid fa-chart-line"></i>
-                        <i class="fa-solid fa-hashtag"></i>
-                        <i class="fa-solid fa-chart-line"></i>
-                        <i class="fa-solid fa-hashtag"></i>
+                        <CardIconsServicosCasamento image={IconBusca} texto='Buscar fornecedores' />
+                        <CardIconsServicosCasamento image={IconAssistindo} texto='Assista aulas' />
+                        <CardIconsServicosCasamento image={IconDinheiro} texto='Sorteios' />
+                        <CardIconsServicosCasamento image={IconPlanejamento} texto='Planejamento' />
+                        <CardIconsServicosCasamento image={IconInspiracoes} texto='Inspirações' />
+                        <CardIconsServicosCasamento image={IconComunidade} texto='Comunidade' />
                     </div>
                 </div>
 

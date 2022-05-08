@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import useSWR from 'swr'
 import './PerfilEmpresa.css'
 
 import api from '../../../api/';
@@ -24,6 +25,17 @@ export default function Perfil() {
     let idUsuario = dadosToken[1]
     let nivelUsuario = dadosToken[3]
     let tokenUsuario = dadosToken[5]
+
+    const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`, 
+        api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
+        .then(({data}) => {
+        console.log("TESTE SWR")
+        console.log(data)
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }).catch(({error}) => {
+        console.log("SWR FAIL")
+    }))
+
 
     useEffect(() => {
         api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)

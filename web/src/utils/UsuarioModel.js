@@ -56,10 +56,6 @@ module.exports = {
         nivelConta: '',
         tokenConvite: 0,
 
-        casamentosBemSucedidos: 0,
-        classificacao: null,
-        pontosAcumulados: 0,
-        
         valorMinimo: "",
         formasPagamento: "",
         maisDeUmEventoPorDia: false,

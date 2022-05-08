@@ -10,7 +10,7 @@ import FotosVitrine from "./FotosVitrine/FotosVitrine";
 import CardDadosContato from "./InformacoesProfissional/CardDadosContato";
 import PrincipaisPerguntas from './InformacoesProfissional/CardPrincipaisPerguntas'
 import CardDepoimentos from './DepoimentosSobreProfissional/CardOpinioes'
-import CarregandoPlaceholder from "../../../components/ModalError/CarregandoPlaceholder";
+import CarregandoPlaceholder from "../../../components/Modal/CarregandoPlaceholder";
 
 export default function Vitrine(){
     const [ DadosVitrine, setDadosVitrine ] = useState(VitrineModel.dadosVitrineDTO)

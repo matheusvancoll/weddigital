@@ -1,8 +1,6 @@
 .card-anuncio-marketplace-container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 1rem;
     padding: 1rem;
     border-radius: 5px;
@@ -10,11 +8,11 @@
 }
 
 /* === IMAGEM === */
-.card-anuncio-marketplace-image img{
-    width: 10rem;
-    height: 10rem;
+.image-profissional{
+    width: 100%;
     border-radius: 5px;
     background-color: var(--color-dourado);
+    
 }
 
 /* === DADOS === */
@@ -41,5 +39,4 @@
 .card-anuncio-marketplace-container a:hover{
     background-color: var(--color-dourado);
     color: var(--color-roxo);
-    padding: 0.5rem 1.5rem;
 }

@@ -3,7 +3,7 @@ import InputMask from 'react-input-mask';
 import { useHistory } from "react-router-dom";
 
 import api from "../../../../api";
-import ErroCarregarDados from "../../../ModalError/ErroCarregarDados";
+import ErroCarregarDados from "../../../Modal/ErroCarregarDados";
 import UserContext from "../../../../api/userContext-api/userContext";
 
 export default function FormDadosGerais(props){
