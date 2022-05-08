@@ -1,0 +1,13 @@
+.card-icon-servicos-casamentos__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-icon-servicos-casamentos__container p{
+    font-size: 1.25rem;
+}
+
+.card-icon-servicos-casamentos__container img{
+    width: 5rem;
+}
