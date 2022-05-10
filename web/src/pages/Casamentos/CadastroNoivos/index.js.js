@@ -1,30 +1,27 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import InputMask from 'react-input-mask';
-import emailjs from 'emailjs-com'
-import './CadastroEmpresa.css'
+import './CadastroNoivos.css'
 
-import api from '../../../../api/'
-import Navbar from '../../../../components/Navbar'
-import UsuarioModel from '../../../../utils/UsuarioModel';
-import UserContext from '../../../../api/userContext-api/userContext'
-import CadastroInvalido from "../../../../components/Modal/CardAnuncioPlaceholder";
-import Utils from "../../../../utils/Utils";
-import CarregandoPlaceholder from "../../../../components/Modal/CarregandoPlaceholder";
+import api from '../../../api'
+import UserContext from '../../../api/userContext-api/userContext'
+import UsuarioModel from '../../../utils/UsuarioModel'
+import Utils from "../../../utils/Utils";
+
+import Navbar from '../../../components/Navbar'
+import CarregandoPlaceholder from "../../../components/Modal/CarregandoPlaceholder";
+import CadastroInvalido from "../../../components/Modal/CardAnuncioPlaceholder";
 
 export default function CadastroUsuario(){
-    const history = useHistory()
-    const { setToken } = useContext(UserContext)
-
-    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioEmpresaDTO)
+    const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioNoivDTO)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
-    const [IsWhatsapp, setIsWhatsapp] = useState(false)
-    const [IsCNPJ, setIsCNPJ] = useState(false)
-    const form = useRef();
-
+    const { setToken } = useContext(UserContext)
+    const [IsNoiva, setIsNoiva] = useState(true)
+    const history = useHistory()
+    
     function onChange(ev){
         const { value, name } = ev.target
         setDadosCadastro({
@@ -33,26 +30,12 @@ export default function CadastroUsuario(){
         })
     }
 
-    function enviarEmailConfirmacaoCadastro(e){
-        e.preventDefault();
-        emailjs.sendForm('service_dbbp6yf', 'template_44kjgsh', form.current, 'nRkUn8RqboquqFSTd')
-        .then((result) => {
-            alert("DEU BOM")
-            console.log(result.text)
-        }, (error) => {
-            alert("DEU ERRO")
-            console.log(error.text)
-        })
-    }
-
-
     function onSubmit(ev){
-        ev.preventDefault();
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
+        setIsSenhaValida(true)
 
         if(!validarSenha()){
-            console.log("TRAVOU")
             setIsSenhaValida(false)
             setIsCarregandoDados(false)
             return
@@ -65,43 +48,22 @@ export default function CadastroUsuario(){
             setIsCarregandoDados(false)
             return
         }
-
-        let urlDados = window.location.href.split('_')
-        let idUsuarioConviteUrl = null;
-        let tokenUsuarioConviteUrl = null;
-
-        if(urlDados.length > 1){
-            idUsuarioConviteUrl = urlDados[1]
-            tokenUsuarioConviteUrl = urlDados[2]
-        }
-
-        if(idUsuarioConviteUrl != null && tokenUsuarioConviteUrl != undefined){
-            setDadosCadastro({
-                ...DadosCadastro, 
-                is_CadastroPorConvite: true,
-                idUsuarioConvite: idUsuarioConviteUrl,
-                tokenUsuarioConvite: tokenUsuarioConviteUrl,
-            })
-        }
-
-        api.post('usuario/empresa/novoUsuario', DadosCadastro)
+        
+        api.post('usuario/noivos/novoUsuario', DadosCadastro)
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)
-                history.push('/empresas/perfil')
+                history.push('/aguardando-liberacao')
             }).catch((error) => {
                 setIsUsuarioExistente(true)
                 setIsCarregandoDados(false)
                 window.scrollTo(0,0)
-                return
             })
-        
-        enviarEmailConfirmacaoCadastro(ev)
     }
 
     return(
         <>
-            <Navbar isAreaEmpresa={true}/>
+            <Navbar />
             <div className="container-sm cadastro-usuario-container">
                 {IsUsuarioExistente
                     ? <CadastroInvalido />
@@ -112,11 +74,11 @@ export default function CadastroUsuario(){
                     ? <CarregandoPlaceholder />
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
-                    <form className="row g-3 needs-validation cadastro-usuario-form" ref={form}>
+                    <form className="row g-3 needs-validation cadastro-usuario-form">
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>
-                                <input type="text" className="form-control" id="validationCustom01" required
-                                        name="nomeUsuario" value={DadosCadastro.nomeUsuario} onChange={onChange} />
+                                <input type="text" className="form-control" id="validationCustom01"
+                                        name="nomeUsuario" value={DadosCadastro.nomeUsuario} onChange={onChange} required />
                         </div>
 
                         <div className="col-md-5">
@@ -124,7 +86,7 @@ export default function CadastroUsuario(){
                             <div className="input-group has-validation">
                                 <span className="input-group-text" id="inputGroupPrepend">@</span>
                                 <input type="text" className="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required
-                                        name="login" value={DadosCadastro.login} onChange={onChange} />
+                                        name="login" value={DadosCadastro.login} onChange={onChange}  />
                             </div>
                         </div>
 
@@ -154,12 +116,6 @@ export default function CadastroUsuario(){
                             </div>
                         }
 
-                        <div className="col-md-12">
-                            <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
-                            <input type="text" className="form-control" id="validationCustom01" required
-                                    name="nomeEmpresa" value={DadosCadastro.nomeEmpresa} onChange={onChange} />
-                        </div>
-                        
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Cidade*</label>
                             <input type="text" className="form-control" id="validationCustom01" required
@@ -170,6 +126,7 @@ export default function CadastroUsuario(){
                             <label for="validationCustom04" className="form-label">Estado*</label>
                             <select className="form-select" id="validationCustom04" required
                                     name="estado" value={DadosCadastro.estado} onChange={onChange} >
+                                <option selected disabled>Selecione</option>
                                 {/* <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AP">Amapá</option>
@@ -206,82 +163,33 @@ export default function CadastroUsuario(){
                         </div>
 
                         <div className="col-md-7">
-                            <label for="validationCustom01" className="form-label">Contato*</label>
+                            <label for="validationCustom01" className="form-label">Casamos em:*</label>
                             <InputMask className="form-control" id="validationCustom01" required
-                                        mask="(99) 99999999" maskChar=" "
-                                        name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange}/>
+                                        mask="99/99/9999" maskChar=" "
+                                        name="dataCasamento" value={DadosCadastro.dataCasamento} onChange={onChange}/>
                         </div>
-
-                        <div className="col-md-5">
-                            <label for="validationCustom04" className="form-label">Segmento da empresa*</label>
-                            <select className="form-select" id="validationCustom04" required
-                                    name="segmento" value={DadosCadastro.segmento} onChange={onChange} >
-                                <option value="recepcao">Recepção</option>
-                                <option value="fotografia">Fotografia</option>
-                                <option value="Filmagem">Filmagem</option>
-                                <option value="fotografiaFilmagem">Fotografia e Filmagem</option>
-                                <option value="musico">Músico / Banda</option>
-                                <option value="decoracao">Decoração</option>
-                                <option value="cerimonialista">Cerimonialista</option>
-                                <option value="floricultura">Floricultura</option>
-                                <option value="bolo">Bolo de casamento</option>
-                                <option value="doces">Doces</option>
-                                <option value="salgados">Salgados</option>
-                                <option value="buffet">Buffet</option>
-                                <option value="joias">Joalheria</option>
-                                <option value="roupas">Roupas</option>
-                            </select>
-                        </div>
-
-                        <label class="form-check-label" for="flexSwitchCheckDefault">É Whatsapp?</label>
+            
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Sou:</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="is_Whatsapp" checked={IsWhatsapp} value="false" 
+                                    name="is_Noiva" checked={IsNoiva} value={IsNoiva}
                                     onChange={() =>{
-                                        setIsWhatsapp(!IsWhatsapp)
+                                        setIsNoiva(!IsNoiva)
                                         setDadosCadastro({
                                             ...DadosCadastro, 
-                                            is_Whatsapp: !IsWhatsapp,
-                                        })
-                                    }}
-                                    />
-                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsWhatsapp ? "Sim" : "Não"}</label>
-                        </div>
-
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"
-                                    name="is_CNPJ" checked={IsCNPJ} value={IsCNPJ}
-                                    onChange={() =>{
-                                        setIsCNPJ(!IsCNPJ)
-                                        setDadosCadastro({
-                                            ...DadosCadastro, 
-                                            is_CNPJ: !IsCNPJ,
+                                            is_Noiva: !IsNoiva,
                                         })
                                     }}
                                 />
-                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsCNPJ ? "Sim" : "Não"}</label>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{IsNoiva ? "Noiva" : "Noivo"}</label>
                         </div>
 
-                        {IsCNPJ
-                            ? 
-                                <>
-                                    <div className="col-md-7">
-                                        <label for="validationCustom01" className="form-label">Número do CNPJ*</label>
-                                        <InputMask className="form-control" id="validationCustom01" required
-                                                    mask="99.999.999/9999-99" maskChar=" "
-                                                    name="numeroCNPJ" value={DadosCadastro.numeroCNPJ} onChange={onChange} />
-                                    </div>
-                                </> 
-                            :<></>
-                        }              
-                        
                         <div className="col-12">
                             <div className="form-check">
                                 <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
                                 
                                 <label className="form-check-label" for="invalidCheck">
-                                    Declaro que li e aceito os <a href="/termos-de-uso">termos de uso</a>
+                                    Declaro que li e aceito os termos de uso
                                 </label>
                                 {IsAcordoChecked
                                 ? ""
@@ -291,6 +199,9 @@ export default function CadastroUsuario(){
                                 }
                             </div>
                         </div>
+
+                        {/* A senha deve conter no mínimo 3 caracteres em maiúsculo, 2 números e 1 caractere especial! */}
+
                         <div className="col-12">
                             <button className="btn btn-primary" type="submit" onClick={onSubmit}>Cadastrar</button>
                         </div>
@@ -302,6 +213,7 @@ export default function CadastroUsuario(){
     )
 }
 
+
 function validarSenha(){
     let senha1 = document.getElementById('validationSenha1').value
     let senha2 = document.getElementById('validationSenha2').value
@@ -311,6 +223,7 @@ function validarSenha(){
         let isSenhaIntegra = Utils.verificarIntegridadeSenha(senha1)
         
         if(isSenhaIntegra){
+            console.log("DEU TRUE")
             return true
         }else{
             return false
@@ -319,3 +232,4 @@ function validarSenha(){
         return false
     }
 }
+

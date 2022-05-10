@@ -7,11 +7,11 @@ import PrivateRouter from './privateRouter'
 import TermoDeUso from '../CondicoesLegais/TermoDeUso'
 
 import HomepageEmpresa from '../Empresas/Homepage'
-import CadastroEmpresa from '../Empresas/Acesso/CadastroEmpresa'
+import CadastroEmpresa from '../Empresas/CadastroEmpresa'
 import PerfilEmpresa from '../Empresas/Perfil/'
 
 import HomepageNoivos from '../Casamentos/Homepage'
-import CadastroNoivos from '../Casamentos/Acesso/CadastroNoivos/index.js'
+import CadastroNoivos from '../Casamentos/CadastroNoivos/index.js'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
 import Login from '../Login'
