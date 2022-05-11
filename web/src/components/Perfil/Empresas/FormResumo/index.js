@@ -1,7 +1,6 @@
 import React from "react";
 import './FormResumo.css'
 
-import ImagePerfil from '../../../../assets/perfil.jpg'
 import BoxInfoResumo from "./BoxInfoRedumo";
 
 export default function FormResumo(props){
@@ -14,10 +13,10 @@ export default function FormResumo(props){
     return(
         <>
             <div className="perfil-resumo__cards">
-                <BoxInfoResumo title='Visitas em sua vitrine' valor={dadosPerfil.visitasVitrine} />
+                <BoxInfoResumo title='Visitas em seu perfil' valor={dadosPerfil.visitasVitrine} />
                 <BoxInfoResumo title='Orçamentos solicitados' valor={dadosPerfil.orcamentosRecebidos} />
-                <BoxInfoResumo title='Pontos Acumulados' valor={dadosPerfil.pontosAcumulados} />
                 <BoxInfoResumo title='Casamentos bem sucedidos' valor={dadosPerfil.casamentosBemSucedidos} />
+                <BoxInfoResumo title='Feedbacks recebidos' valor="1" />
             </div>
         </>
     )

@@ -29,7 +29,7 @@ export default function CardProdutoMarketplace(props){
                 <p class="card-text">{segmento} | A partir de: {valorMinimo}</p>
                 <p class="card-text">{cidade}, {estado}</p>
                 <p class="card-text">Classificacao: {classificacao ? classificacao : "N/D"} <br></br> Casamentos bem sucedidos: {casamentosBemSucedidos}</p>
-                <a href={"/buscar-profissional/detalhes=" + idProfissional}>Detalhes</a>
+                <a href={"/buscar-profissional/detalhes=" + idProfissional}>Orçamento gratis</a>
             </div>
         </div>
     )

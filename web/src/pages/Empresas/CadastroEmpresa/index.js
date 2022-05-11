@@ -26,11 +26,13 @@ export default function CadastroUsuario(){
     const form = useRef();
 
     function onChange(ev){
+        ev.preventDefault()
         const { value, name } = ev.target
         setDadosCadastro({
             ...DadosCadastro, 
             [name]: value,
         })
+        console.log("nome: " + name + "Valor: " + value)
     }
 
     function enviarEmailConfirmacaoCadastro(e){
@@ -117,7 +119,7 @@ export default function CadastroUsuario(){
                     ? <CarregandoPlaceholder />
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
-                    <form className="row g-3 needs-validation cadastro-usuario-form" ref={form} action="/web/public">
+                    <form className="row g-3 needs-validation cadastro-usuario-form" ref={form}>
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>
                                 <input type="text" className="form-control" id="validationCustom01" required
