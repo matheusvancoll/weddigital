@@ -18,6 +18,7 @@ export default function CadastroUsuario(){
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
+    const [IsSenhaIgual, setIsSenhaIgual] = useState(true)
     const { setToken } = useContext(UserContext)
     const [IsNoiva, setIsNoiva] = useState(true)
     const history = useHistory()
@@ -28,6 +29,42 @@ export default function CadastroUsuario(){
             ...DadosCadastro, 
             [name]: value,
         })
+        console.log(value)
+    }
+
+    function formatarData(ev){
+        const { value, name } = ev.target
+        let arrData = value.split('-')
+        let dataFormatada = `${arrData[2]}/${arrData[1]}/${arrData[0]}`
+
+    }
+    function onSenhaValida(ev){
+        setIsSenhaValida(false)
+        const { value, name } = ev.target
+
+        let isSenhaIntegra = Utils.verificarIntegridadeSenha(value)
+        if(isSenhaIntegra){
+            setIsSenhaValida(true)
+        }else{
+            setIsSenhaValida(false)
+        }
+
+        setDadosCadastro({
+            ...DadosCadastro,
+            [name]: value,
+        })
+    }
+
+    function onSenhaIgual(ev){
+        setIsSenhaIgual(false)
+        const { value, name } = ev.target
+        let isSenhaIgual = Utils.verificarIgualdadeSenha(DadosCadastro.senha, value)
+
+        if(isSenhaIgual){
+            setIsSenhaIgual(true)
+        }else{
+            setIsSenhaIgual(false)
+        }
     }
 
     function onSubmit(ev){
@@ -49,16 +86,16 @@ export default function CadastroUsuario(){
             return
         }
         
-        api.post('usuario/noivos/novoUsuario', DadosCadastro)
-            .then((response) => {
-                setIsCarregandoDados(false)
-                setToken(response.data)
-                history.push('/aguardando-liberacao')
-            }).catch((error) => {
-                setIsUsuarioExistente(true)
-                setIsCarregandoDados(false)
-                window.scrollTo(0,0)
-            })
+        // api.post('usuario/noivos/novoUsuario', DadosCadastro)
+        //     .then((response) => {
+        //         setIsCarregandoDados(false)
+        //         setToken(response.data)
+        //         history.push('/aguardando-liberacao')
+        //     }).catch((error) => {
+        //         setIsUsuarioExistente(true)
+        //         setIsCarregandoDados(false)
+        //         window.scrollTo(0,0)
+        //     })
     }
 
     return(
@@ -74,7 +111,7 @@ export default function CadastroUsuario(){
                     ? <CarregandoPlaceholder />
                 :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
-                    <form className="row g-3 needs-validation cadastro-usuario-form">
+                    <form className="row g-3 needs-validation cadastro-usuario-form" action="post">
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>
                                 <input type="text" className="form-control" id="validationCustom01"
@@ -99,22 +136,34 @@ export default function CadastroUsuario(){
                         <div className="col-md-6">
                             <label for="validationCustom03" className="form-label">Senha*</label>
                             <input type="password" className="form-control" id="validationSenha1" required 
-                                        name="senha" value={DadosCadastro.senha} onChange={onChange} />
+                                        name="senha" value={DadosCadastro.senha} onChange={onSenhaValida} />
                         </div>
 
                         <div className="col-md-6">
                             <label for="validationCustom05" className="form-label">Confirmar senha*</label>
                             <input type="password" className="form-control" id="validationSenha2" required 
-                                    onChange={validarSenha}/>
+                                    onChange={onSenhaIgual}/>
                         </div>
 
-                        {IsSenhaValida
-                            ? ""
-                            :<div class=".text-danger">
-                                <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br> 
-                                pelo menos, uma letra maiúscula e um número!</p>
-                            </div>
-                        }
+                        <div className="col-md-6">
+                            {IsSenhaValida
+                                ? ""
+                                : <div className=".text-danger">
+                                    <p className="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e
+                                        incluir, <br></br>
+                                        pelo menos, uma letra maiúscula e um número!</p>
+                                </div>
+                            }
+                        </div>
+
+                        <div className="col-md-6">
+                            {IsSenhaIgual
+                                ? ""
+                                : <div className=".text-danger">
+                                    <p className="text-danger">*As senhas não são iguais!</p>
+                                </div>
+                            }
+                        </div>
 
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Cidade*</label>
@@ -164,9 +213,14 @@ export default function CadastroUsuario(){
 
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Casamos em:*</label>
-                            <InputMask className="form-control" id="validationCustom01" required
-                                        mask="99/99/9999" maskChar=" "
-                                        name="dataCasamento" value={DadosCadastro.dataCasamento} onChange={onChange}/>
+                            <div className="formField app-form-field formField--date" aria-labelledby="main_aside_date">
+                                <i className="svgIcon svgIcon__calendar formField__icon"></i>
+                                <input className="formField__input app-lead-form-date"
+                                       type="date" name="Fecha" id="main_aside_date"
+                                       placeholder="" autoComplete="off"
+                                       name="dataCasamento" value={DadosCadastro.dataCasamento} onChange={formatarData} required
+                                    />
+                                </div>
                         </div>
             
                         <label class="form-check-label" for="flexSwitchCheckDefault">Sou:</label>

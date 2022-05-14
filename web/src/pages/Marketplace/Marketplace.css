@@ -3,6 +3,10 @@
     justify-content: space-between;
 }
 
+.container__vitrine__marketplacce{
+    display: flex;
+    flex-direction: column;
+}
 .card-icon-placeholder{
     background-color: var(--color-cinza);
     width: 4rem;
@@ -57,7 +61,7 @@
     }
 }
 
-@media only screen and (min-width: 1400){
+@media only screen and (min-width: 1400px){
     .lista-produtos-marketplace{
         grid-template-columns: auto auto auto auto;
         justify-content: center;

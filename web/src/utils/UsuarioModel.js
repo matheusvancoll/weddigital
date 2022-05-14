@@ -14,7 +14,7 @@ module.exports = {
         is_CNPJ: false,
         numeroCNPJ: "",
         descricaoEmpresa: "",
-        nivelConta: "",
+        nivelConta: "1",
         is_CadastroPorConvite: false,
         idUsuarioConvite: "",
         tokenUsuarioConvite: ""

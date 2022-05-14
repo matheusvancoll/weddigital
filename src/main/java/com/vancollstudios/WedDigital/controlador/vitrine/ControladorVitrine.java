@@ -6,17 +6,21 @@ import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
+import com.vancollstudios.WedDigital.repositorio.vitrine.RepositorioVitrine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
 public class ControladorVitrine {
+
+    private final int LIMITE_ORCAMENTO_FREE = 5;
+    private final int NIVEL_CONTA_FREE = 1;
 
     @Autowired
     RepositorioProfissional repositorioProfissional;
@@ -24,22 +28,31 @@ public class ControladorVitrine {
     @Autowired
     RepositorioUsuario repositorioUsuario;
 
+    @Autowired
+    RepositorioVitrine repositorioVitrine;
+
     @GetMapping(path = "/api/profissionais/listarTodos/")
     public Collection<DadosResumoProfissionaisDTO> obterListaProfissionais(){
         Collection<DadosResumoProfissionaisDTO> dadosResumoProfissionaisDTO = new ArrayList<>();
 
-        Iterable<Profissional> listaProfisisonais = repositorioProfissional.findAll();
+        Collection<Profissional> listaProfisisonais = repositorioVitrine.listarProfissionaisPorNivelConta();
+
         for (Profissional profissional : listaProfisisonais){
-            DadosResumoProfissionaisDTO dadosProfissional = new DadosResumoProfissionaisDTO();
-            dadosProfissional.setIdProfissional(profissional.getIdProfissional());
-            dadosProfissional.setNomeEmpresa(profissional.getNomeEmpresa());
-            dadosProfissional.setCidade(profissional.getCidade());
-            dadosProfissional.setEstado(profissional.getEstado());
-            dadosProfissional.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
-            dadosProfissional.setClassificacao(profissional.getClassificacao());
-            dadosProfissional.setSegmento(profissional.getSegmento());
-            dadosProfissional.setValorMinimo(profissional.getValorMinimo());
-            dadosResumoProfissionaisDTO.add(dadosProfissional);
+            if(profissional.getNivelConta() == NIVEL_CONTA_FREE &&
+               profissional.getOrcamentosRecebidos() >= LIMITE_ORCAMENTO_FREE){
+                continue;
+            }else{
+                DadosResumoProfissionaisDTO dadosProfissional = new DadosResumoProfissionaisDTO();
+                dadosProfissional.setIdProfissional(profissional.getIdProfissional());
+                dadosProfissional.setNomeEmpresa(profissional.getNomeEmpresa());
+                dadosProfissional.setCidade(profissional.getCidade());
+                dadosProfissional.setEstado(profissional.getEstado());
+                dadosProfissional.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
+                dadosProfissional.setClassificacao(profissional.getClassificacao());
+                dadosProfissional.setSegmento(profissional.getSegmento());
+                dadosProfissional.setValorMinimo(profissional.getValorMinimo());
+                dadosResumoProfissionaisDTO.add(dadosProfissional);
+            }
         }
 
         return dadosResumoProfissionaisDTO;
@@ -83,6 +96,29 @@ public class ControladorVitrine {
         repositorioProfissional.save(profissional);
 
         return dadosResumoVitrineDTO;
+    }
+
+    @GetMapping(path = "/api/orcamento/solicitacao")
+    public ResponseEntity<String> solicitarOrcamentoVitrine(@RequestParam Integer idProfissional, @RequestParam Integer IdCliente){
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(IdCliente);
+        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findByidProfissional(idProfissional);
+
+        if(usuarioOptional == null || !usuarioOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not user");
+        }
+        if(ProfissionalOptional == null || !ProfissionalOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not prof");
+        }
+
+        Usuario usuario  = usuarioOptional.get();
+        Profissional profissional  = ProfissionalOptional.get();
+
+
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    }
+    public String ob(){
+//        orcamentos/solicitacao?idProfissional=${idProfissional}&idCliente=${idCliente}
+        return null;
     }
 
     @GetMapping(path = "/api/obterEmailUsuario/{idUsuario}")

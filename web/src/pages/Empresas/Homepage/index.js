@@ -7,6 +7,7 @@ import ImagemPanel from '../../../assets/panel.jpg'
 import ImagemAcessoria from '../../../assets/acessoria.jpg'
 import CardVantagensEmpresas from '../../../components/Homepage/CardVantagens/CardVantagensEmpresas';
 import CardServicosOferecidos from '../../../components/Homepage/CardVantagens/CardServicosOferecidos';
+import {Link} from "react-router-dom";
 
 export default function HomePage() {
     return (
@@ -19,14 +20,13 @@ export default function HomePage() {
                             <span className='text-roxo'>Sua empresa</span> <br></br>
                             <span className='text-preto'>vendendo para <br></br> 
                                                         noivos <span className='text-roxo'>reais</span></span>
-                            
                         </h1>
 
                         <h4 className='text-roxo'>
                             Tenha acesso a conteúdos exclusivos de estratégias de marketing das empresas de grande sucesso.
                         </h4>
 
-                        <a href='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</a>
+                        <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
                     </div>
                     <div className='home_one__imagem'>
                         <img src={ImagemWed}></img>
@@ -43,7 +43,7 @@ export default function HomePage() {
                         <CardVantagensEmpresas icon="fa-solid fa-file-contract" title="Feche mais contratos"
                                 description='Alavanque seu negócio fechando com noivos que acessam a plataforma'/>
                     </div>
-                    
+
                     <div className='home_cards line2'>
                         <CardVantagensEmpresas icon="fa-solid fa-arrow-trend-up" title="Cresça na velocidade digital"
                                     description='Não importa quanto tempo você tem de mercado, a internet potencializa sua marca 10x mais rápido'/>
@@ -66,7 +66,7 @@ export default function HomePage() {
 
                             <CardServicosOferecidos icon="fa-solid fa-graduation-cap"
                                 texto='Tenha acesso a conteúdos exclusivos em vídeo, áudio, PDF. Um passo a passo sobre estratégias de marketing.' />
-                            
+
                             <CardServicosOferecidos icon="fa-solid fa-chalkboard-user"
                                 texto='Um painel totalmente fácil de ser usado, te proporcionando uma experiência prática.' />
                         </div>
@@ -88,7 +88,7 @@ export default function HomePage() {
 
                             <CardServicosOferecidos icon="fa-solid fa-handshake"
                                 texto='Conheça profissionais com o mesmo propósito que o seu e troque experiências.' />
-                            
+
                             <CardServicosOferecidos icon="fa-solid fa-building-lock"
                                 texto='Seus dados estarão seguros na nossa base de dados.' />
                         </div>
@@ -98,7 +98,7 @@ export default function HomePage() {
                             Tudo isso na sua mão
                         </h2>
 
-                        <a href='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</a>
+                        <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
                     </div>
                 </div>
 

@@ -33,21 +33,65 @@ export default function Marketplace(){
             <Navbar />
             <div className='marketplace-corpo-produtos'>
                 <SidebarMarketplace />
+                <div className='container__vitrine__marketplacce'>
+                    <div>
+                        <div className="container-sm p-2">
+                            <nav aria-label="breadcrumb">
+                                <ol className="breadcrumb">
+                                    <li className="breadcrumb-item"><a href="/">Início</a></li>
+                                    <li className="breadcrumb-item active" aria-current="page">Busca</li>
+                                </ol>
+                            </nav>
+                        </div>
 
-                {IsCarregandoDados 
-                ? <>
-                    <div className='placeholder-lista-profissionais'>
-                        <CardAnuncioPlaceholder />
-                        <CardAnuncioPlaceholder />
-                        <CardAnuncioPlaceholder />
+                        <div className="container-sm">
+                            <div className="input-group rounded">
+                                <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search"
+                                       aria-describedby="search-addon"/>
+                                <span className="input-group-text border-0" id="search-addon">
+                        <i className="fas fa-search"></i>
+                    </span>
+                            </div>
+                        </div>
                     </div>
-                </>
-                :<>
-                    <div className='lista-produtos-marketplace'>
-                        {listaCardProfissionaisMarketplace}
+
+
+                    <div>
+                        {IsCarregandoDados
+                            ? <>
+                                <div className='placeholder-lista-profissionais'>
+                                    <CardAnuncioPlaceholder />
+                                    <CardAnuncioPlaceholder />
+                                    <CardAnuncioPlaceholder />
+                                </div>
+                            </>
+                            :<>
+                                <div className='lista-produtos-marketplace'>
+                                    {listaCardProfissionaisMarketplace}
+                                </div>
+                            </>
+                        }
                     </div>
-                </>
-                }
+
+
+                </div>
+
+
+
+                {/*{IsCarregandoDados */}
+                {/*? <>*/}
+                {/*    <div className='placeholder-lista-profissionais'>*/}
+                {/*        <CardAnuncioPlaceholder />*/}
+                {/*        <CardAnuncioPlaceholder />*/}
+                {/*        <CardAnuncioPlaceholder />*/}
+                {/*    </div>*/}
+                {/*</>*/}
+                {/*:<>*/}
+                {/*    <div className='lista-produtos-marketplace'>*/}
+                {/*        {listaCardProfissionaisMarketplace}*/}
+                {/*    </div>*/}
+                {/*</>*/}
+                {/*}*/}
             </div>
         </div>
     )

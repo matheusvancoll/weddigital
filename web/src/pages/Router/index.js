@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import UserContext from '../../api/userContext-api/userContext'
 import PrivateRouter from './privateRouter'
 
 import TermoDeUso from '../CondicoesLegais/TermoDeUso'
@@ -20,8 +19,6 @@ import Vitrine from '../Marketplace/Vitrine/Vitrine'
 import Teste from '../teste'
 
 export default function Router() {
-    const { token } = useContext(UserContext)
-
     return(
         <Switch>
             {/* EMPRESAS */}

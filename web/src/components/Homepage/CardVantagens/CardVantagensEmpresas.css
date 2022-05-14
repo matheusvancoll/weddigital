@@ -8,7 +8,7 @@
 }
 
 .card__icon{
-    font-size: 6rem;
+    font-size: 3rem;
     line-height: 2rem;
     margin-bottom: 0.75rem;
     color: var(--color-dourado);
@@ -19,8 +19,8 @@
 }
 
 .card_title{
-    font-size: 2.25rem;
+    font-size: 1.75rem;
 }
 .card_description{
-    font-size: 1.25rem;
+    font-size: 1rem;
 }

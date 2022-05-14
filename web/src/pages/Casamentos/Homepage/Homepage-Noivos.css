@@ -10,6 +10,7 @@
     margin: 7rem 2rem 4rem 2rem;
     font-size: 3rem;
     line-height: 3rem;
+    text-align: center;
 }
 
 .area1-description-h4{
@@ -47,6 +48,7 @@
 .area1-icons{
     margin: 7rem 0 3rem 0;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     font-size: 2rem;
 }
@@ -115,6 +117,10 @@
 
     .area1-description{
         width: 75%;
+    }
+
+    .area1-icons{
+        flex-direction: row;
     }
 
     .area2-part1, .area2-part2{

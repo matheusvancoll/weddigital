@@ -4,7 +4,6 @@ import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioNoivosDTO;
-//import com.vancollstudios.WedDigital.repositorio.casamentos.RepositorioCasamento;
 import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
@@ -17,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
 public class ControladorUsuario {
 

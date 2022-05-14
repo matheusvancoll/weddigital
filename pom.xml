@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vancollstudios</groupId>
 	<artifactId>WedDigital</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>Prod</version>
 	<name>WedDigital</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

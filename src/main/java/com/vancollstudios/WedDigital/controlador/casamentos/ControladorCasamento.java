@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
 public class ControladorCasamento {
 
     @Autowired
     RepositorioCasamento repositorioCasamento;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/api/casamento/{idUsuarios}")
     public Casamento consultarCasamentoPorIdUsuario(@PathVariable("idUsuarios") Integer idUsuario){
         ResponseEntity casamentoEncontrado = repositorioCasamento.findAllByIdUsuario(idUsuario)

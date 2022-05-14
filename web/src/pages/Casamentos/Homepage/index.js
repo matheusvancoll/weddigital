@@ -10,6 +10,7 @@ import IconDinheiro  from '../../../assets/icons/pagamento.png'
 import IconPlanejamento  from '../../../assets/icons/planejamento.png'
 import IconInspiracoes  from '../../../assets/icons/luminaria.png'
 import IconComunidade  from '../../../assets/icons/comunidade.png'
+import {Link} from "react-router-dom";
 
 export default function HomePage() {
     return (
@@ -25,7 +26,7 @@ export default function HomePage() {
                     <div className='area1-search'>
                         <div className='area1-description'>
                             <h4 className='text-roxo area1-description-h4'>Concorra a R$ 1.000 e aprenda tudo sobre o seu casamento com fornecedores de forma rápida e segura</h4>
-                            <a href='/buscar-profissional' className='teste'>LOCALIZAR FORNECEDORES</a>
+                            <Link to='/buscar-profissional' className='teste'>LOCALIZAR FORNECEDORES</Link>
                         </div>
                     </div>
 
@@ -46,7 +47,7 @@ export default function HomePage() {
                         <img src=''></img>
                         <h4 className='area2-h4'>R$ 1.000</h4>
                         <h4 className='area2-h4'>Todos os meses para você</h4>
-                        <a href='/'>QUERO PARTICIPAR</a>
+                        <Link to='/'>QUERO PARTICIPAR</Link>
                     </div>
 
                     <div className='area2-part2'>

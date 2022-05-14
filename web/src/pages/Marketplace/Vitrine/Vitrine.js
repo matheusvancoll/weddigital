@@ -42,7 +42,7 @@ export default function Vitrine(){
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Início</a></li>
-                        <li class="breadcrumb-item"><a href="buscar-profissionais">Busca</a></li>
+                        <li class="breadcrumb-item"><a href="/buscar-profissional">Busca</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Perfil</li>
                     </ol>
                 </nav>
@@ -78,9 +78,8 @@ export default function Vitrine(){
                     </div>
 
                     <div className="contato__vitrine">
-                        <CardDadosContato  
-                            numeroContato={DadosVitrine.numeroContato}
-                            emailContato={DadosVitrine.emailContato}
+                        <CardDadosContato
+                            idProfissional={idProfissionalURL}
                             descricaoEmpresa={DadosVitrine.descricaoEmpresa}
                             nomeEmpresa={DadosVitrine.nomeEmpresa}
                         />

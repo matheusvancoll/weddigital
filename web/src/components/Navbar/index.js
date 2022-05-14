@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import './Navbar.css'
 
 import UserContext from '../../api/userContext-api/userContext'
 
-import Logo from '../../assets/icon.png'
+import Logo from '../../assets/icon.ico'
 export default function Navbar(props) {
     const { token, setToken } = useContext(UserContext)
     const history = useHistory()
@@ -24,7 +24,7 @@ export default function Navbar(props) {
             {/* === LOGO ICON === */}
             <div className='navbar-logo-container'>
                 <img src={Logo} className='navbar-logo-img' ></img>
-                <a href='/' className='navbar-logo-name'>Wed Digital</a>
+                <Link to='/' className='navbar-logo-name'>Wed <br></br>Digital</Link>
             </div>
 
             {/* === CENTER === */}
@@ -32,11 +32,11 @@ export default function Navbar(props) {
                 {props.isAreaEmpresa
                 ?
                     <>
-                        <a href='/#inicio'>Início</a>
-                        <a href='#vantagens'>Vantagens</a>
-                        <a href='#servicos'>Serviços</a>
-                        <a href='#premios'>Prêmios</a>
-                        <a href='#planos'>Planos</a>
+                        <div className='mobile-hidden'>
+                            <a href='#vantagens'>Vantagens</a>
+                            <a href='#servicos'>Serviços</a>
+                            <a href='#premios'>Prêmios</a>
+                        </div>
                     </>
                 :
                     <> 
@@ -48,8 +48,8 @@ export default function Navbar(props) {
                         </div>
                         : tipoUsuario == 'noivos' 
                         ? <div>
-                            <a href='/perfil'>Meu Casamento</a>
-                            <a href='/buscar-profissionais'>Fornecedores</a>
+                            <Link to='/perfil'>Meu Casamento</Link>
+                            <Link to='/buscar-profissionais'>Fornecedores</Link>
                         </div>
                         : <div> </div>
                     }
@@ -64,14 +64,14 @@ export default function Navbar(props) {
                     {possuiUsuario
                         ? 
                             <>
-                                <a href='/empresas/perfil' id='btnLogin'>Perfil</a>
-                                <a href='/empresas' onClick={onSubmit}>Sair</a>
+                                <Link to='/empresas/perfil' id='btnLogin'>Perfil</Link>
+                                <Link to='/empresas' onClick={onSubmit}>Sair</Link>
                             </>
                         :
                             <>
                                 <div>
-                                    <a href='/empresas/cadastro' id='btnAreaEmpresa'>CADASTRO GRATIS</a>
-                                    <a href='/login' id='btnLoginEmpresa'>Login</a>
+                                    <Link to='/empresas/cadastro' id='btnAreaEmpresa'>CADASTRO GRATIS</Link>
+                                    <Link to='/login' id='btnLoginEmpresa'>Login</Link>
                                 </div>
                             </>
                         }
@@ -79,14 +79,14 @@ export default function Navbar(props) {
                 : 
                     <>
                         <div className={token ? "" : "isLogado"}>
-                            <a href={tipoUsuario == 'profissional' ? '/empresas/perfil' : '/perfil'} id='btnLogin'>Perfil</a>
-                            <a href='/' onClick={onSubmit}>Sair</a>
+                            <Link to={tipoUsuario == 'profissional' ? '/empresas/perfil' : '/perfil'} id='btnLogin'>Perfil</Link>
+                            <Link to='/' onClick={onSubmit}>Sair</Link>
                         </div>
 
                         <div className={token ? "isLogado" : ""}>
-                            <a href='/login' id='btnLogin'>Acessar</a>
-                            <a href='/cadastro' id='btnLogin'>Cadastro</a>
-                            <a href='/empresas'>Área Empresa</a>
+                            <Link to='/login' id='btnLogin'>Acessar</Link>
+                            <Link to='/cadastro' id='btnLogin'>Cadastro</Link>
+                            <Link to='/empresas'>Área Empresa</Link>
                         </div>
                     </>
                 }

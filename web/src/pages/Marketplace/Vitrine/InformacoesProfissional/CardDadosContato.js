@@ -1,21 +1,33 @@
-import React, { useState } from "react";
-import InputMask from 'react-input-mask';
-import VitrineModel from "../../../../utils/VitrineModel";
+import React, {useContext, useState} from "react";
+import api from "../../../../api";
+import CarregandoPlaceholder from "../../../../components/Modal/CarregandoPlaceholder";
+import UserContext from "../../../../api/userContext-api/userContext";
 
 export default function CardDadosContato(props){
+    const [ isCarregando, setIsCarregando ] = useState(false)
     const [ NomeNoiv, setNomeNoiv ] = useState('')
     const [ QtdConvidados, setQtdConvidados ] = useState('')
     const [ DataCasamento, setDataCasamento ] = useState('')
+    const { token } = useContext(UserContext)
 
-    let numero = props.numeroContato
-    let email = props.emailContato
+    let dadosToken = token.split('.')
     let descricao = props.descricaoEmpresa
     let nomeEmpresa = props.nomeEmpresa
-
+    let idProfissional = props.idProfissional
+    let idCliente = dadosToken[1]
 
     function enviarPedidoOrcamento(){
-        
-        console.log("TESTE SLOJD")
+        console.log("IDPROFISSIONAL: " + idProfissional)
+        console.log("IDCLIENTE: "+ idCliente)
+        if(idCliente != undefined && idProfissional != undefined){
+
+            api.get(`orcamento/solicitacao?idProfissional=${idProfissional}&idCliente=${idCliente}`)
+                .then((response) => {
+                    console.log("DEu ceerto")
+                }).catch((error) => {
+
+            })
+        }
     }
 
     function onChanceData(ev){
@@ -38,68 +50,60 @@ export default function CardDadosContato(props){
             <div class="card vitrine-informacoes__container" id="pedirOrcamento">
                 <h5 class="card-header">Sobre este profissional:</h5>
                 <div class="card-body">
-                    <label for="validationCustom01" className="form-label">Contato</label>
-                    <input class="form-control" type="text" value={numero} aria-label="Disabled input example" disabled readonly />
-                    <br></br>
-                    
-                    <label for="validationCustom01" className="form-label">Email</label>
-                    <input class="form-control" type="email" value={email} aria-label="Disabled input example" disabled readonly />
-                    <br></br>
+                    <label htmlFor="validationCustom01" className="form-label">Descrição da empresa</label>
+                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="4"
+                              value={descricao} aria-label="Disabled input example" disabled readOnly/>
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Solicitação de orçamento</h5>
+                        </div>
 
-                    <label for="validationCustom01" className="form-label">Descrição da empresa</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                    value={descricao} aria-label="Disabled input example" disabled readonly />
-                    <br></br>
+                        <div className="modal-body">
+                            <label htmlFor="validationCustom01" className="label-pedido-orcamento">Seu nome:</label>
+                            <input className="form-control input-pedido-orcamento"
+                                   type="text" value={NomeNoiv}
+                                   onChange={onNomeNoiv}
+                            />
 
-                    <div>
-                        <button type="button" class="btn color-roxo" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Pedir orcamento grátis
-                        </button>
-                    </div>
+                            <label htmlFor="validationCustom01" className="label-pedido-orcamento">Data do
+                                casamento:</label>
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Solicitação de orçamento</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                
-                                <div class="modal-body">
-                                    <label for="validationCustom01" className="label-pedido-orcamento">Seu nome:</label>
-                                    <input class="form-control input-pedido-orcamento" 
-                                            type="text"
-                                            value={NomeNoiv}
-                                            onChange={onNomeNoiv}
-                                            />
-                                    
-                                    <label for="validationCustom01" className="label-pedido-orcamento">Data do casamento:</label>
-                                    <InputMask className="form-control" id="validationCustom01" required
-                                        mask="99/99/9999" maskChar=" "
-                                        name="numeroContato"
-                                        value={DataCasamento}
-                                        onChange={onChanceData}
-                                        />
-                                        
-                                    <label for="validationCustom01" className="label-pedido-orcamento">Quantidade de convidados:</label>
-                                    <input class="form-control input-pedido-orcamento" 
-                                            type="text"
-                                            value={QtdConvidados}
-                                            onChange={onQtdConvidados}
-                                            />
+                            <div className="">
 
-                                    <label for="validationCustom01" className="form-label">Sua mensagem ficará assim:</label>
-                                    
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" aria-label="Disabled input example" disabled readonly
-                                    value={`Olá ${nomeEmpresa}, me chamo ${NomeNoiv} e gostaria de obter um orçamento para meu casamento previsto para: ${DataCasamento}. Com ${QtdConvidados} convidados`} />
-
-                                </div>
-                                
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn color-roxo" onClick={enviarPedidoOrcamento}>Solicitar</button>
+                            </div>
+                            <div className="app-form-control formControl  leadForm__asideFormControl">
+                                <div className="formField app-form-field formField--date"
+                                     aria-labelledby="main_aside_date">
+                                    <i className="svgIcon svgIcon__calendar formField__icon"></i>
+                                    <input type="date" name="Fecha"
+                                           id="main_aside_date" value=""
+                                           placeholder="" autoComplete="off"
+                                           className="formField__input app-lead-form-date"
+                                    />
                                 </div>
                             </div>
+
+                            <label htmlFor="validationCustom01" className="label-pedido-orcamento">Quantidade de
+                                convidados:</label>
+                            <input className="form-control input-pedido-orcamento"
+                                   type="text"
+                                   value={QtdConvidados}
+                                   onChange={onQtdConvidados}
+                            />
+
+                            <label htmlFor="validationCustom01" className="form-label">Sua mensagem ficará
+                                assim:</label>
+
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
+                                      aria-label="Disabled input example" disabled readOnly
+                                      value={`Olá ${nomeEmpresa}, me chamo ${NomeNoiv} e gostaria de obter um orçamento para meu casamento previsto para: ${DataCasamento}. Com ${QtdConvidados} convidados`}/>
+
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn color-roxo" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" onClick={enviarPedidoOrcamento}>
+                                Pedir orcamento grátis
+                            </button>
                         </div>
                     </div>
                 </div>

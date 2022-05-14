@@ -12,6 +12,7 @@ import CadastroInvalido from "../../../components/Modal/CadastroInvalido";
 import Utils from "../../../utils/Utils";
 import CarregandoPlaceholder from "../../../components/Modal/CarregandoPlaceholder";
 
+
 export default function CadastroUsuario(){
     const history = useHistory()
     const { setToken } = useContext(UserContext)
@@ -21,6 +22,7 @@ export default function CadastroUsuario(){
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
+    const [IsSenhaIgual, setIsSenhaIgual] = useState(true)
     const [IsWhatsapp, setIsWhatsapp] = useState(false)
     const [IsCNPJ, setIsCNPJ] = useState(false)
     const form = useRef();
@@ -32,7 +34,37 @@ export default function CadastroUsuario(){
             ...DadosCadastro, 
             [name]: value,
         })
-        console.log("nome: " + name + "Valor: " + value)
+    }
+
+    function onSenhaValida(ev){
+        ev.preventDefault()
+        setIsSenhaValida(false)
+        const { value, name } = ev.target
+
+        let isSenhaIntegra = Utils.verificarIntegridadeSenha(value)
+        if(isSenhaIntegra){
+            setIsSenhaValida(true)
+        }else{
+            setIsSenhaValida(false)
+        }
+
+        setDadosCadastro({
+            ...DadosCadastro,
+            [name]: value,
+        })
+    }
+
+    function onSenhaIgual(ev){
+        ev.preventDefault()
+        setIsSenhaIgual(false)
+        const { value, name } = ev.target
+        let isSenhaIgual = Utils.verificarIgualdadeSenha(DadosCadastro.senha, value)
+
+        if(isSenhaIgual){
+            setIsSenhaIgual(true)
+        }else{
+            setIsSenhaIgual(false)
+        }
     }
 
     function enviarEmailConfirmacaoCadastro(e){
@@ -47,17 +79,10 @@ export default function CadastroUsuario(){
         })
     }
 
-
     function onSubmit(ev){
+        console.log("Chegou no ev")
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
-
-        if(!validarSenha()){
-            console.log("TRAVOU")
-            setIsSenhaValida(false)
-            setIsCarregandoDados(false)
-            return
-        }
 
         let termosUso = document.getElementById('invalidCheck').checked
         let inputEmail = document.getElementById('exampleInputEmail1').value
@@ -91,17 +116,17 @@ export default function CadastroUsuario(){
             })
         }
 
-        api.post('usuario/empresa/novoUsuario', DadosCadastro)
-            .then((response) => {
-                setIsCarregandoDados(false)
-                setToken(response.data)
-                history.push('/empresas/perfil')
-            }).catch((error) => {
-                setIsUsuarioExistente(true)
-                setIsCarregandoDados(false)
-                window.scrollTo(0,0)
-                return
-            })
+        // api.post('usuario/empresa/novoUsuario', DadosCadastro)
+        //     .then((response) => {
+        //         setIsCarregandoDados(false)
+        //         setToken(response.data)
+        //         history.push('/empresas/perfil')
+        //     }).catch((error) => {
+        //         setIsUsuarioExistente(true)
+        //         setIsCarregandoDados(false)
+        //         window.scrollTo(0,0)
+        //         return
+        //     })
         
         // enviarEmailConfirmacaoCadastro(ev)
     }
@@ -143,22 +168,32 @@ export default function CadastroUsuario(){
                         <div className="col-md-6">
                             <label for="validationCustom03" className="form-label">Senha*</label>
                             <input type="password" className="form-control" id="validationSenha1" required 
-                                        name="senha" value={DadosCadastro.senha} onChange={onChange} />
+                                        name="senha" value={DadosCadastro.senha} onChange={onSenhaValida} />
                         </div>
 
                         <div className="col-md-6">
                             <label for="validationCustom05" className="form-label">Confirmar senha*</label>
                             <input type="password" className="form-control" id="validationSenha2" required 
-                                    onChange={validarSenha}/>
+                                    onChange={onSenhaIgual}/>
+                        </div>
+                        <div className="col-md-6">
+                            {IsSenhaValida
+                                ? ""
+                                :<div class=".text-danger">
+                                    <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br>
+                                        pelo menos, uma letra maiúscula e um número!</p>
+                                </div>
+                            }
                         </div>
 
-                        {IsSenhaValida
-                            ? ""
-                            :<div class=".text-danger">
-                                <p class="text-danger">*Sua senha deve ter entre 8 e 36 caracteres e incluir, <br></br> 
-                                pelo menos, uma letra maiúscula e um número!</p>
-                            </div>
-                        }
+                        <div className="col-md-6">
+                            {IsSenhaIgual
+                                ? ""
+                                : <div className=".text-danger">
+                                    <p className="text-danger">*As senhas não são iguais!</p>
+                                </div>
+                            }
+                        </div>
 
                         <div className="col-md-12">
                             <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
@@ -308,7 +343,9 @@ export default function CadastroUsuario(){
     )
 }
 
-function validarSenha(){
+function validarIgual(){
+    let isSenhaIntegra = Utils.verificarIntegridadeSenha(senha1)
+
     let senha1 = document.getElementById('validationSenha1').value
     let senha2 = document.getElementById('validationSenha2').value
     let isSenhaIgual = Utils.verificarIgualdadeSenha(senha1, senha2)

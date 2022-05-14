@@ -14,13 +14,6 @@ export default function CardProdutoMarketplace(props){
     let casamentosBemSucedidos = props.dadosProfissionais.casamentosBemSucedidos
     let idProfissional = props.dadosProfissionais.idProfissional
 
-    // if(classificacao === 0 || classificacao == null || classificacao == undefined){ classificacao = "✩✩✩✩✩" }
-    // if(classificacao >= 1){ classificacao = "⭐✩✩✩✩" }
-    // if(classificacao >= 2){ classificacao = "⭐⭐✩✩✩" }
-    // if(classificacao >= 3){ classificacao = "⭐⭐⭐✩✩" }
-    // if(classificacao >= 4){ classificacao = "⭐⭐⭐⭐☆" }
-    // if(classificacao == 5){ classificacao = "⭐⭐⭐⭐⭐" }
-
     return(
         <div className='card-anuncio-marketplace-container'>
             <img src={Imagem} class="card-img-top image-profissional" alt="..." />

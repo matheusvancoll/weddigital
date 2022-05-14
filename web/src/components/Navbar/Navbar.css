@@ -3,7 +3,7 @@
     height: 4rem;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -22,16 +22,19 @@
     color: var(--color-roxo);
 }
 .navbar-logo-img{
-    margin: 1rem;
-    width: 50px;
-    height: 50px;
+    width: 3rem;
+    height: 3rem;
 }
 .navbar-logo-name{
     font-family: var(--font-logo-WedDigital);
-    font-size: 2.25rem;
-    line-height: 1.75rem;
+    font-size: 1rem;
+    line-height: 1rem;
 }
 
+/* ==== CENTER ===== */
+.mobile-hidden{
+    display: none;
+}
 
 /* ===== LINKS ===== */
 .navbar-links a{
@@ -46,7 +49,7 @@
 
 /* ===== LOGIN ===== */
 .navbar-login{
-    margin-right: 0.8rem;
+    margin-right: 0.5rem;
 }
 .navbar-login a{
     text-decoration: none;
@@ -55,7 +58,7 @@
     transition: 0.5s;
 }
 .navbar-login a:hover{
-    padding: 0.25rem;
+    padding: 0.15rem;
     border-radius: 5px;
     font-weight: 600;
     background-color: var(--color-roxo);
@@ -65,13 +68,13 @@
     transition: 0.5s;
 }
 #btnLogin{
-    padding-right: 0.4rem;
+    padding-right: 0.5rem;
     border-right: 1px solid black;
 }
 
 #btnAreaEmpresa{
     margin: 1rem;
-    padding: 0.5rem;
+    padding: 0.20rem;
     border-radius: 5px;
     font-weight: 600;
     background-color: var(--color-roxo);
@@ -82,13 +85,13 @@
 }
 
 #btnAreaEmpresa:hover{
-    padding: 0.75rem 1rem;
+    padding: 0.20rem 1rem;
 }
 
 #btnLoginEmpresa{
     text-decoration: none;
     color: var(--color-roxo);
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     border-left: 1px solid var(--color-roxo);
 }
 
@@ -103,5 +106,14 @@
 
 
 @media only screen and (min-width: 768px) {
+    .navbar-container{
+        justify-content: space-around;
+    }
+    .navbar-logo-name{
+        font-size: 1.5rem;
+    }
 
+    .mobile-hidden{
+        display: block;
+    }
 }
