@@ -4,7 +4,6 @@ import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioNoivosDTO;
-import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
@@ -29,8 +28,6 @@ public class ControladorUsuario {
     @Autowired
     RepositorioNoivos repositorioNoivos;
 
-    @Autowired
-    RepositorioOrcamento repositorioOrcamento;
 
     @Autowired
     PasswordEncoder passwordEncoder;

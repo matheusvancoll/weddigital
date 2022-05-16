@@ -13,15 +13,21 @@ export default function CardDadosContato(props){
     let dadosToken = token.split('.')
     let descricao = props.descricaoEmpresa
     let nomeEmpresa = props.nomeEmpresa
-    let idProfissional = props.idProfissional
-    let idCliente = dadosToken[1]
+    let idProfissionalReq = props.idProfissional
+    let idClienteReq = dadosToken[1]
 
     function enviarPedidoOrcamento(){
-        console.log("IDPROFISSIONAL: " + idProfissional)
-        console.log("IDCLIENTE: "+ idCliente)
-        if(idCliente != undefined && idProfissional != undefined){
+        let corpoMensagemReq = document.getElementById('exampleFormControlTextareaCorpoMensagem').value
+         const dadosPedidoOrcamento = {
+            idProfissional: idProfissionalReq,
+            idCliente: idClienteReq,
+            corpoMensagem: corpoMensagemReq
+         }
 
-            api.get(`orcamento/solicitacao?idProfissional=${idProfissional}&idCliente=${idCliente}`)
+        console.log(dadosPedidoOrcamento)
+
+        if(idClienteReq != undefined && idProfissionalReq != undefined){
+            api.post('orcamento/solicitacao', dadosPedidoOrcamento)
                 .then((response) => {
                     console.log("DEu ceerto")
                 }).catch((error) => {
@@ -32,7 +38,9 @@ export default function CardDadosContato(props){
 
     function onChanceData(ev){
         const { value, name } = ev.target
-        setDataCasamento(value)
+        let data = value.split('-')
+        let dataFormatada = `${data[2]}/${data[1]}/${data[0]}`
+        setDataCasamento(dataFormatada)
     }
 
     function onNomeNoiv(ev){
@@ -65,22 +73,10 @@ export default function CardDadosContato(props){
                                    onChange={onNomeNoiv}
                             />
 
-                            <label htmlFor="validationCustom01" className="label-pedido-orcamento">Data do
-                                casamento:</label>
+                            <label htmlFor="validationCustom01" className="label-pedido-orcamento">Data do casamento:</label>
 
-                            <div className="">
-
-                            </div>
-                            <div className="app-form-control formControl  leadForm__asideFormControl">
-                                <div className="formField app-form-field formField--date"
-                                     aria-labelledby="main_aside_date">
-                                    <i className="svgIcon svgIcon__calendar formField__icon"></i>
-                                    <input type="date" name="Fecha"
-                                           id="main_aside_date" value=""
-                                           placeholder="" autoComplete="off"
-                                           className="formField__input app-lead-form-date"
-                                    />
-                                </div>
+                            <div>
+                                <input type="date" autoComplete="off" id="dateCasamentoPedido" onChange={onChanceData} />
                             </div>
 
                             <label htmlFor="validationCustom01" className="label-pedido-orcamento">Quantidade de
@@ -94,13 +90,13 @@ export default function CardDadosContato(props){
                             <label htmlFor="validationCustom01" className="form-label">Sua mensagem ficará
                                 assim:</label>
 
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"
+                            <textarea className="form-control" id="exampleFormControlTextareaCorpoMensagem" rows="3"
                                       aria-label="Disabled input example" disabled readOnly
                                       value={`Olá ${nomeEmpresa}, me chamo ${NomeNoiv} e gostaria de obter um orçamento para meu casamento previsto para: ${DataCasamento}. Com ${QtdConvidados} convidados`}/>
 
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn color-roxo" data-bs-toggle="modal"
+                            <button type="button" className="btn color-roxo"
                                     data-bs-target="#exampleModal" onClick={enviarPedidoOrcamento}>
                                 Pedir orcamento grátis
                             </button>

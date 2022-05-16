@@ -1,9 +1,14 @@
 package com.vancollstudios.WedDigital.controlador.vitrine;
 
 import com.vancollstudios.WedDigital.controlador.vitrine.DTO.DadosResumoProfissionaisDTO;
+import com.vancollstudios.WedDigital.model.chat.Mensagem;
+import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
+import com.vancollstudios.WedDigital.model.orcamentos.Orcamento;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoVitrineDTO;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
+import com.vancollstudios.WedDigital.repositorio.chat.RepositorioMensagens;
+import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import com.vancollstudios.WedDigital.repositorio.vitrine.RepositorioVitrine;
@@ -11,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+
 @CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
 public class ControladorVitrine {
@@ -30,6 +36,12 @@ public class ControladorVitrine {
 
     @Autowired
     RepositorioVitrine repositorioVitrine;
+
+    @Autowired
+    RepositorioOrcamento repositorioOrcamento;
+
+    @Autowired
+    RepositorioMensagens repositorioMensagens;
 
     @GetMapping(path = "/api/profissionais/listarTodos/")
     public Collection<DadosResumoProfissionaisDTO> obterListaProfissionais(){
@@ -98,10 +110,10 @@ public class ControladorVitrine {
         return dadosResumoVitrineDTO;
     }
 
-    @GetMapping(path = "/api/orcamento/solicitacao")
-    public ResponseEntity<String> solicitarOrcamentoVitrine(@RequestParam Integer idProfissional, @RequestParam Integer IdCliente){
-        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(IdCliente);
-        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findByidProfissional(idProfissional);
+    @PostMapping(path = "/api/orcamento/solicitacao")
+    public ResponseEntity<String> solicitarOrcamentoVitrine(@RequestBody DadosResumoOrcamentoDTO dadosResumoOrcamentoDTO){
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(dadosResumoOrcamentoDTO.getIdCliente());
+        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findByidProfissional(dadosResumoOrcamentoDTO.getIdProfissional());
 
         if(usuarioOptional == null || !usuarioOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not user");
@@ -112,14 +124,28 @@ public class ControladorVitrine {
 
         Usuario usuario  = usuarioOptional.get();
         Profissional profissional  = ProfissionalOptional.get();
+        Orcamento orcamento = new Orcamento();
+        Mensagem mensagem = new Mensagem();
 
+        orcamento.setIdProfissional(profissional.getIdProfissional());
+        orcamento.setIdCliente(usuario.getIdUsuario());
+        mensagem.setIdProfissional(profissional.getIdProfissional());
+        mensagem.setIdCliente(usuario.getIdUsuario());
+        mensagem.setCorpoMensagem(dadosResumoOrcamentoDTO.getCorpoMensagem());
+
+        Long datetime = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(datetime);
+        mensagem.setDataEnvioMensagem(timestamp);
+
+        profissional.setOrcamentosRecebidos(profissional.getOrcamentosRecebidos()+1);
+
+        repositorioOrcamento.save(orcamento);
+        repositorioMensagens.save(mensagem);
+        repositorioProfissional.save(profissional);
 
         return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
-    public String ob(){
-//        orcamentos/solicitacao?idProfissional=${idProfissional}&idCliente=${idCliente}
-        return null;
-    }
+
 
     @GetMapping(path = "/api/obterEmailUsuario/{idUsuario}")
     public String obterEmailUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario){

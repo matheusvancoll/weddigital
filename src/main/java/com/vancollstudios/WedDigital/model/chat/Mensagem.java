@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "DADOS_CHAT")
 public class Mensagem {
@@ -11,13 +13,17 @@ public class Mensagem {
     private Integer idMensagem;
 
     @Column
-    private Integer idProfissionall;
+    private Integer idProfissional;
 
     @Column
-    Integer idCliente;
+    private Integer idCliente;
 
     @Column
-    String corpoMensagem;
+    private String corpoMensagem;
+
+    @Column
+    private Timestamp dataEnvioMensagem;
+
 
     public Integer getIdMensagem() {
         return idMensagem;
@@ -27,12 +33,12 @@ public class Mensagem {
         this.idMensagem = idMensagem;
     }
 
-    public Integer getIdProfissionall() {
-        return idProfissionall;
+    public Integer getIdProfissional() {
+        return idProfissional;
     }
 
-    public void setIdProfissionall(Integer idProfissionall) {
-        this.idProfissionall = idProfissionall;
+    public void setIdProfissional(Integer idProfissional) {
+        this.idProfissional = idProfissional;
     }
 
     public Integer getIdCliente() {
@@ -49,5 +55,13 @@ public class Mensagem {
 
     public void setCorpoMensagem(String corpoMensagem) {
         this.corpoMensagem = corpoMensagem;
+    }
+
+    public Timestamp getDataEnvioMensagem() {
+        return dataEnvioMensagem;
+    }
+
+    public void setDataEnvioMensagem(Timestamp dataEnvioMensagem) {
+        this.dataEnvioMensagem = dataEnvioMensagem;
     }
 }
