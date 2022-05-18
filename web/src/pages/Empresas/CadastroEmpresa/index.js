@@ -116,17 +116,17 @@ export default function CadastroUsuario(){
             })
         }
 
-        // api.post('usuario/empresa/novoUsuario', DadosCadastro)
-        //     .then((response) => {
-        //         setIsCarregandoDados(false)
-        //         setToken(response.data)
-        //         history.push('/empresas/perfil')
-        //     }).catch((error) => {
-        //         setIsUsuarioExistente(true)
-        //         setIsCarregandoDados(false)
-        //         window.scrollTo(0,0)
-        //         return
-        //     })
+         api.post('usuario/empresa/novoUsuario', DadosCadastro)
+             .then((response) => {
+                 setIsCarregandoDados(false)
+                 setToken(response.data)
+                 history.push('/empresas/perfil')
+             }).catch((error) => {
+                 setIsUsuarioExistente(true)
+                 setIsCarregandoDados(false)
+                 window.scrollTo(0,0)
+                 return
+             })
         
         // enviarEmailConfirmacaoCadastro(ev)
     }

@@ -6,7 +6,7 @@ export default function ContactUs() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-    emailjs.sendForm('service_dbbp6yf', 'template_44kjgsh', form.current, 'nRkUn8RqboquqFSTd')
+    emailjs.sendForm('service_5tqqlsa', 'template_x9le1nm', form.current, 'XKOIdqt9WWgiZGPAc')
       .then((result) => {
           alert("DEU BOM")
           console.log(result.text);
