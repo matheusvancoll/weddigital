@@ -13,13 +13,16 @@ public class StatusPontuacao {
     private Integer idPontuacao;
 
     @Column
-    private String nivelNome;
+    private String statusNome;
 
     @Column
     private Integer pontoMinimo;
 
     @Column
     private Integer pontoMaximo;
+
+    @Column
+    private String proximoNivel;
 
     public Integer getIdPontuacao() {
         return idPontuacao;
@@ -29,12 +32,12 @@ public class StatusPontuacao {
         this.idPontuacao = idPontuacao;
     }
 
-    public String getNivelNome() {
-        return nivelNome;
+    public String getStatusNome() {
+        return statusNome;
     }
 
-    public void setNivelNome(String nivelNome) {
-        this.nivelNome = nivelNome;
+    public void setStatusNome(String statusNome) {
+        this.statusNome = statusNome;
     }
 
     public Integer getPontoMinimo() {
@@ -51,5 +54,13 @@ public class StatusPontuacao {
 
     public void setPontoMaximo(Integer pontoMaximo) {
         this.pontoMaximo = pontoMaximo;
+    }
+
+    public String getProximoNivel() {
+        return proximoNivel;
+    }
+
+    public void setProximoNivel(String proximoNivel) {
+        this.proximoNivel = proximoNivel;
     }
 }

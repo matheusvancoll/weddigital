@@ -12,9 +12,12 @@ import Logo from '../../../assets/avatar.png'
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
 import FormFAQProfissional from '../../../components/Perfil//Empresas/FormFAQProfissional';
+import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
+import StatusModel from "../../../utils/statusNivelModel";
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
+    const [ DadosStatusProfissional, setDadosStatusProfissional ] = useState(StatusModel.StatusNivelProfissional)
     const [ IsDadosInvalido, setIsDadosInvalido ] = useState(false)
     const [ TabLocation, setTabLocation ] = useState("Resumo")
     const [ IsCarregando, setIsCarregando ] = useState(true)
@@ -46,6 +49,18 @@ export default function Perfil() {
         }).catch(({error}) => {
             setIsCarregando(false)
             setIsDadosInvalido(true)
+        })
+
+
+        api.get(`usuario/empresa/obterDadosPontuacao/${idUsuario}`)
+            .then(({data}) => {
+                console.log("STATUS")
+                console.log(data)
+                setDadosStatusProfissional(data)
+                setIsCarregando(false)
+                //eslint-disable-next-line react-hooks/exhaustive-deps
+            }).catch(({error}) => {
+            setIsCarregando(false)
         })
     }, [])
     
@@ -163,6 +178,14 @@ export default function Perfil() {
                                 <p><FormFAQProfissional /></p>
                             </div>
                             :''}
+
+
+                            {TabLocation == 'conquitas' ?
+                                <div >
+                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                                </div>
+                                :''
+                            }
                         </>
                     </>
                     }

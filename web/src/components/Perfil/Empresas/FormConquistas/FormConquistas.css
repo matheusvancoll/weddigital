@@ -1,0 +1,18 @@
+.progresso-casamentos{
+    width: 97%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.progresso-casamentos-left{
+    margin-right: 3rem;
+}
+
+.progress{
+    height: 2rem;
+}
+
+.progresso-casamentos-right{
+    margin-left: 3rem;
+}

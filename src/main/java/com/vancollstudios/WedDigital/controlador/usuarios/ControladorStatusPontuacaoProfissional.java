@@ -8,6 +8,7 @@ import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacao;
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
+import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ import java.util.Random;
 @CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
 public class ControladorStatusPontuacaoProfissional {
+
+    @Autowired
+    RepositorioUsuario repositorioUsuario;
 
     @Autowired
     RepositorioProfissional repositorioProfissional;
@@ -41,29 +45,32 @@ public class ControladorStatusPontuacaoProfissional {
     }
 
 
-
     @GetMapping(path = "/api/usuario/empresa/obterDadosPontuacao/{idUsuario}")
     public ResponseEntity<DadosResumoStatusPontuacaoDTO> obterDadosResumoStatusPontuacaoPorIdProfissional(@PathVariable("idUsuario") Integer idUsuario){
         DadosResumoStatusPontuacaoDTO dadosStatusDTO = new DadosResumoStatusPontuacaoDTO();
         StatusPontuacao statusPontuacao = new StatusPontuacao();
-
         Profissional profissional = new Profissional();
+        Usuario usuario = new Usuario();
+        String nivelConta = "";
 
-        ResponseEntity dadosProfissional = repositorioProfissional.findByidProfissional(idUsuario)
+        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
-        if(dadosProfissional != null && dadosProfissional.getBody() != null){
-            profissional = (Profissional) dadosProfissional.getBody();
-            String nivelConta = "";
 
-            if(profissional.getNivelConta() > 1){
+        ResponseEntity dadosProfissinal = repositorioProfissional.findAllByIdUsuario(idUsuario)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+        if(dadosUsuario != null && dadosUsuario.getBody() != null){
+            usuario = (Usuario) dadosUsuario.getBody();
+            profissional = (Profissional) dadosProfissinal.getBody();
+
+            if(usuario.getIs_Profissional() && (profissional.getIdUsuario() == usuario.getIdUsuario())){
                 statusPontuacao = repositorioStatusPontuacaoProfissional.obterStatusPontuacaoPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
 
-                dadosStatusDTO.setIdPontuacao(statusPontuacao.getIdPontuacao());
-                dadosStatusDTO.setPontoMinimo(statusPontuacao.getPontoMinimo());
-                dadosStatusDTO.setPontoMaximo(statusPontuacao.getPontoMaximo());
-                dadosStatusDTO.setNumeroCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
-
+                if(profissional.getNivelConta() == 1) {
+                    nivelConta = "Bronze";
+                }
                 if(profissional.getNivelConta() == 2){
                     nivelConta = "Prata";
                 }
@@ -71,12 +78,18 @@ public class ControladorStatusPontuacaoProfissional {
                     nivelConta = "Ouro";
                 }
 
-                dadosStatusDTO.setNivelStatusNome(statusPontuacao.getNivelNome());
+                dadosStatusDTO.setIdPontuacao(statusPontuacao.getIdPontuacao());
+                dadosStatusDTO.setPontoMinimo(statusPontuacao.getPontoMinimo());
+                dadosStatusDTO.setPontoMaximo(statusPontuacao.getPontoMaximo());
+                dadosStatusDTO.setNumeroCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
+                dadosStatusDTO.setNivelContaNome(nivelConta);
+                dadosStatusDTO.setNivelStatusNome(statusPontuacao.getStatusNome());
+                dadosStatusDTO.setProximoNivel(statusPontuacao.getProximoNivel());
             }else{
-                nivelConta = "Bronze";
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
-
-            dadosStatusDTO.setNivelContaNome(nivelConta);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         return ResponseEntity.ok().body(dadosStatusDTO);

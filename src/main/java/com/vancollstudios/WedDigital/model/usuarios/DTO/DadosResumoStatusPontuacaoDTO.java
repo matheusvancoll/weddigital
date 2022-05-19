@@ -7,6 +7,7 @@ public class DadosResumoStatusPontuacaoDTO {
     private Integer pontoMinimo;
     private Integer pontoMaximo;
     private Integer numeroCasamentosBemSucedidos;
+    private String proximoNivel;
 
     public Integer getIdPontuacao() {
         return idPontuacao;
@@ -56,5 +57,13 @@ public class DadosResumoStatusPontuacaoDTO {
 
     public void setPontoMaximo(Integer pontoMaximo) {
         this.pontoMaximo = pontoMaximo;
+    }
+
+    public String getProximoNivel() {
+        return proximoNivel;
+    }
+
+    public void setProximoNivel(String proximoNivel) {
+        this.proximoNivel = proximoNivel;
     }
 }
