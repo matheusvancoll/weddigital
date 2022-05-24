@@ -12,6 +12,7 @@
     "react": "^18.0.0",
     "react-currency-input-field": "^3.6.4",
     "react-dom": "^18.0.0",
+    "react-helmet": "^6.1.0",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",

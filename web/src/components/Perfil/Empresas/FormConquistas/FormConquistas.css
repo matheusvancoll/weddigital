@@ -5,7 +5,17 @@
     justify-content: space-between;
 }
 
-.progresso-casamentos-left{
+.progresso-casamentos-status{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.left{
     margin-right: 3rem;
 }
 
@@ -13,6 +23,10 @@
     height: 2rem;
 }
 
-.progresso-casamentos-right{
+.right{
     margin-left: 3rem;
+}
+
+.status-conta-ico{
+    width: 8rem;
 }

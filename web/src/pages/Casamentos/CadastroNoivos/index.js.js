@@ -29,7 +29,6 @@ export default function CadastroUsuario(){
             ...DadosCadastro, 
             [name]: value,
         })
-        console.log(value)
     }
 
     function formatarData(ev){
@@ -277,7 +276,6 @@ function validarSenha(){
         let isSenhaIntegra = Utils.verificarIntegridadeSenha(senha1)
         
         if(isSenhaIntegra){
-            console.log("DEU TRUE")
             return true
         }else{
             return false

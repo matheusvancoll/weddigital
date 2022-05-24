@@ -132,6 +132,8 @@ public class ControladorVitrine {
         mensagem.setIdProfissional(profissional.getIdProfissional());
         mensagem.setIdCliente(usuario.getIdUsuario());
         mensagem.setCorpoMensagem(dadosResumoOrcamentoDTO.getCorpoMensagem());
+        mensagem.setEnviadoPorCliente(true);
+        mensagem.setEnviadoPorProfissional(false);
 
         Long datetime = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(datetime);

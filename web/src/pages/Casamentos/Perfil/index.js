@@ -11,7 +11,6 @@ import Logo from '../../../assets/avatar.png'
 
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil/Empresas/FormDadosGerais';
-import FormFAQProfissional from '../../../components/Perfil/Empresas/FormFAQProfissional';
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilDTO)
@@ -36,10 +35,6 @@ export default function Perfil() {
             setIsDadosInvalido(true)
         })
     }, [])
-    
-
-    console.log('DADOS GEt')
-    console.log(DadosResumoPerfil)
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
@@ -146,7 +141,7 @@ export default function Perfil() {
 
                             {TabLocation == 'duvidas' ?
                             <div >
-                                <p><FormFAQProfissional /></p>
+                                <p></p>
                             </div>
                             :''}
                         </div>

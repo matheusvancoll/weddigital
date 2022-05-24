@@ -5,15 +5,17 @@ import './PerfilEmpresa.css'
 import api from '../../../api/';
 import UserContext from '../../../api/userContext-api/userContext';
 import UsuarioModel from '../../../utils/UsuarioModel';
+import StatusModel from "../../../utils/statusNivelModel";
 
 import NavbarPerfil from '../../../components/Perfil/Navbar'
 import Logo from '../../../assets/avatar.png'
 
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
-import FormFAQProfissional from '../../../components/Perfil//Empresas/FormFAQProfissional';
 import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
-import StatusModel from "../../../utils/statusNivelModel";
+import FormConteudo from "../../../components/Perfil/Empresas/FormConteudo";
+import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
+
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
@@ -54,8 +56,6 @@ export default function Perfil() {
 
         api.get(`usuario/empresa/obterDadosPontuacao/${idUsuario}`)
             .then(({data}) => {
-                console.log("STATUS")
-                console.log(data)
                 setDadosStatusProfissional(data)
                 setIsCarregando(false)
                 //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,14 +132,6 @@ export default function Perfil() {
                                 <span>Minha assinatura</span>
                             </a>
                         </div>
-
-                        {/* <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
-                            <a href='#comunidade' onClick={() => setTabLocation("comunidade")} >
-                                <i class="fa-solid fa-users-rectangle"></i>
-                                <span>Comunidade Wed</span>
-                            </a>
-                        </div> */}
-
                     </div>
             </section>
 
@@ -162,6 +154,7 @@ export default function Perfil() {
                         <>
                             {TabLocation == 'Resumo' ?
                             <div >
+                                <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
                                 <FormResumo dadosUsuario={DadosResumoPerfil}/>
                             </div>
                             :''
@@ -173,55 +166,29 @@ export default function Perfil() {
                             </div>
                             :''}
 
-                            {TabLocation == 'duvidas' ?
+                            {TabLocation == 'orcamentos' ?
                             <div >
-                                <p><FormFAQProfissional /></p>
+                                <FormOrcamentos />
                             </div>
                             :''}
 
+                            {TabLocation == 'conteudo' ?
+                            <div >
+                                <FormConteudo />
+                            </div>
+                            :''}
 
                             {TabLocation == 'conquitas' ?
-                                <div >
-                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
-                                </div>
-                                :''
-                            }
+                            <div >
+                                <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                            </div>
+                            :''}
                         </>
                     </>
                     }
                 </>
                 }
             </div>
-            
-
-
-            
-            {/* <div className='.container p-4 d-flex justify-content-center'>
-                <ul className="nav nav-pills">
-                <li className="nav-item">
-                        <a className={TabLocation == 'resumo' ? 'nav-link active' : 'nav-link'} aria-current="page" href='#' onClick={() => toggleTabs("resumo")}>Resumo</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'dadosGerais' ? 'nav-link active' : 'nav-link'} aria-current="page" href='#' onClick={() => toggleTabs("dadosGerais")}>Dados Gerais</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'duvidas' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("duvidas")}>Dúvidas</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'galeria' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("galeria")}>Galeria</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'parceiros' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("parceiros")}>Seus Parceiros</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'equipe' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("equipe")}>Minha Equipe</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={TabLocation == 'conquistas' ? 'nav-link active' : 'nav-link'} href='#' onClick={() => toggleTabs("conquistas")}>Minhas Conquistas</a>
-                    </li>
-                </ul>
-            </div> */}
-
         </div>
     )
 }

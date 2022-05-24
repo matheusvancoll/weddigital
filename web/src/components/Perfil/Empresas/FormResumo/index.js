@@ -7,9 +7,6 @@ export default function FormResumo(props){
 
     let dadosPerfil = props.dadosUsuario
 
-    console.log("DADOS PERFIIKF RESUMO")
-    console.log(dadosPerfil)
-
     return(
         <>
             <div className="perfil-resumo__cards">

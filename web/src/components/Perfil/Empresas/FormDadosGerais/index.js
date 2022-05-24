@@ -61,7 +61,7 @@ export default function FormDadosGerais(props){
 {/* ==== DADOS GERAIS ==== */}
                 <p className="text-center texto-label-titulo">Dados Gerais</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
-                
+                <br></br>
                 <form className="row g-4 cadastro-usuario-form">
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Nome da Empresa*</label>

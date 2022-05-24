@@ -24,12 +24,9 @@ export default function CardDadosContato(props){
             corpoMensagem: corpoMensagemReq
          }
 
-        console.log(dadosPedidoOrcamento)
-
         if(idClienteReq != undefined && idProfissionalReq != undefined){
             api.post('orcamento/solicitacao', dadosPedidoOrcamento)
                 .then((response) => {
-                    console.log("DEu ceerto")
                 }).catch((error) => {
 
             })

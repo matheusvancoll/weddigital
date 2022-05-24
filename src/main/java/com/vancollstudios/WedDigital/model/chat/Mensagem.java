@@ -24,6 +24,12 @@ public class Mensagem {
     @Column
     private Timestamp dataEnvioMensagem;
 
+    @Column
+    private Boolean enviadoPorProfissional;
+
+    @Column
+    private Boolean enviadoPorCliente;
+
 
     public Integer getIdMensagem() {
         return idMensagem;
@@ -63,5 +69,21 @@ public class Mensagem {
 
     public void setDataEnvioMensagem(Timestamp dataEnvioMensagem) {
         this.dataEnvioMensagem = dataEnvioMensagem;
+    }
+
+    public Boolean getEnviadoPorProfissional() {
+        return enviadoPorProfissional;
+    }
+
+    public void setEnviadoPorProfissional(Boolean enviadoPorProfissional) {
+        this.enviadoPorProfissional = enviadoPorProfissional;
+    }
+
+    public Boolean getEnviadoPorCliente() {
+        return enviadoPorCliente;
+    }
+
+    public void setEnviadoPorCliente(Boolean enviadoPorCliente) {
+        this.enviadoPorCliente = enviadoPorCliente;
     }
 }

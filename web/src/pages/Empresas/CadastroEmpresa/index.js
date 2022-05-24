@@ -71,16 +71,13 @@ export default function CadastroUsuario(){
         e.preventDefault();
         emailjs.sendForm('service_dbbp6yf', 'template_44kjgsh', form.current, 'nRkUn8RqboquqFSTd')
         .then((result) => {
-            alert("DEU BOM")
             console.log(result.text)
         }, (error) => {
-            alert("DEU ERRO")
             console.log(error.text)
         })
     }
 
     function onSubmit(ev){
-        console.log("Chegou no ev")
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
 

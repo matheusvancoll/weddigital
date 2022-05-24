@@ -8,10 +8,8 @@ export default function ContactUs() {
     e.preventDefault();
     emailjs.sendForm('service_5tqqlsa', 'template_x9le1nm', form.current, 'XKOIdqt9WWgiZGPAc')
       .then((result) => {
-          alert("DEU BOM")
           console.log(result.text);
       }, (error) => {
-          alert("DEU ERRO")
           console.log(error.text);
       });
   };

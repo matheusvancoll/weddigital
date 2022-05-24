@@ -1,5 +1,7 @@
 package com.vancollstudios.WedDigital.controlador.usuarios;
 
+import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
+import org.springframework.web.multipart.MultipartFile;
 import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
@@ -31,6 +33,9 @@ public class ControladorUsuario {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    ControladorImagem controladorImagem;
 
 
 //    @GetMapping(path = "/api/usuario/buscarTodosUsuarios")
@@ -294,6 +299,12 @@ public class ControladorUsuario {
         repositorioUsuario.save(usuarioAtualizado);
         String token = obterTokenPorIdUsuario(idUsuario);
         return token;
+    }
+
+    @PostMapping(path = "/api/dadosPerfil/uploadImagens/")
+    public String uploadImagensParaVitrine(@RequestParam MultipartFile imagem){
+        controladorImagem.salvarImagemVitrineProfissional(imagem);
+        return "sucess";
     }
 
     public String obterTokenPorIdUsuario(Integer idUsuario){

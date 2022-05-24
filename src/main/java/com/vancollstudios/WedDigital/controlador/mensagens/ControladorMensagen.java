@@ -38,14 +38,15 @@ public class ControladorMensagen {
 
     @GetMapping(path = "/api/mensagens/profissional/listarConversas/{idProfissional}")
     public Collection<dadosResumoListaMensagensDTO> obterListaMensagensPorProfissionalId(@PathVariable("idProfissional") Integer idProfissional){
-        Collection<Mensagem> listaMensagensDoProfissional = repositorioMensagens.findAllByIdProfissional(idProfissional);
         Collection<dadosResumoListaMensagensDTO> listaResumoMensagenDTO = new ArrayList<>();
-
+        Collection<Mensagem> listaMensagensDoProfissional = new ArrayList<>();
         Profissional profissional = new Profissional();
-        Optional<Profissional> profissionalOption = repositorioProfissional.findByidProfissional(idProfissional);
+
+        Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(idProfissional);
 
         if(profissionalOption.isPresent()){
             profissional = profissionalOption.get();
+            listaMensagensDoProfissional = repositorioMensagens.findAllByIdProfissional(profissional.getIdProfissional());
         }
 
         for(Mensagem mensagem : listaMensagensDoProfissional){
