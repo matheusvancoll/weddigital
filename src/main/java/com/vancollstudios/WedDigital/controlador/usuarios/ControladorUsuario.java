@@ -142,9 +142,9 @@ public class ControladorUsuario {
             novoProfissional.setIs_CadastroPorConvite(false);
         }
 
-        ResponseEntity.ok(repositorioProfissional.save(novoProfissional));
+        Integer idNProfissional =  ResponseEntity.ok(repositorioProfissional.save(novoProfissional)).getBody().getIdUsuario();
 
-        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
+        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario, idNProfissional);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
     }
@@ -302,7 +302,7 @@ public class ControladorUsuario {
 
         repositorioProfissional.save(profissionalAtualizado);
         repositorioUsuario.save(usuarioAtualizado);
-        String token = obterTokenPorIdUsuario(idUsuario);
+        String token = obterTokenPorIdUsuario(idUsuario, dadosAtualizados.getIdProfissional());
         return token;
     }
 
@@ -349,16 +349,16 @@ public class ControladorUsuario {
         return "sucess";
     }
 
-    public String obterTokenPorIdUsuario(Integer idUsuario){
+    public String obterTokenPorIdUsuario(Integer idUsuario, Integer idTipoUsuario){
         String tokenAcesso = "";
         Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(idUsuario);
         Usuario usuario  = usuarioOptional.get();
 
         if(usuarioOptional != null || usuarioOptional.isPresent()){
             String tipoUsuario;
-            if(usuario.getIs_Noivos()){ tipoUsuario = "noivos"; }
-            else{ tipoUsuario = "profissional"; }
-            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ usuario.getNomeUsuario() +"."+ usuario.getNivelConta() +"."+ usuario.getDataCriacao() +"."+ usuario.getRandomToken();
+            if(usuario.getIs_Noivos()) { tipoUsuario = "noivos"; }
+            else { tipoUsuario = "profissional"; }
+            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ idTipoUsuario;
         }
 
         return tokenAcesso;
@@ -449,8 +449,8 @@ public class ControladorUsuario {
             novoNoivos.setIs_CadastroPorConvite(false);
         }
 
-        ResponseEntity.ok(repositorioNoivos.save(novoNoivos));
-        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario);
+        Integer idNoivos =  ResponseEntity.ok(repositorioNoivos.save(novoNoivos)).getBody().getIdUsuario();
+        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario, idNoivos);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
     }
