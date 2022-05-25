@@ -8,7 +8,6 @@ import UsuarioModel from '../../../utils/UsuarioModel';
 import StatusModel from "../../../utils/statusNivelModel";
 
 import NavbarPerfil from '../../../components/Perfil/Navbar'
-import Logo from '../../../assets/avatar.png'
 
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
@@ -31,7 +30,7 @@ export default function Perfil() {
     let nivelUsuario = dadosToken[3]
     let tokenUsuario = dadosToken[5]
 
-    const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`, 
+    const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`,
         api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
         .then(({data}) => {
         console.log("TESTE SWR")
@@ -67,6 +66,9 @@ export default function Perfil() {
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
+    let nomeArquivoPerfil = DadosResumoPerfil.fotoPerfil ? DadosResumoPerfil.fotoPerfil : 'avatar.png'
+    const fotoPerfil = require(`../../../fileContents/imagensPerfil/${nomeArquivoPerfil}`)
+
     return (
         <div className='perfil-container'>
             <NavbarPerfil toggleState={SidebarOpen} toggleMove={toggleSidebar} />
@@ -74,7 +76,7 @@ export default function Perfil() {
             <section className="sidebar" id={SidebarOpen ? "" : "responsive-sidebar"}>
                     <div className="sidebar__title">
                         <div className="sidebar__img">
-                            <img src={Logo} alt="logo"/>
+                            <img src={fotoPerfil} alt="logo"/>
                             <h1>{DadosResumoPerfil.nomeEmpresa}</h1>
                         </div>
                     </div>
@@ -97,14 +99,14 @@ export default function Perfil() {
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'orcamentos' ? "active" : ""}>
                             <a href='#orcamentos' onClick={() => setTabLocation("orcamentos")} >
                                 <i class="fa-solid fa-tags"></i>
-                                <span>Orçamentos</span>
+                                <span>Meus Orçamentos</span>
                             </a>
                         </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conteudo' ? "active" : ""}>
-                            <a href='#conteudo' onClick={() => setTabLocation("conteudo")} >
+                            <a href='#conteudo' onClick={() => setTabLocation("cursos")} >
                                 <i class="fa-solid fa-graduation-cap"></i>
-                                <span>Conteúdos</span>
+                                <span>Cursos</span>
                             </a>
                         </div>
 
@@ -115,16 +117,19 @@ export default function Perfil() {
                             </a>
                         </div>
 
-                        {nivelUsuario == null
-                        ? 
-                            <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
-                                <a href='#convites' onClick={() => setTabLocation("convites")} >
-                                    <i class="fa-solid fa-share-nodes"></i>
-                                    <span>Convites</span>
-                                </a>
-                            </div>
-                        :' '
-                        }
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
+                            <a href='#convites' onClick={() => setTabLocation("convites")} >
+                                <i class="fa-solid fa-share-nodes"></i>
+                                <span>Convites</span>
+                            </a>
+                        </div>
+
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
+                            <a href='#convites' onClick={() => setTabLocation("comunidade")} >
+                                <i className="fa-solid fa-people-group"></i>
+                                <span>Comunidade</span>
+                            </a>
+                        </div>
 
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'assinatura' ? "active" : ""}>
                             <a href='#assinatura' onClick={() => setTabLocation("assinatura")} >
@@ -143,7 +148,7 @@ export default function Perfil() {
                             Carregando...
                     </button>
                 </div> 
-                :<>
+                :<div className="conteinar_conteudo_perfil">
                     {IsDadosInvalido 
                     ? <div class="container-sm alert alert-danger text-center w-25 " role="alert">
                         Oooops! Parece que algo não saiu como o planejado :(
@@ -172,7 +177,7 @@ export default function Perfil() {
                             </div>
                             :''}
 
-                            {TabLocation == 'conteudo' ?
+                            {TabLocation == 'cursos' ?
                             <div >
                                 <FormConteudo />
                             </div>
@@ -186,7 +191,7 @@ export default function Perfil() {
                         </>
                     </>
                     }
-                </>
+                </div>
                 }
             </div>
         </div>

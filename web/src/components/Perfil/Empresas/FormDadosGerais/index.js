@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import InputMask from 'react-input-mask';
 import { useHistory } from "react-router-dom";
+import './FormDadosGerais.css'
 
 import api from "../../../../api";
 import ErroCarregarDados from "../../../Modal/ErroCarregarDados";
@@ -44,7 +45,7 @@ export default function FormDadosGerais(props){
             })
     }
     return(
-        <>
+        <div className="form-dados-derais__container">
             {IsCarregandoDados 
             ? <div className='.container p-4 d-flex justify-content-center'>
                 <button class="btn btn-primary" type="button" disabled>
@@ -62,7 +63,7 @@ export default function FormDadosGerais(props){
                 <p className="text-center texto-label-titulo">Dados Gerais</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
                 <br></br>
-                <form className="row g-4 cadastro-usuario-form">
+                <form className="row g-4 border_custom">
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
                         <input type="text" className="form-control" id="validationCustom01" required
@@ -106,7 +107,7 @@ export default function FormDadosGerais(props){
 {/* ==== CONTATO ==== */}
                 <p className="text-center texto-label-titulo">Contato</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
-                <form className="row g-3 needs-validation cadastro-usuario-form">
+                <form className="row g-3 border_custom">
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Nome</label>
                         <input type="text" className="form-control" id="validationCustom01" required
@@ -188,7 +189,7 @@ export default function FormDadosGerais(props){
 
 {/* ==== FAQ ==== */}
                 <p className="text-center texto-label-titulo">Perguntas relevantes</p>
-                <form className="row g-3 needs-validation cadastro-usuario-form">
+                <form className="row g-3 border_custom">
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Valor a partir de</label>
                         <InputMask className="form-control" id="validationCustom01" required
@@ -233,32 +234,16 @@ export default function FormDadosGerais(props){
                     </div>
                 </form>
 
-                <div> <br></br> <br></br> </div>
+                <div className="space-vertical"></div>
 
                 <div className="col-12">
                     <button className="btn btn-primary" type="submit" onClick={onSubmit}>Atualizar Dados</button>
                 </div>
 
-                <div> <br></br> <br></br> </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            </> 
+                <div className="space-vertical"></div>
+
+            </>
             }
-        </>
+        </div>
     )
 }

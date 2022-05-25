@@ -1,10 +1,10 @@
-package com.vancollstudios.WedDigital.model.imagensVitrine;
+package com.vancollstudios.WedDigital.model.imagens;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "DADOS_IMAGENS_VITRINE")
+@Entity(name = "IMAGENS_VITRINE")
 public class ImagemVitrine {
 
     @Id

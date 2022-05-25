@@ -1,6 +1,6 @@
-package com.vancollstudios.WedDigital.repositorio.imagensVitrine;
+package com.vancollstudios.WedDigital.repositorio.imagens;
 
-import com.vancollstudios.WedDigital.model.imagensVitrine.ImagemVitrine;
+import com.vancollstudios.WedDigital.model.imagens.ImagemVitrine;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@Entity(name = "DADOS_CHAT")
+@Entity(name = "MENSAGENS_CHAT")
 public class Mensagem {
     @Id @GeneratedValue
     private Integer idMensagem;

@@ -1,6 +1,8 @@
 package com.vancollstudios.WedDigital.controlador.usuarios;
 
 import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
+import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
+import com.vancollstudios.WedDigital.repositorio.imagens.RepositorioImagemPerfil;
 import org.springframework.web.multipart.MultipartFile;
 import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
@@ -30,6 +32,8 @@ public class ControladorUsuario {
     @Autowired
     RepositorioNoivos repositorioNoivos;
 
+    @Autowired
+    RepositorioImagemPerfil repositorioImagemPerfil;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -201,6 +205,7 @@ public class ControladorUsuario {
 
         dadosResumoPerfilProfissionalDTO.setIdUsuario(profissionalParam.getIdUsuario());
         dadosResumoPerfilProfissionalDTO.setNomeUsuario(usuarioParam.getNomeUsuario());
+        dadosResumoPerfilProfissionalDTO.setFotoPerfil(usuarioParam.getFotoPerfil());
         dadosResumoPerfilProfissionalDTO.setIdProfissional(profissionalParam.getIdProfissional());
         dadosResumoPerfilProfissionalDTO.setCidade(profissionalParam.getCidade());
         dadosResumoPerfilProfissionalDTO.setEstado(profissionalParam.getEstado());
@@ -301,9 +306,46 @@ public class ControladorUsuario {
         return token;
     }
 
+    @PostMapping(path = "/api/dadosPerfil/uploadImagensPerfil/{idUsuario}")
+    public String uploadImagensParaPerfil(@PathVariable("idUsuario") Integer idUsuario, @RequestParam MultipartFile fotoPerfil){
+        Usuario usuario = new Usuario();
+        String nomeArquivo = "";
+        String statusUpload = "";
+
+        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+        if(dadosUsuario != null && dadosUsuario.getBody() != null){
+            usuario = (Usuario) dadosUsuario.getBody();
+            String extensaoImagem = Util.obterExtensaoImagem(fotoPerfil);
+            nomeArquivo = usuario.getIdUsuario() + "_" + usuario.getNomeUsuario() + "_" + usuario.getRandomToken() + "." + extensaoImagem;
+        }
+
+        String caminhoDiretorioFoto = controladorImagem.salvarImagemPerfilUsuario(fotoPerfil, nomeArquivo);
+        usuario.setFotoPerfil(nomeArquivo);
+
+        if(caminhoDiretorioFoto != ""){
+            ImagemPerfil imagemPerfil = new ImagemPerfil();
+            imagemPerfil.setIdUsuario(idUsuario);
+            imagemPerfil.setCaminhoImagem(caminhoDiretorioFoto);
+            imagemPerfil.setNomeArquivo(nomeArquivo);
+
+            repositorioImagemPerfil.save(imagemPerfil);
+            repositorioUsuario.save(usuario);
+
+            statusUpload = "sucesso";
+        }else{
+            statusUpload = "falha";
+        }
+
+        return statusUpload;
+    }
+
     @PostMapping(path = "/api/dadosPerfil/uploadImagens/")
-    public String uploadImagensParaVitrine(@RequestParam MultipartFile imagem){
-        controladorImagem.salvarImagemVitrineProfissional(imagem);
+    public String uploadImagensParaVitrine(@RequestParam Collection<MultipartFile> imagem){
+
+
+//        controladorImagem.salvarImagemVitrineProfissional(imagem);
         return "sucess";
     }
 

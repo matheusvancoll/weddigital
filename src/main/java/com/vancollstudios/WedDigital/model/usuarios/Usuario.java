@@ -55,6 +55,9 @@ public class Usuario {
     @Column
     private Integer randomToken;
 
+    @Column
+    private String fotoPerfil;
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -181,5 +184,13 @@ public class Usuario {
 
     public void setRandomToken(Integer randomToken) {
         this.randomToken = randomToken;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }

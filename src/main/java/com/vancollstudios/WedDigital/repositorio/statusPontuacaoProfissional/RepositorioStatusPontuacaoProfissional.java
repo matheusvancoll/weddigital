@@ -3,7 +3,6 @@ package com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.model.statusPontuacaoProfissional.StatusPontuacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 

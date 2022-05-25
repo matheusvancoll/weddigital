@@ -2,22 +2,16 @@ package com.vancollstudios.WedDigital.controlador.usuarios;
 
 import com.vancollstudios.WedDigital.model.statusPontuacaoProfissional.StatusPontuacao;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoStatusPontuacaoDTO;
-import com.vancollstudios.WedDigital.model.usuarios.DTO.UsuarioEmpresaDTO;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacao;
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
-import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
 @CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
@@ -68,15 +62,9 @@ public class ControladorStatusPontuacaoProfissional {
             if(usuario.getIs_Profissional() && (profissional.getIdUsuario() == usuario.getIdUsuario())){
                 statusPontuacao = repositorioStatusPontuacaoProfissional.obterStatusPontuacaoPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
 
-                if(profissional.getNivelConta() == 1) {
-                    nivelConta = "Bronze";
-                }
-                if(profissional.getNivelConta() == 2){
-                    nivelConta = "Prata";
-                }
-                if(profissional.getNivelConta() == 3){
-                    nivelConta = "Ouro";
-                }
+                if(profissional.getNivelConta() == 1) { nivelConta = "Bronze"; }
+                if(profissional.getNivelConta() == 2) { nivelConta = "Ouro"; }
+                if(profissional.getNivelConta() == 3) { nivelConta = "Diamante"; }
 
                 dadosStatusDTO.setIdPontuacao(statusPontuacao.getIdPontuacao());
                 dadosStatusDTO.setPontoMinimo(statusPontuacao.getPontoMinimo());

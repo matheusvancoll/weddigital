@@ -6,6 +6,7 @@ public class DadosResumoPerfilProfissionalDTO {
 
     private Integer idUsuario;
     private String nomeUsuario;
+    private String fotoPerfil;
     private String tipoUsuario;
     private Integer idProfissional;
     private String cidade;
@@ -45,6 +46,14 @@ public class DadosResumoPerfilProfissionalDTO {
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
     public String getTipoUsuario() {

@@ -1,5 +1,7 @@
 package com.vancollstudios.WedDigital.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,12 +38,20 @@ public class Util {
     }
 
 
-
     public static String adicionarZeros(String param) {
         if (param.length() < 2) {
             return "0" + param;
         } else {
             return param;
         }
+    }
+
+    public static String obterExtensaoImagem(MultipartFile arquivo){
+        String contentType = arquivo.getContentType();
+        String[] arrContentType = contentType.split("/");
+
+        String extensaoArquivo = arrContentType[(arrContentType.length - 1)];
+
+        return extensaoArquivo;
     }
 }

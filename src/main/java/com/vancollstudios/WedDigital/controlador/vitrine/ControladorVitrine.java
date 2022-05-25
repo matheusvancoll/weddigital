@@ -25,7 +25,7 @@ import java.util.Optional;
 @RestController
 public class ControladorVitrine {
 
-    private final int LIMITE_ORCAMENTO_FREE = 5;
+    private final int LIMITE_ORCAMENTO_FREE = 3;
     private final int NIVEL_CONTA_FREE = 1;
 
     @Autowired

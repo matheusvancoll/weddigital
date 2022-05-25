@@ -1,0 +1,13 @@
+.border_custom{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 0.5rem;
+}
+
+.space-vertical{
+    padding: 2rem 0;
+}
+
+@media only screen and (min-width: 768px) {
+
+}

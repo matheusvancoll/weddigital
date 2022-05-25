@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "DADOS_CURSO")
+@Entity(name = "CURSOS")
 public class AulasProfissional {
 
     @Id

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "DADOS_PONTUACAO")
+@Entity(name = "NIVEL_STATUS_CONTA")
 public class StatusPontuacao {
 
     @Id

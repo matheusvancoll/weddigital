@@ -41,11 +41,12 @@ module.exports = {
 
     dadosResumoPerfilProfissionalDTO: {
         idUsuario: "",
-        nomeUsuario: '',
+        nomeUsuario: "",
+        fotoPerfil: "",
         tipoUsuario: "",
         idProfissional: "",
-        cidade: '',
-        estado: '',
+        cidade: "",
+        estado: "",
         nomeEmpresa: "",
         descricaoEmpresa: "",
         email: "",
