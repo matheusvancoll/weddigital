@@ -14,9 +14,8 @@ services:
     expose:
       - 3306
     command: --default-authentication-plugin=mysql_native_password
-#    --init-file /app/database/init.sql
-#    volumes:
-#      - ./init.sql:/app/database/init.sql
+    volumes:
+      - /home/matheus/wedTeste/database:/var/lib/mysql
     restart: always
 
   wed_spring_backend:
@@ -28,8 +27,12 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
+    volumes:
+      - /home/matheus/wedTeste/imgPerfil/:/app/web/src/fileContents/imagensPerfil/
+      - /home/matheus/wedTeste/backend/:/app/src/
     depends_on:
       - wed_database_mysql
+
   wed-react-frontend:
     image: node:16.13.2
     container_name: wed_frontend
@@ -38,6 +41,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    volumes:
+      - /home/matheus/wedTeste/imgPerfil/:/app/web/src/fileContents/imagensPerfil/
+      - /home/matheus/wedTeste/frontend/:/app/web/
     depends_on:
       - wed_spring_backend
-
