@@ -27,22 +27,23 @@ export default function Perfil() {
 
     let dadosToken = token.split('.')
     let idUsuario = dadosToken[1]
-    let nivelUsuario = dadosToken[3]
-    let tokenUsuario = dadosToken[5]
+    let idProfissional = dadosToken[2]
 
-    const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`,
-        api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
-        .then(({data}) => {
-        console.log("TESTE SWR")
-        console.log(data)
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }).catch(({error}) => {
-        console.log("SWR FAIL")
-    }))
+    console.log("TOKEssN: " + idProfissional)
+
+    // const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idUsuario=${idProfissional}`,
+    //     api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idUsuario=${idProfissional}`)
+    //     .then(({data}) => {
+    //     console.log("TESTE SWR")
+    //     console.log(data)
+    //     //eslint-disable-next-line react-hooks/exhaustive-deps
+    // }).catch(({error}) => {
+    //     console.log("SWR FAIL")
+    // }))
 
 
     useEffect(() => {
-        api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&tokenUsuario=${tokenUsuario}`)
+        api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idProfissional=${idProfissional}`)
         .then(({data}) => {
             setDadosResumoPerfil(data)
             setIsCarregando(false)

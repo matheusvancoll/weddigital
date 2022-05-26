@@ -18,6 +18,7 @@ public class DadosResumoPerfilProfissionalDTO {
     private String email;
     private String numeroContato;
     private Boolean is_Whatsapp;
+    private String numeroCPF;
     private Boolean is_CNPJ;
     private String numeroCNPJ;
     private String valorMinimo;
@@ -126,6 +127,14 @@ public class DadosResumoPerfilProfissionalDTO {
 
     public void setIs_Whatsapp(Boolean is_Whatsapp) {
         this.is_Whatsapp = is_Whatsapp;
+    }
+
+    public String getNumeroCPF() {
+        return numeroCPF;
+    }
+
+    public void setNumeroCPF(String numeroCPF) {
+        this.numeroCPF = numeroCPF;
     }
 
     public Boolean getIs_CNPJ() {

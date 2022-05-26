@@ -9,7 +9,7 @@ function PrivateRouter({ component: Component, ...rest}){
         <Route {...rest} 
             render={ () => token
                 ? <Component {...rest}/>
-                : <Redirect to="/empresas" />
+                : <Redirect to="/" />
             }
         />
     )

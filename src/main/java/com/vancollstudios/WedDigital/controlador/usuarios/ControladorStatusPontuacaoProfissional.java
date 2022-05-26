@@ -47,7 +47,7 @@ public class ControladorStatusPontuacaoProfissional {
         Usuario usuario = new Usuario();
         String nivelConta = "";
 
-        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 

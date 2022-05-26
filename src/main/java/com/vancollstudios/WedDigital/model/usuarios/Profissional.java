@@ -34,6 +34,9 @@ public class Profissional {
     private String estado;
 
     @Column
+    private String numeroCPF;
+
+    @Column
     private Boolean is_CNPJ;
 
     @Column
@@ -150,6 +153,14 @@ public class Profissional {
 
     public void setSegmento(String segmento) {
         this.segmento = segmento;
+    }
+
+    public String getNumeroCPF() {
+        return numeroCPF;
+    }
+
+    public void setNumeroCPF(String numeroCPF) {
+        this.numeroCPF = numeroCPF;
     }
 
     public Boolean getIs_CNPJ() {

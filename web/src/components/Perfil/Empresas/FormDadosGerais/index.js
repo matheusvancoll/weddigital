@@ -6,12 +6,15 @@ import './FormDadosGerais.css'
 import api from "../../../../api";
 import ErroCarregarDados from "../../../Modal/ErroCarregarDados";
 import UserContext from "../../../../api/userContext-api/userContext";
+import ErroUploadArquivo from "../../../Modal/ErroUploadArquivo";
 
 export default function FormDadosGerais(props){
     const { token, setToken } = useContext(UserContext)
     const history = useHistory()
     const [DadosCadastro, setDadosCadastro] = useState(props.dadosResumoPerfil)
     const [IsErroCadastro, setIsErroCadastro] = useState(false)
+    const [IsErroUploadFoto, setIsErroUploadFoto] = useState(false)
+
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsCNPJ, setIsCNPJ] = useState(DadosCadastro.is_CNPJ)
     const [IsWhatsapp, setIsWhatsapp] = useState(DadosCadastro.is_Whatsapp)
@@ -44,6 +47,27 @@ export default function FormDadosGerais(props){
                 window.scrollTo(0,0)
             })
     }
+
+    function uploadFotoPerfil(ev){
+        ev.preventDefault();
+        setIsCarregandoDados(true)
+        setIsErroUploadFoto(false)
+
+        let arquivoImagem = document.getElementById('inputFotoPerfil').files[0]
+
+        const formData = new FormData();
+        formData.append('fotoPerfil', arquivoImagem);
+
+        api.post('dadosPerfil/uploadImagensPerfil/'+ idUsuario + '?fotoPerfil=', formData)
+            .then((response) => {
+                setIsCarregandoDados(false)
+                setIsErroUploadFoto(false)
+            }).catch((error) => {
+                setIsCarregandoDados(false)
+                setIsErroUploadFoto(true)
+        })
+    }
+
     return(
         <div className="form-dados-derais__container">
             {IsCarregandoDados 
@@ -59,11 +83,28 @@ export default function FormDadosGerais(props){
                 ? <ErroCarregarDados /> 
                 : ''
                 }
+
+                {IsErroUploadFoto
+                ? <ErroUploadArquivo />
+                :''
+                }
 {/* ==== DADOS GERAIS ==== */}
                 <p className="text-center texto-label-titulo">Dados Gerais</p>
                 <p className="text-center">É essencial que toda a informação estejam atualizados e sejam verdadeiros.</p>
                 <br></br>
                 <form className="row g-4 border_custom">
+
+                    <div className="col-md-12">
+                        <label htmlFor="validationCustom01" className="form-label">Atualizar foto do perfil (até 1MB)</label>
+                        <div className="input-group">
+                            <input type="file" className="form-control" id="inputFotoPerfil"
+                                   aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
+                            <button className="btn btn-outline-secondary" type="button"
+                                    id="inputGroupFileAddon04" onClick={uploadFotoPerfil}>Atualizar
+                            </button>
+                        </div>
+                    </div>
+
                     <div className="col-md-12">
                         <label for="validationCustom01" className="form-label">Nome da Empresa*</label>
                         <input type="text" className="form-control" id="validationCustom01" required
@@ -75,6 +116,14 @@ export default function FormDadosGerais(props){
                         <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus visitantes o que você pode oferecer!" required
                                     name="descricaoEmpresa" value={DadosCadastro.descricaoEmpresa} onChange={onChange}></textarea>
                     </div>
+
+                    <div className="col-md-7">
+                        <label htmlFor="validationCustom01" className="form-label">Número do CPF*</label>
+                        <InputMask className="form-control" id="validationCustom01" required
+                                   mask="99.999.999/9999-99" maskChar=" "
+                                   name="numeroCNPJ" value={DadosCadastro.numeroCPF} onChange={onChange}/>
+                    </div>
+
                     <label class="form-check-label" for="flexSwitchCheckDefault">Possui CNPJ?</label>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefaultLogin"

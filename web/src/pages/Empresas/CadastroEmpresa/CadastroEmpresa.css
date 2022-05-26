@@ -16,3 +16,7 @@
     border: 1px solid black;
     border-radius: 5px;
 }
+
+.form-envio-email-confirmacao-cadastro{
+    display: none;
+}

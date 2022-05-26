@@ -76,7 +76,7 @@ public class ControladorVitrine {
         DadosResumoVitrineDTO dadosResumoVitrineDTO = new DadosResumoVitrineDTO();
         Profissional profissional = new Profissional();
 
-        Optional<Profissional> profissionalOptional = repositorioProfissional.findByidProfissional(idProfissional);
+        Optional<Profissional> profissionalOptional = repositorioProfissional.findAllByIdProfissional(idProfissional);
 
         if(profissionalOptional != null || profissionalOptional.isPresent()){
             profissional = profissionalOptional.get();
@@ -113,7 +113,7 @@ public class ControladorVitrine {
     @PostMapping(path = "/api/orcamento/solicitacao")
     public ResponseEntity<String> solicitarOrcamentoVitrine(@RequestBody DadosResumoOrcamentoDTO dadosResumoOrcamentoDTO){
         Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(dadosResumoOrcamentoDTO.getIdCliente());
-        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findByidProfissional(dadosResumoOrcamentoDTO.getIdProfissional());
+        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findAllByIdProfissional(dadosResumoOrcamentoDTO.getIdProfissional());
 
         if(usuarioOptional == null || !usuarioOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not user");

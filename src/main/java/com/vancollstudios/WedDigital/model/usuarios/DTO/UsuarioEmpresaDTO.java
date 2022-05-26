@@ -12,6 +12,7 @@ public class UsuarioEmpresaDTO {
     private String segmento;
     private String cidade;
     private String estado;
+    private String numeroCPF;
     private Boolean is_CNPJ;
     private String numeroCNPJ;
     private Integer nivelConta;
@@ -105,6 +106,14 @@ public class UsuarioEmpresaDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNumeroCPF() {
+        return numeroCPF;
+    }
+
+    public void setNumeroCPF(String numeroCPF) {
+        this.numeroCPF = numeroCPF;
     }
 
     public Boolean getIs_CNPJ() {

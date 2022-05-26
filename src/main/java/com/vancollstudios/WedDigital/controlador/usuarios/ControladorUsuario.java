@@ -64,10 +64,19 @@ public class ControladorUsuario {
         String tokenAcesso = "";
 
         if(isAcessoValido){
-            String tipoUsuario;
-            if(usuario.getIs_Noivos()){ tipoUsuario = "noivos"; }
-            else{ tipoUsuario = "profissional"; }
-            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ usuario.getNomeUsuario() +"."+ usuario.getNivelConta() +"."+ usuario.getDataCriacao() +"."+ usuario.getRandomToken();
+            Integer idTipoUsuario = 0;
+
+            Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(usuario.getIdUsuario());
+            //para noivos
+//            Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(usuario.getIdUsuario());
+
+            if(profissionalOption != null){
+                Profissional profissional = profissionalOption.get();
+                idTipoUsuario = profissional.getIdProfissional();
+            }
+
+            tokenAcesso = obterTokenPorIdUsuario(usuario.getIdUsuario(), idTipoUsuario);
+
             Date dataAtual = new Date();
             String dataAcesso = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
             usuario.setUltimoAcesso(dataAcesso);
@@ -78,6 +87,42 @@ public class ControladorUsuario {
 
         return ResponseEntity.status(status).body(tokenAcesso);
     }
+
+    @PostMapping(path = "/api/dadosPerfil/uploadImagensPerfil/{idUsuario}")
+    public String uploadImagensFotoPerfil(@PathVariable("idUsuario") Integer idUsuario, @RequestParam MultipartFile fotoPerfil){
+        Usuario usuario = new Usuario();
+        String nomeArquivo = "";
+        String statusUpload = "";
+
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+        if(dadosUsuario != null && dadosUsuario.getBody() != null){
+            usuario = (Usuario) dadosUsuario.getBody();
+            String extensaoImagem = Util.obterExtensaoImagem(fotoPerfil);
+            nomeArquivo = usuario.getIdUsuario() + "_" + usuario.getNomeUsuario() + "_" + usuario.getRandomToken() + "." + extensaoImagem;
+        }
+
+        String caminhoDiretorioFoto = controladorImagem.salvarImagemPerfilUsuario(fotoPerfil, nomeArquivo);
+        usuario.setFotoPerfil(nomeArquivo);
+
+        if(caminhoDiretorioFoto != ""){
+            ImagemPerfil imagemPerfil = new ImagemPerfil();
+            imagemPerfil.setIdUsuario(idUsuario);
+            imagemPerfil.setCaminhoImagem(caminhoDiretorioFoto);
+            imagemPerfil.setNomeArquivo(nomeArquivo);
+
+            repositorioImagemPerfil.save(imagemPerfil);
+            repositorioUsuario.save(usuario);
+
+            statusUpload = "sucesso";
+        }else{
+            statusUpload = "falha";
+        }
+
+        return statusUpload;
+    }
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // ---------- EMPRESA ----------------------------------------------------------------------------------------------
@@ -142,9 +187,9 @@ public class ControladorUsuario {
             novoProfissional.setIs_CadastroPorConvite(false);
         }
 
-        Integer idNProfissional =  ResponseEntity.ok(repositorioProfissional.save(novoProfissional)).getBody().getIdUsuario();
+        Integer idNovoProfissional =  ResponseEntity.ok(repositorioProfissional.save(novoProfissional)).getBody().getIdProfissional();
 
-        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario, idNProfissional);
+        String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario, idNovoProfissional);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
     }
@@ -166,6 +211,7 @@ public class ControladorUsuario {
         profissional.setCidade(novoUsuarioEmpresaParam.getCidade());
         profissional.setEstado(novoUsuarioEmpresaParam.getEstado());
         profissional.setIs_CNPJ(novoUsuarioEmpresaParam.getIs_CNPJ());
+        profissional.setNumeroCPF(novoUsuarioEmpresaParam.getNumeroCPF());
         profissional.setNumeroCNPJ(novoUsuarioEmpresaParam.getNumeroCNPJ());
         profissional.setNivelConta(novoUsuarioEmpresaParam.getNivelConta());
         profissional.setPontosAcumulados(0);
@@ -214,6 +260,7 @@ public class ControladorUsuario {
         dadosResumoPerfilProfissionalDTO.setEmail(profissionalParam.getEmail());
         dadosResumoPerfilProfissionalDTO.setNumeroContato(profissionalParam.getNumeroContato());
         dadosResumoPerfilProfissionalDTO.setIs_Whatsapp(profissionalParam.getIs_Whatsapp());
+        dadosResumoPerfilProfissionalDTO.setNumeroCPF(profissionalParam.getNumeroCPF());
         dadosResumoPerfilProfissionalDTO.setIs_CNPJ(profissionalParam.getIs_CNPJ());
         dadosResumoPerfilProfissionalDTO.setNumeroCNPJ(profissionalParam.getNumeroCNPJ());
         dadosResumoPerfilProfissionalDTO.setNivelConta(profissionalParam.getNivelConta());
@@ -237,55 +284,54 @@ public class ControladorUsuario {
     }
 
     @GetMapping(path = "/api/usuario/empresa/obterDadosPerfil")
-    public ResponseEntity<DadosResumoPerfilProfissionalDTO> obterDadosResumoPerfilPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer tokenUsuario){
+    public ResponseEntity<DadosResumoPerfilProfissionalDTO> obterDadosResumoPerfilPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional){
         DadosResumoPerfilProfissionalDTO dadosResumoPerfilProfissionalDTO = new DadosResumoPerfilProfissionalDTO();
         Usuario usuario = new Usuario();
         Profissional profissional;
 
-        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
-        if(dadosUsuario != null && dadosUsuario.getBody() != null){
-            usuario = (Usuario) dadosUsuario.getBody();
-            if(!Objects.equals(tokenUsuario, usuario.getRandomToken())){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-            }
-        }
 
-        ResponseEntity dadosProfissional = repositorioProfissional.findAllByIdUsuario(idUsuario)
+        ResponseEntity dadosProfissional = repositorioProfissional.findByIdProfissional(idProfissional)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
-        if(usuario != null && dadosProfissional != null && dadosProfissional.getBody() != null){
+        if(dadosUsuario != null && dadosUsuario.getBody() != null &&
+                dadosProfissional != null && dadosProfissional.getBody() != null){
             usuario = (Usuario) dadosUsuario.getBody();
             profissional = (Profissional) dadosProfissional.getBody();
             dadosResumoPerfilProfissionalDTO = popularDadosResumoPerfilProfissional(usuario, profissional);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         return ResponseEntity.ok().body(dadosResumoPerfilProfissionalDTO);
     }
 
-    @PutMapping(path = "/api/dadosPerfil/atualizarDados/{idUsuario}")
-    public String atualizarDadosUsuarioPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
+    @PutMapping(path = "/api/dadosPerfil/atualizarDados")
+    public String atualizarDadosUsuarioPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
         Usuario usuarioAtualizado = new Usuario();
+        Profissional profissionalAtualizado = new Profissional();
 
-        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
-        if(dadosUsuario != null && dadosUsuario.getBody() != null){
+        ResponseEntity dadosProfissional = repositorioProfissional.findByIdProfissional(idProfissional)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+        if(dadosUsuario != null && dadosUsuario.getBody() != null &&
+            dadosProfissional != null && dadosProfissional.getBody() != null){
             usuarioAtualizado = (Usuario) dadosUsuario.getBody();
+            profissionalAtualizado = (Profissional) dadosProfissional.getBody();
         }
 
-        Profissional profissionalAtualizado = new Profissional();
-
-        usuarioAtualizado.setIdUsuario(dadosAtualizados.getIdUsuario());
         usuarioAtualizado.setNomeUsuario(dadosAtualizados.getNomeUsuario());
         usuarioAtualizado.setEmail(dadosAtualizados.getEmail());
 
-        profissionalAtualizado.setIdUsuario(dadosAtualizados.getIdUsuario());
-        profissionalAtualizado.setIdProfissional(dadosAtualizados.getIdProfissional());
         profissionalAtualizado.setCidade(dadosAtualizados.getCidade());
         profissionalAtualizado.setEstado(dadosAtualizados.getEstado());
         profissionalAtualizado.setNomeEmpresa(dadosAtualizados.getNomeEmpresa());
@@ -294,6 +340,7 @@ public class ControladorUsuario {
         profissionalAtualizado.setNumeroContato(dadosAtualizados.getNumeroContato());
         profissionalAtualizado.setIs_Whatsapp(dadosAtualizados.getIs_Whatsapp());
         profissionalAtualizado.setIs_CNPJ(dadosAtualizados.getIs_CNPJ());
+        profissionalAtualizado.setNumeroCPF(dadosAtualizados.getNumeroCPF());
         profissionalAtualizado.setNumeroCNPJ(dadosAtualizados.getNumeroCNPJ());
         profissionalAtualizado.setValorMinimo(dadosAtualizados.getValorMinimo());
         profissionalAtualizado.setFormasPagamento(dadosAtualizados.getFormasDePagamento());
@@ -306,52 +353,11 @@ public class ControladorUsuario {
         return token;
     }
 
-    @PostMapping(path = "/api/dadosPerfil/uploadImagensPerfil/{idUsuario}")
-    public String uploadImagensParaPerfil(@PathVariable("idUsuario") Integer idUsuario, @RequestParam MultipartFile fotoPerfil){
-        Usuario usuario = new Usuario();
-        String nomeArquivo = "";
-        String statusUpload = "";
 
-        ResponseEntity dadosUsuario = repositorioUsuario.findAllByIdUsuario(idUsuario)
-                .map(registro -> ResponseEntity.ok().body(registro))
-                .orElse(ResponseEntity.notFound().build());
-        if(dadosUsuario != null && dadosUsuario.getBody() != null){
-            usuario = (Usuario) dadosUsuario.getBody();
-            String extensaoImagem = Util.obterExtensaoImagem(fotoPerfil);
-            nomeArquivo = usuario.getIdUsuario() + "_" + usuario.getNomeUsuario() + "_" + usuario.getRandomToken() + "." + extensaoImagem;
-        }
-
-        String caminhoDiretorioFoto = controladorImagem.salvarImagemPerfilUsuario(fotoPerfil, nomeArquivo);
-        usuario.setFotoPerfil(nomeArquivo);
-
-        if(caminhoDiretorioFoto != ""){
-            ImagemPerfil imagemPerfil = new ImagemPerfil();
-            imagemPerfil.setIdUsuario(idUsuario);
-            imagemPerfil.setCaminhoImagem(caminhoDiretorioFoto);
-            imagemPerfil.setNomeArquivo(nomeArquivo);
-
-            repositorioImagemPerfil.save(imagemPerfil);
-            repositorioUsuario.save(usuario);
-
-            statusUpload = "sucesso";
-        }else{
-            statusUpload = "falha";
-        }
-
-        return statusUpload;
-    }
-
-    @PostMapping(path = "/api/dadosPerfil/uploadImagens/")
-    public String uploadImagensParaVitrine(@RequestParam Collection<MultipartFile> imagem){
-
-
-//        controladorImagem.salvarImagemVitrineProfissional(imagem);
-        return "sucess";
-    }
 
     public String obterTokenPorIdUsuario(Integer idUsuario, Integer idTipoUsuario){
         String tokenAcesso = "";
-        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(idUsuario);
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findByIdUsuario(idUsuario);
         Usuario usuario  = usuarioOptional.get();
 
         if(usuarioOptional != null || usuarioOptional.isPresent()){
@@ -362,6 +368,14 @@ public class ControladorUsuario {
         }
 
         return tokenAcesso;
+    }
+
+    @PostMapping(path = "/api/dadosPerfil/uploadImagens")
+    public String uploadImagensParaVitrine(@RequestParam Collection<MultipartFile> imagem){
+
+
+//        controladorImagem.salvarImagemVitrineProfissional(imagem);
+        return "sucess";
     }
 
     public Boolean isUsuarioExistente(String login, String email){

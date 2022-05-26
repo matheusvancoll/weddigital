@@ -3,8 +3,6 @@ import { Switch, Route } from 'react-router-dom'
 
 import PrivateRouter from './privateRouter'
 
-import TermoDeUso from '../CondicoesLegais/TermoDeUso'
-
 import HomepageEmpresa from '../Empresas/Homepage'
 import CadastroEmpresa from '../Empresas/CadastroEmpresa'
 import PerfilEmpresa from '../Empresas/Perfil/'
@@ -17,6 +15,8 @@ import Login from '../Login'
 import Marketplace from '../Marketplace'
 import Vitrine from '../Marketplace/Vitrine/Vitrine'
 import Teste from '../teste'
+
+import TermoDeUso from '../CondicoesLegais/TermoDeUso'
 
 export default function Router() {
     return(
@@ -40,6 +40,7 @@ export default function Router() {
             <Route exact path="/buscar-profissional/detalhes=:idProfissional" component={Vitrine} />
             <Route exact path="/teste" component={Teste} />
             <Route exact path='/termos-de-uso' component={TermoDeUso} />
+
         </Switch>
     )
 }
