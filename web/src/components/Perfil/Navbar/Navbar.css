@@ -11,6 +11,7 @@
     color: var(--color-text);
     transition: .5s;
     font-size: 1.25rem;
+    z-index: 1;
 }
 
 #max-responsive {
@@ -21,6 +22,27 @@
 .navbar__toggle {
     width: 2rem;
 }
+
+.container-logo-weddigital-perfil{
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.navbar-logo-name-perfil{
+    text-decoration: none;
+    color: var(--color-dourado);
+    transition: 0.5s;
+}
+
+.navbar-logo-name-perfil:hover{
+    text-decoration: none;
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+}
+
 .navbar__icons a{
     color: var(--color-text);
     margin-right: 1rem;

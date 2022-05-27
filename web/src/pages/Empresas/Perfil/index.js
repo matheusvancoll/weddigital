@@ -12,7 +12,7 @@ import NavbarPerfil from '../../../components/Perfil/Navbar'
 import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
 import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
-import FormConteudo from "../../../components/Perfil/Empresas/FormConteudo";
+import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
 import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
 
 
@@ -20,10 +20,12 @@ export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
     const [ DadosStatusProfissional, setDadosStatusProfissional ] = useState(StatusModel.StatusNivelProfissional)
     const [ IsDadosInvalido, setIsDadosInvalido ] = useState(false)
-    const [ TabLocation, setTabLocation ] = useState("Resumo")
+    const [ TabLocation, setTabLocation ] = useState("resumo")
     const [ IsCarregando, setIsCarregando ] = useState(true)
     const [ SidebarOpen, setSidebarOpen ] = useState(true)
     const { token } = useContext(UserContext)
+
+    let urlTabAcesso = window.location.href.split('#')
 
     let dadosToken = token.split('.')
     let idUsuario = dadosToken[1]
@@ -47,6 +49,7 @@ export default function Perfil() {
         .then(({data}) => {
             setDadosResumoPerfil(data)
             setIsCarregando(false)
+            setIsCarregando(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps
         }).catch(({error}) => {
             setIsCarregando(false)
@@ -57,7 +60,7 @@ export default function Perfil() {
         api.get(`usuario/empresa/obterDadosPontuacao/${idUsuario}`)
             .then(({data}) => {
                 setDadosStatusProfissional(data)
-                setIsCarregando(false)
+                setTabLocation(urlTabAcesso[1] ? urlTabAcesso[1] : "resumo")
                 //eslint-disable-next-line react-hooks/exhaustive-deps
             }).catch(({error}) => {
             setIsCarregando(false)
@@ -83,8 +86,8 @@ export default function Perfil() {
                     </div>
 
                     <div className="sidebar__menu">
-                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'Resumo' ? "active" : ""}>
-                            <a href='#Resumo' onClick={() => setTabLocation("Resumo")} >
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'resumo' ? "active" : ""}>
+                            <a href='#resumo' onClick={() => setTabLocation("resumo")} >
                                 <i class="fa-solid fa-gauge-high"></i>
                                 <span>Resumo</span>
                             </a>
@@ -104,8 +107,8 @@ export default function Perfil() {
                             </a>
                         </div>
 
-                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'conteudo' ? "active" : ""}>
-                            <a href='#conteudo' onClick={() => setTabLocation("cursos")} >
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'cursos' ? "active" : ""}>
+                            <a href='#cursos' onClick={() => setTabLocation("cursos")} >
                                 <i class="fa-solid fa-graduation-cap"></i>
                                 <span>Cursos</span>
                             </a>
@@ -125,8 +128,8 @@ export default function Perfil() {
                             </a>
                         </div>
 
-                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
-                            <a href='#convites' onClick={() => setTabLocation("comunidade")} >
+                        <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'comunidade' ? "active" : ""}>
+                            <a href='#comunidade' onClick={() => setTabLocation("comunidade")} >
                                 <i className="fa-solid fa-people-group"></i>
                                 <span>Comunidade</span>
                             </a>
@@ -158,7 +161,7 @@ export default function Perfil() {
                     </div> 
                     : <>
                         <>
-                            {TabLocation == 'Resumo' ?
+                            {TabLocation == 'resumo' ?
                             <div >
                                 <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
                                 <FormResumo dadosUsuario={DadosResumoPerfil}/>
@@ -180,7 +183,7 @@ export default function Perfil() {
 
                             {TabLocation == 'cursos' ?
                             <div >
-                                <FormConteudo />
+                                <FormCursos />
                             </div>
                             :''}
 

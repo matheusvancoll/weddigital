@@ -8,6 +8,7 @@ import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.Rep
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
+import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,9 +63,7 @@ public class ControladorStatusPontuacaoProfissional {
             if(usuario.getIs_Profissional() && (profissional.getIdUsuario() == usuario.getIdUsuario())){
                 statusPontuacao = repositorioStatusPontuacaoProfissional.obterStatusPontuacaoPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
 
-                if(profissional.getNivelConta() == 1) { nivelConta = "Bronze"; }
-                if(profissional.getNivelConta() == 2) { nivelConta = "Ouro"; }
-                if(profissional.getNivelConta() == 3) { nivelConta = "Diamante"; }
+                nivelConta = Util.converterNivelContaParaString(profissional.getNivelConta());
 
                 dadosStatusDTO.setIdPontuacao(statusPontuacao.getIdPontuacao());
                 dadosStatusDTO.setPontoMinimo(statusPontuacao.getPontoMinimo());
@@ -81,6 +80,13 @@ public class ControladorStatusPontuacaoProfissional {
         }
 
         return ResponseEntity.ok().body(dadosStatusDTO);
+    }
+
+    public String obterStatusContaPorCasamentosBemSucedidos(Integer numeroCasamentos){
+        StatusPontuacao statusPontuacao = new StatusPontuacao();
+        statusPontuacao = repositorioStatusPontuacaoProfissional.obterStatusPontuacaoPorCasamentosBemSucedidos(numeroCasamentos);
+
+        return statusPontuacao.getStatusNome();
     }
 
 

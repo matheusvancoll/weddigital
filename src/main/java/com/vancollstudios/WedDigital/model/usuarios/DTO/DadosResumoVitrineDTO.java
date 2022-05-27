@@ -6,6 +6,7 @@ public class DadosResumoVitrineDTO {
     private String nomeEmpresa;
     private Integer casamentosBemSucedidos;
     private Double classificacaoProfissional;
+    private String nivelStatusConta;
     private String numeroContato;
     private String emailContato;
     private String descricaoEmpresa;
@@ -44,6 +45,14 @@ public class DadosResumoVitrineDTO {
 
     public void setClassificacaoProfissional(Double classificacaoProfissional) {
         this.classificacaoProfissional = classificacaoProfissional;
+    }
+
+    public String getNivelStatusConta() {
+        return nivelStatusConta;
+    }
+
+    public void setNivelStatusConta(String nivelStatusConta) {
+        this.nivelStatusConta = nivelStatusConta;
     }
 
     public String getNumeroContato() {

@@ -5,6 +5,7 @@ public class DadosResumoProfissionaisDTO {
     private Integer idProfissional;
     private String nomeEmpresa;
     private Integer casamentosBemSucedidos;
+    private String nivelStatusConta;
     private Double classificacao;
     private String cidade;
     private String estado;
@@ -33,6 +34,14 @@ public class DadosResumoProfissionaisDTO {
 
     public void setCasamentosBemSucedidos(Integer casamentosBemSucedidos) {
         this.casamentosBemSucedidos = casamentosBemSucedidos;
+    }
+
+    public String getNivelStatusConta() {
+        return nivelStatusConta;
+    }
+
+    public void setNivelStatusConta(String nivelStatusConta) {
+        this.nivelStatusConta = nivelStatusConta;
     }
 
     public Double getClassificacao() {

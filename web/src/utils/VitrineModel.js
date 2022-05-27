@@ -2,6 +2,7 @@ module.exports = {
     dadosVitrineDTO: {
         idProfissional: "",
         nomeEmpresa: "",
+        nivelStatusConta: "",
         casamentosBemSucedidos: "",
         classificacaoProfissional: "",
         numeroContato: "",

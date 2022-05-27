@@ -54,4 +54,14 @@ public class Util {
 
         return extensaoArquivo;
     }
+
+    public static String converterNivelContaParaString(Integer nivelConta){
+        String nivelContaTexto = "";
+
+        if(nivelConta == 1) { nivelContaTexto = "Bronze"; }
+        if(nivelConta== 2) { nivelContaTexto = "Ouro"; }
+        if(nivelConta == 3) { nivelContaTexto = "Diamante"; }
+
+        return nivelContaTexto;
+    }
 }

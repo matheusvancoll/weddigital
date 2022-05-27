@@ -148,6 +148,7 @@ public class ControladorUsuario {
             novoUsuario.setNomeUsuario(novoUsuarioEmpresaDTO.getNomeUsuario());
             novoUsuario.setEmail(novoUsuarioEmpresaDTO.getEmail());
             novoUsuario.setLogin(novoUsuarioEmpresaDTO.getLogin());
+            novoUsuario.setNivelConta(1);
             novoUsuario.setIs_Profissional(true);
             novoUsuario.setIs_Noivos(false);
             novoUsuario.setIs_PrimeiroAcesso(true);

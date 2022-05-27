@@ -13,10 +13,13 @@ export default function CardProdutoMarketplace(props){
     let classificacao = props.dadosProfissionais.classificacao
     let casamentosBemSucedidos = props.dadosProfissionais.casamentosBemSucedidos
     let idProfissional = props.dadosProfissionais.idProfissional
+    let nivelStatusConta = props.dadosProfissionais.nivelStatusConta
 
     return(
         <div className='card-anuncio-marketplace-container'>
             <img src={Imagem} class="card-img-top image-profissional" alt="..." />
+            {nivelStatusConta ? <h5 className="card-text nivel-profissional-status">{nivelStatusConta}</h5> : ''}
+
             <div class="card-body">
                 <h5 class="card-title">{nomeEmpresa}</h5>
                 <p class="card-text">{segmento} | A partir de: {valorMinimo}</p>

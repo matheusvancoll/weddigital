@@ -73,18 +73,11 @@ export default function CadastroUsuario(){
 
     function enviarEmailConfirmacaoCadastro(e, emailEnvio){
         e.preventDefault();
-        console.log("form")
-        console.log(form)
-
-        console.log("form.current")
-        console.log(form.current)
 
         emailjs.sendForm('service_5tqqlsa', 'template_x9le1nm', form.current, 'XKOIdqt9WWgiZGPAc')
         .then((result) => {
-            console.log("TRUE")
             console.log(result.text)
         }, (error) => {
-            console.log("FALSE")
             console.log(error.text)
         })
     }
@@ -140,18 +133,18 @@ export default function CadastroUsuario(){
         console.log("AFTER")
 
 
-         // api.post('usuario/empresa/novoUsuario', DadosCadastro)
-         //     .then((response) => {
-         //         setIsCarregandoDados(false)
-         //         setIsAguardandoConfirmacaoEmail(true)
-         //         setToken(response.data)
-         //         aguardandoLiberacaoEmail(ev, inputEmail)
-         //     }).catch((error) => {
-         //         setIsAguardandoConfirmacaoEmail(false)
-         //         setIsUsuarioExistente(true)
-         //         setIsCarregandoDados(false)
-         //         window.scrollTo(0,0)
-         //     })
+         api.post('usuario/empresa/novoUsuario', DadosCadastro)
+             .then((response) => {
+                 setIsCarregandoDados(false)
+                 setIsAguardandoConfirmacaoEmail(true)
+                 setToken(response.data)
+                 aguardandoLiberacaoEmail(ev, inputEmail)
+             }).catch((error) => {
+                 setIsAguardandoConfirmacaoEmail(false)
+                 setIsUsuarioExistente(true)
+                 setIsCarregandoDados(false)
+                 window.scrollTo(0,0)
+             })
         aguardandoLiberacaoEmail(ev, inputEmail)
     }
 

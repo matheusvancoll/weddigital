@@ -1,5 +1,6 @@
 package com.vancollstudios.WedDigital.controlador.vitrine;
 
+import com.vancollstudios.WedDigital.controlador.usuarios.ControladorStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.controlador.vitrine.DTO.DadosResumoProfissionaisDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
@@ -9,9 +10,11 @@ import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.chat.RepositorioMensagens;
 import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
+import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import com.vancollstudios.WedDigital.repositorio.vitrine.RepositorioVitrine;
+import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,12 @@ public class ControladorVitrine {
     @Autowired
     RepositorioMensagens repositorioMensagens;
 
+    @Autowired
+    RepositorioStatusPontuacaoProfissional repositorioStatusPontuacaoProfissional;
+
+    @Autowired
+    ControladorStatusPontuacaoProfissional controladorStatusPontuacaoProfissional;
+
     @GetMapping(path = "/api/profissionais/listarTodos/")
     public Collection<DadosResumoProfissionaisDTO> obterListaProfissionais(){
         Collection<DadosResumoProfissionaisDTO> dadosResumoProfissionaisDTO = new ArrayList<>();
@@ -55,6 +64,7 @@ public class ControladorVitrine {
                 continue;
             }else{
                 DadosResumoProfissionaisDTO dadosProfissional = new DadosResumoProfissionaisDTO();
+
                 dadosProfissional.setIdProfissional(profissional.getIdProfissional());
                 dadosProfissional.setNomeEmpresa(profissional.getNomeEmpresa());
                 dadosProfissional.setCidade(profissional.getCidade());
@@ -63,6 +73,13 @@ public class ControladorVitrine {
                 dadosProfissional.setClassificacao(profissional.getClassificacao());
                 dadosProfissional.setSegmento(profissional.getSegmento());
                 dadosProfissional.setValorMinimo(profissional.getValorMinimo());
+
+                if(profissional.getNivelConta() > 1){
+                    String nivelConta = Util.converterNivelContaParaString(profissional.getNivelConta());
+                    String statusConta = controladorStatusPontuacaoProfissional.obterStatusContaPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
+                    dadosProfissional.setNivelStatusConta(nivelConta + " " + statusConta);
+                }
+
                 dadosResumoProfissionaisDTO.add(dadosProfissional);
             }
         }
@@ -91,14 +108,8 @@ public class ControladorVitrine {
             dadosResumoVitrineDTO.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
         }
 
-        dadosResumoVitrineDTO.setClassificacaoProfissional(profissional.getClassificacao());
-        dadosResumoVitrineDTO.setNumeroContato(profissional.getNumeroContato());
-        dadosResumoVitrineDTO.setEmailContato(profissional.getEmail());
-        dadosResumoVitrineDTO.setDescricaoEmpresa(profissional.getDescricaoEmpresa());
-        dadosResumoVitrineDTO.setValorMinimo(profissional.getValorMinimo());
-        dadosResumoVitrineDTO.setFormasPagamento(profissional.getFormasPagamento());
-        dadosResumoVitrineDTO.setRealizaMaisDeUmEventoPorDia(profissional.getMaisDeUmEventoPorDia());
-        dadosResumoVitrineDTO.setTrabalhaSozinho(profissional.getTrabalhaSozinho());
+        dadosResumoVitrineDTO = popularDadosResumoVitrineDtoPorProfissional(profissional);
+
         if(profissional.getVisitasVitrine() == null){
             profissional.setVisitasVitrine(1);
         }else{
@@ -146,6 +157,26 @@ public class ControladorVitrine {
         repositorioProfissional.save(profissional);
 
         return ResponseEntity.status(HttpStatus.OK).body("ok");
+    }
+
+
+    public DadosResumoVitrineDTO popularDadosResumoVitrineDtoPorProfissional(Profissional profissional){
+        DadosResumoVitrineDTO dadosResumoVitrineDTO = new DadosResumoVitrineDTO();
+
+        dadosResumoVitrineDTO.setClassificacaoProfissional(profissional.getClassificacao());
+        dadosResumoVitrineDTO.setNumeroContato(profissional.getNumeroContato());
+        dadosResumoVitrineDTO.setEmailContato(profissional.getEmail());
+        dadosResumoVitrineDTO.setDescricaoEmpresa(profissional.getDescricaoEmpresa());
+        dadosResumoVitrineDTO.setValorMinimo(profissional.getValorMinimo());
+        dadosResumoVitrineDTO.setFormasPagamento(profissional.getFormasPagamento());
+        dadosResumoVitrineDTO.setRealizaMaisDeUmEventoPorDia(profissional.getMaisDeUmEventoPorDia());
+        dadosResumoVitrineDTO.setTrabalhaSozinho(profissional.getTrabalhaSozinho());
+
+        String nivelConta = Util.converterNivelContaParaString(profissional.getNivelConta());
+        String statusConta = controladorStatusPontuacaoProfissional.obterStatusContaPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
+        dadosResumoVitrineDTO.setNivelStatusConta(nivelConta + statusConta);
+
+        return dadosResumoVitrineDTO;
     }
 
 
