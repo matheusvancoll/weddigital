@@ -59,8 +59,9 @@ public class Util {
         String nivelContaTexto = "";
 
         if(nivelConta == 1) { nivelContaTexto = "Bronze"; }
-        if(nivelConta== 2) { nivelContaTexto = "Ouro"; }
-        if(nivelConta == 3) { nivelContaTexto = "Diamante"; }
+        if(nivelConta == 2) { nivelContaTexto = "Start"; }
+        if(nivelConta== 3) { nivelContaTexto = "Ouro"; }
+        if(nivelConta == 4) { nivelContaTexto = "Diamante"; }
 
         return nivelContaTexto;
     }

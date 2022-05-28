@@ -26,6 +26,8 @@ export default function Vitrine(){
     useEffect(() => {
         api.get(`detalhesProfissional/${idProfissionalURL}`)
         .then(({data}) => {
+            console.log("data")
+            console.log(data)
             setDadosVitrine(data)
             setIsCarregando(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,7 +76,7 @@ export default function Vitrine(){
 
                 <div className="vitrine01-principal">
                     <div className="fotos__vitrine">
-                        <FotosVitrine />
+                        <FotosVitrine listaImagens={DadosVitrine.imagensProfissional} />
                     </div>
 
                     <div className="contato__vitrine">

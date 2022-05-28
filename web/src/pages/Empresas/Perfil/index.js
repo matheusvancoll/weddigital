@@ -31,8 +31,6 @@ export default function Perfil() {
     let idUsuario = dadosToken[1]
     let idProfissional = dadosToken[2]
 
-    console.log("TOKEssN: " + idProfissional)
-
     // const { data, error } = useSWR(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idUsuario=${idProfissional}`,
     //     api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idUsuario=${idProfissional}`)
     //     .then(({data}) => {
@@ -171,7 +169,7 @@ export default function Perfil() {
 
                             {TabLocation == 'meuPerfil' ?
                             <div >
-                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} />
+                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} idProfissional={idProfissional} />
                             </div>
                             :''}
 

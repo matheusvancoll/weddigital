@@ -1,14 +1,18 @@
 package com.vancollstudios.WedDigital.controlador.vitrine;
 
+import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
 import com.vancollstudios.WedDigital.controlador.usuarios.ControladorStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.controlador.vitrine.DTO.DadosResumoProfissionaisDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
+import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
+import com.vancollstudios.WedDigital.model.imagens.ImagemVitrine;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
 import com.vancollstudios.WedDigital.model.orcamentos.Orcamento;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoVitrineDTO;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.chat.RepositorioMensagens;
+import com.vancollstudios.WedDigital.repositorio.imagens.RepositorioImagemVitrine;
 import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
 import com.vancollstudios.WedDigital.repositorio.statusPontuacaoProfissional.RepositorioStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
@@ -19,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +37,8 @@ public class ControladorVitrine {
 
     private final int LIMITE_ORCAMENTO_FREE = 3;
     private final int NIVEL_CONTA_FREE = 1;
+
+    private final int LIMITE_UPLOAD_IMAGENS_VITRINE = 20;
 
     @Autowired
     RepositorioProfissional repositorioProfissional;
@@ -50,7 +59,13 @@ public class ControladorVitrine {
     RepositorioStatusPontuacaoProfissional repositorioStatusPontuacaoProfissional;
 
     @Autowired
+    RepositorioImagemVitrine repositorioImagemVitrine;
+
+    @Autowired
     ControladorStatusPontuacaoProfissional controladorStatusPontuacaoProfissional;
+
+    @Autowired
+    ControladorImagem controladorImagem;
 
     @GetMapping(path = "/api/profissionais/listarTodos/")
     public Collection<DadosResumoProfissionaisDTO> obterListaProfissionais(){
@@ -176,18 +191,69 @@ public class ControladorVitrine {
         String statusConta = controladorStatusPontuacaoProfissional.obterStatusContaPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
         dadosResumoVitrineDTO.setNivelStatusConta(nivelConta + statusConta);
 
+        dadosResumoVitrineDTO.setImagensProfissional(this.obterImagensVitrinePorIdUsuario(profissional.getIdProfissional()));
+
         return dadosResumoVitrineDTO;
     }
 
+    @PostMapping(path = "/api/imagens/uploadImagensVitrine/{idProfissional}")
+    public String uploadImagemVitrine(@PathVariable("idProfissional") Integer idProfissional, @RequestParam MultipartFile arquivoImagemVitrine){
+        Profissional profissional = new Profissional();
+        String nomeArquivo = "";
+        String statusUpload = "";
+        Integer qtdImagensJaEnviadas = 0;
 
-    @GetMapping(path = "/api/obterEmailUsuario/{idUsuario}")
-    public String obterEmailUsuarioPorId(@PathVariable("idUsuario") Integer idUsuario){
-        String emailUsuario = "";
-        Optional<Usuario> usuario = repositorioUsuario.findAllByIdUsuario(idUsuario);
-        if(usuario != null && usuario.get() != null){
-            emailUsuario = usuario.get().getEmail();
+
+        ResponseEntity dadosProfissional = repositorioProfissional.findByIdProfissional(idProfissional)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+        if(dadosProfissional != null && dadosProfissional.getBody() != null){
+            profissional = (Profissional) dadosProfissional.getBody();
+            String extensaoImagem = Util.obterExtensaoImagem(arquivoImagemVitrine);
+
+            if(extensaoImagem.equals("jpeg") || extensaoImagem.equals("png") || extensaoImagem.equals("jpg") ||
+                    extensaoImagem.equals("JPEG") || extensaoImagem.equals("PNG") || extensaoImagem.equals("JPG")){
+                qtdImagensJaEnviadas = repositorioImagemVitrine.obterQuantidadeImagensVitrineSalvosPorIdProfissional(idProfissional);
+                nomeArquivo = profissional.getIdUsuario() + "_" + profissional.getNomeEmpresa() + "_" + (qtdImagensJaEnviadas+1) + "." + extensaoImagem;
+            }else{
+                return "falha";
+            }
+        }else{
+            return "falha";
         }
 
-        return emailUsuario;
+        if(qtdImagensJaEnviadas < LIMITE_UPLOAD_IMAGENS_VITRINE){
+
+            String caminhoDiretorioImagem = controladorImagem.salvarImagemVitrine(arquivoImagemVitrine, nomeArquivo);
+
+            if(caminhoDiretorioImagem != ""){
+                ImagemVitrine imagemVitrine = new ImagemVitrine();
+                imagemVitrine.setNomeImagem(nomeArquivo);
+                imagemVitrine.setIdProfissional(idProfissional);
+
+                repositorioImagemVitrine.save(imagemVitrine);
+                statusUpload = "sucesso";
+            }else{
+                statusUpload = "falha";
+            }
+        }else{
+            return "limite";
+        }
+
+        return statusUpload;
     }
+
+    @GetMapping(path = "/api/obterImagensVitrine/{idProfissional}")
+    public Collection<String> obterImagensVitrinePorIdUsuario(@PathVariable("idProfissional") Integer idProfissional){
+
+        Collection<String> listaArquivos = new ArrayList<>();
+        Collection<ImagemVitrine> imagensVitrine = repositorioImagemVitrine.findAllByIdProfissional(idProfissional);
+
+        for (ImagemVitrine imagem : imagensVitrine){
+            listaArquivos.add(imagem.getNomeImagem());
+        }
+
+        return listaArquivos;
+    }
+
 }

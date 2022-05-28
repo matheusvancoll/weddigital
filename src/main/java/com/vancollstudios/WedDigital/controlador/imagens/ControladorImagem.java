@@ -39,4 +39,21 @@ public class ControladorImagem {
 
         return statusUploadImagem;
     }
+
+    public String salvarImagemVitrine(MultipartFile arquivoImagem, String nomeImagem){
+        String statusUploadImagem = "";
+        Path caminhoDiretorio = Paths.get(this.diretorioRaizImagens, this.diretorioImgensVitrine);
+        Path caminhoArquivo = caminhoDiretorio.resolve(nomeImagem);
+
+
+        try{
+            Files.createDirectories(caminhoDiretorio);
+            arquivoImagem.transferTo(caminhoArquivo.toFile());
+            statusUploadImagem = caminhoArquivo.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("Problemas na tentativa de salvar o arquivo");
+        }
+
+        return statusUploadImagem;
+    }
 }

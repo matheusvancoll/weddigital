@@ -1,19 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import InputMask from 'react-input-mask';
 import { useHistory } from "react-router-dom";
 import './FormDadosGerais.css'
 
 import api from "../../../../api";
-import ErroCarregarDados from "../../../Modal/ErroCarregarDados";
 import UserContext from "../../../../api/userContext-api/userContext";
+
+import ErroCarregarDados from "../../../Modal/ErroCarregarDados";
 import ErroUploadArquivo from "../../../Modal/ErroUploadArquivo";
+import CardImagemVitrine from './CardImagemVitrine'
+import ErroLimiteUpload from "../../../Modal/ErroLimiteUpload";
 
 export default function FormDadosGerais(props){
-    const { token, setToken } = useContext(UserContext)
+    const { setToken } = useContext(UserContext)
     const history = useHistory()
     const [DadosCadastro, setDadosCadastro] = useState(props.dadosResumoPerfil)
     const [IsErroCadastro, setIsErroCadastro] = useState(false)
     const [IsErroUploadFoto, setIsErroUploadFoto] = useState(false)
+    const [IsLimiteUpload, setIsLimiteUpload] = useState(false)
 
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsCNPJ, setIsCNPJ] = useState(DadosCadastro.is_CNPJ)
@@ -22,6 +26,31 @@ export default function FormDadosGerais(props){
     const [IsTrabalhaSozinho, setIsTrabalhaSozinho] = useState(DadosCadastro.trabalhaSozinho)
 
     let idUsuario = props.idUsuario
+    let idProfissional = props.idProfissional
+
+    //Carregar upload fotos vitrine
+    const [Imagens, setImagens] = useState([])
+
+    useEffect(() => {
+        setIsCarregandoDados(true)
+        api.get("obterImagensVitrine/"+ idProfissional)
+            .then(({data}) => {
+                setImagens(data)
+                setIsCarregandoDados(false)
+            //eslint-disable-next-line react-hooks/exhaustive-deps
+        }).catch(({error}) => {
+            console.log(error)
+            setIsCarregandoDados(false)
+        })
+    }, [])
+
+
+    let listaImagens = Imagens
+    let listaCardImagensVitrine = []
+
+    for (let i = 0; i < listaImagens.length; i++) {
+        listaCardImagensVitrine.push(<CardImagemVitrine imagemCarregada={listaImagens[i]} />)
+    }
 
     function onChange(ev){
         const { value, name } = ev.target
@@ -60,13 +89,38 @@ export default function FormDadosGerais(props){
 
         api.post('dadosPerfil/uploadImagensPerfil/'+ idUsuario + '?fotoPerfil=', formData)
             .then((response) => {
+                response == "falha" ? setIsErroUploadFoto(true) : setIsErroUploadFoto(false)
                 setIsCarregandoDados(false)
-                setIsErroUploadFoto(false)
             }).catch((error) => {
+                console.log(error)
                 setIsCarregandoDados(false)
                 setIsErroUploadFoto(true)
         })
     }
+
+    function uploadImagemVitrine(ev){
+        ev.preventDefault();
+        setIsCarregandoDados(true)
+        setIsErroUploadFoto(false)
+        setIsLimiteUpload(false)
+
+        let arquivoImagemVitrine = document.getElementById('inputImagemVitrine').files[0]
+
+        const formData = new FormData();
+        formData.append('arquivoImagemVitrine', arquivoImagemVitrine);
+
+        api.post('imagens/uploadImagensVitrine/'+ idProfissional + '?arquivoImagemVitrine=', formData)
+            .then((response) => {
+                console.log("response.data")
+                console.log(response)
+                response.data == "falha" ? setIsErroUploadFoto(true) : response.data == "limite" ? setIsLimiteUpload(true) : setIsErroUploadFoto(false)
+                setIsCarregandoDados(false)
+            }).catch((error) => {
+            setIsCarregandoDados(false)
+            setIsErroUploadFoto(true)
+        })
+    }
+
 
     return(
         <div className="form-dados-derais__container">
@@ -82,6 +136,11 @@ export default function FormDadosGerais(props){
                 {IsErroCadastro 
                 ? <ErroCarregarDados /> 
                 : ''
+                }
+
+                {IsLimiteUpload
+                    ? <ErroLimiteUpload />
+                    : ''
                 }
 
                 {IsErroUploadFoto
@@ -235,6 +294,25 @@ export default function FormDadosGerais(props){
                             <label class="form-check-label" for="flexSwitchCheckDefault">{IsWhatsapp ? "Sim" : "Não"}</label>
                         </div>
                 </form>
+
+{/* ==== FOTOS ==== */}
+                <p className="text-center texto-label-titulo">Imagens</p>
+                <div className="row g-3 border_custom">
+                    <div className="col-md-12">
+                        <label htmlFor="validationCustom01" className="form-label">Adicionar nova imagem (até 1MB)</label>
+                        <div className="input-group">
+                            <input type="file" className="form-control" id="inputImagemVitrine"
+                                   aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
+                            <button className="btn btn-outline-secondary" type="button"
+                                    id="inputGroupFileAddon04" onClick={uploadImagemVitrine}>Adicionar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="row row-cols-1 row-cols-md-3 g-4">
+                        {listaCardImagensVitrine.length > 0 ? listaCardImagensVitrine : ''}
+                    </div>
+                </div>
 
 {/* ==== FAQ ==== */}
                 <p className="text-center texto-label-titulo">Perguntas relevantes</p>

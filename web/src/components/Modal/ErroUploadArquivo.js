@@ -7,6 +7,8 @@ export default function ErroUploadArquivo(){
             <br></br>
             A imagem deve ser menos que 1MB
             <br></br>
+            Nos formatos: .png, .jpg ou .jpeg
+            <br></br>
             Por favor, tente novamente
         </div>
     )

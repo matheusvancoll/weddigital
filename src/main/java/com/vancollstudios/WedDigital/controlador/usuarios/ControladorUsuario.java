@@ -100,7 +100,12 @@ public class ControladorUsuario {
         if(dadosUsuario != null && dadosUsuario.getBody() != null){
             usuario = (Usuario) dadosUsuario.getBody();
             String extensaoImagem = Util.obterExtensaoImagem(fotoPerfil);
-            nomeArquivo = usuario.getIdUsuario() + "_" + usuario.getNomeUsuario() + "_" + usuario.getRandomToken() + "." + extensaoImagem;
+            if(extensaoImagem.equals("jpeg") || extensaoImagem.equals("png") || extensaoImagem.equals("jpg") ||
+               extensaoImagem.equals("JPEG") || extensaoImagem.equals("PNG") || extensaoImagem.equals("JPG")){
+                nomeArquivo = usuario.getIdUsuario() + "_" + usuario.getNomeUsuario() + "_" + usuario.getRandomToken() + "." + extensaoImagem;
+            }else{
+                return "falha";
+            }
         }
 
         String caminhoDiretorioFoto = controladorImagem.salvarImagemPerfilUsuario(fotoPerfil, nomeArquivo);

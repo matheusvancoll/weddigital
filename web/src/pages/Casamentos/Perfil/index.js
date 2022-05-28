@@ -22,6 +22,7 @@ export default function Perfil() {
 
     let dadosToken = token.split('.')
     let idUsuario = dadosToken[1]
+    let idProfissional = dadosToken[2]
     let tokenUsuario = dadosToken[5]
 
     useEffect(() => {
@@ -135,7 +136,7 @@ export default function Perfil() {
 
                             {TabLocation == 'meuPerfil' ?
                             <div >
-                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} />
+                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} idProfissional={idProfissional} />
                             </div>
                             :''}
 
