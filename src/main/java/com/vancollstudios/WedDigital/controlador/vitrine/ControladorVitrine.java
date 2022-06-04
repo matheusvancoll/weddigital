@@ -4,7 +4,6 @@ import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
 import com.vancollstudios.WedDigital.controlador.usuarios.ControladorStatusPontuacaoProfissional;
 import com.vancollstudios.WedDigital.controlador.vitrine.DTO.DadosResumoProfissionaisDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
-import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
 import com.vancollstudios.WedDigital.model.imagens.ImagemVitrine;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
 import com.vancollstudios.WedDigital.model.orcamentos.Orcamento;
@@ -25,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,8 +72,7 @@ public class ControladorVitrine {
         Collection<Profissional> listaProfisisonais = repositorioVitrine.listarProfissionaisPorNivelConta();
 
         for (Profissional profissional : listaProfisisonais){
-            if(profissional.getNivelConta() == NIVEL_CONTA_FREE &&
-               profissional.getOrcamentosRecebidos() >= LIMITE_ORCAMENTO_FREE){
+            if(profissional.getNivelConta() == NIVEL_CONTA_FREE && profissional.getOrcamentosRecebidos() >= LIMITE_ORCAMENTO_FREE){
                 continue;
             }else{
                 DadosResumoProfissionaisDTO dadosProfissional = new DadosResumoProfissionaisDTO();
@@ -94,6 +91,9 @@ public class ControladorVitrine {
                     String statusConta = controladorStatusPontuacaoProfissional.obterStatusContaPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
                     dadosProfissional.setNivelStatusConta(nivelConta + " " + statusConta);
                 }
+
+                String imagemPrincipalVitrine = repositorioImagemVitrine.obterNomePrimeiraImagemVitrineProfissional(dadosProfissional.getIdProfissional());
+                dadosProfissional.setImagemMarketplace(imagemPrincipalVitrine);
 
                 dadosResumoProfissionaisDTO.add(dadosProfissional);
             }
@@ -243,17 +243,33 @@ public class ControladorVitrine {
         return statusUpload;
     }
 
-    @GetMapping(path = "/api/obterImagensVitrine/{idProfissional}")
-    public Collection<String> obterImagensVitrinePorIdUsuario(@PathVariable("idProfissional") Integer idProfissional){
+    @GetMapping(path = "/api/imagens/deletarImagemVitrine/{idProfissional}")
+    public String deletarImagemVitrine(@PathVariable("idProfissional") Integer idProfissional, @RequestParam Integer idImagem){
+        ImagemVitrine imagemVitrine = new ImagemVitrine();
 
-        Collection<String> listaArquivos = new ArrayList<>();
-        Collection<ImagemVitrine> imagensVitrine = repositorioImagemVitrine.findAllByIdProfissional(idProfissional);
+        Optional<ImagemVitrine> imagemVitrineOptional = repositorioImagemVitrine.findById(idImagem);
+        if(imagemVitrineOptional != null && imagemVitrineOptional.isPresent()) {
 
-        for (ImagemVitrine imagem : imagensVitrine){
-            listaArquivos.add(imagem.getNomeImagem());
+            imagemVitrine = imagemVitrineOptional.get();
+
+            if (imagemVitrine.getIdProfissional().equals(idProfissional)) {
+                controladorImagem.deletarImagemVitrine(imagemVitrineOptional.get().getNomeImagem());
+                repositorioImagemVitrine.deleteById(imagemVitrine.getIdImagem());
+            } else {
+                return "profissional inválido";
+            }
+        }else{
+            return "imagem não localizada";
         }
 
-        return listaArquivos;
+        return "Imagem deletada";
+    }
+
+    @GetMapping(path = "/api/obterImagensVitrine/{idProfissional}")
+    public Collection<ImagemVitrine> obterImagensVitrinePorIdUsuario(@PathVariable("idProfissional") Integer idProfissional){
+        Collection<ImagemVitrine> imagensVitrine = repositorioImagemVitrine.findAllByIdProfissional(idProfissional);
+
+        return imagensVitrine;
     }
 
 }

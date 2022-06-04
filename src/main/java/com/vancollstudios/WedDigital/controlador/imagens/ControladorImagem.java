@@ -45,7 +45,6 @@ public class ControladorImagem {
         Path caminhoDiretorio = Paths.get(this.diretorioRaizImagens, this.diretorioImgensVitrine);
         Path caminhoArquivo = caminhoDiretorio.resolve(nomeImagem);
 
-
         try{
             Files.createDirectories(caminhoDiretorio);
             arquivoImagem.transferTo(caminhoArquivo.toFile());
@@ -55,5 +54,13 @@ public class ControladorImagem {
         }
 
         return statusUploadImagem;
+    }
+
+    public void deletarImagemVitrine(String nomeArquivo){
+        Path caminhoDiretorio = Paths.get(this.diretorioRaizImagens, this.diretorioImgensVitrine);
+        Path caminhoArquivo = caminhoDiretorio.resolve(nomeArquivo);
+
+        java.io.File arquivoDeletar = new java.io.File(caminhoArquivo.toString());
+        arquivoDeletar.delete();
     }
 }

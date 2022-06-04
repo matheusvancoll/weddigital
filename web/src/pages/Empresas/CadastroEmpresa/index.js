@@ -4,6 +4,7 @@ import InputMask from 'react-input-mask';
 import emailjs from 'emailjs-com'
 import './CadastroEmpresa.css'
 
+import Config from '../../../config.json'
 import api from '../../../api'
 import Navbar from '../../../components/Navbar'
 import UsuarioModel from '../../../utils/UsuarioModel';
@@ -71,7 +72,7 @@ export default function CadastroUsuario(){
         }
     }
 
-    function enviarEmailConfirmacaoCadastro(e, emailEnvio){
+    function enviarEmailConfirmacaoCadastro(e){
         e.preventDefault();
 
         emailjs.sendForm('service_5tqqlsa', 'template_x9le1nm', form.current, 'XKOIdqt9WWgiZGPAc')
@@ -94,9 +95,12 @@ export default function CadastroUsuario(){
             email: inputEmail,
         })
 
+        setTimeout(() => {
+            console.log("Email processado")
+        }, "1500")
+
         document.getElementById('inputHiddenEmail').value = inputEmail
         document.getElementById('inputHiddenNomeUsuario').value = inputNome
-
 
         if(!termosUso){
             setIsAcordoChecked(false)
@@ -120,39 +124,35 @@ export default function CadastroUsuario(){
             })
         }
 
-        onSubmit(ev, inputEmail)
+        onSubmit(ev)
     }
 
-    function onSubmit(ev, inputEmail){
-        setTimeout(() => {
-                setIsCarregandoDados(false)
-                setIsAguardandoConfirmacaoEmail(true)
-                aguardandoLiberacaoEmail(ev, inputEmail)
-                console.log("Delayed for 5 second.");
-            }, "5000")
-        console.log("AFTER")
-
-
+    function onSubmit(ev){
          api.post('usuario/empresa/novoUsuario', DadosCadastro)
              .then((response) => {
                  setIsCarregandoDados(false)
                  setIsAguardandoConfirmacaoEmail(true)
                  setToken(response.data)
-                 aguardandoLiberacaoEmail(ev, inputEmail)
+                 aguardandoLiberacaoEmail(ev, response.data)
              }).catch((error) => {
                  setIsAguardandoConfirmacaoEmail(false)
                  setIsUsuarioExistente(true)
                  setIsCarregandoDados(false)
                  window.scrollTo(0,0)
              })
-        aguardandoLiberacaoEmail(ev, inputEmail)
     }
 
-    function aguardandoLiberacaoEmail(ev, inputEmail){
-        enviarEmailConfirmacaoCadastro(ev, inputEmail)
+    function aguardandoLiberacaoEmail(ev, tokenUsuario){
+        let tokenSplit = tokenUsuario.split('.')
+        let idUsuario = tokenSplit[1]
+        let idLinkToken = tokenSplit[(tokenSplit.length-1)]
+        let linkValidacao = `${Config.api.linkValidacaoEmail}?idUsuario=${idUsuario}&tokenUsuario=${idLinkToken}`
+
+        document.getElementById('inputHiddenLink').value = linkValidacao
+
+        enviarEmailConfirmacaoCadastro(ev)
         setTimeout(() => {
-            // history.push('/empresas/perfil')
-            console.log("history.push('/empresas/perfil')")
+            history.push('/empresas/perfil')
         }, "10000")
     }
 
@@ -170,22 +170,17 @@ export default function CadastroUsuario(){
                 :
                     IsAguardandoConfirmacaoEmail
                     ?
-                        <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-dialog-centered">
                             <div className="aguardando-confirmacao-email__container">
                                 <img src={LogoWed} />
 
                                 <h1>Confirme seu email!</h1>
-                                <p>Olá você está confirmando sue email na wed difitnasd que é muito top!</p>
-                                <h6>caso não tneho recebido seu email de confirmaç~çao clique aqui para ree</h6>
-
-                                <a href="#" data-bs-toggle="tooltip" title="Tooltip">
-                                    This link
-                                </a>
-                                and
-                                <a href="#" data-bs-toggle="tooltip" title="Tooltip">
-                                    that link
-                                </a>
-                                have tooltips on hover.
+                                <p>Olá você recebeu um email de confirmação de cadastro em seu email</p>
+                                <h6>Caso não tenha recebido o email, clique em:
+                                    <button type="button" class="btn btn-warning" onClick={enviarEmailConfirmacaoCadastro}>
+                                        Reenviar Email
+                                    </button>
+                                </h6>
                             </div>
                         </div>
                     :<>
@@ -397,6 +392,8 @@ export default function CadastroUsuario(){
                         <input type="text" name="nomeUsuario" id="inputHiddenNomeUsuario" />
                         <label>Email</label>
                         <input type="text" name="email" id="inputHiddenEmail" />
+                        <label>Link Validacao</label>
+                        <input type="text" name="urlValidacaoEmail" id="inputHiddenLink" />
                     </form>
                 </div>
             </div>

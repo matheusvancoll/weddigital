@@ -49,7 +49,12 @@ export default function FormDadosGerais(props){
     let listaCardImagensVitrine = []
 
     for (let i = 0; i < listaImagens.length; i++) {
-        listaCardImagensVitrine.push(<CardImagemVitrine imagemCarregada={listaImagens[i]} />)
+        listaCardImagensVitrine.push(
+            <CardImagemVitrine idImagem={listaImagens[i].idImagem}
+                               imagemCarregada={listaImagens[i].nomeImagem}
+                               idProfissional={idProfissional}
+                               isCarregando={setIsCarregandoDados}
+            />)
     }
 
     function onChange(ev){

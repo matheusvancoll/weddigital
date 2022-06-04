@@ -15,4 +15,9 @@ public interface RepositorioImagemVitrine extends CrudRepository<ImagemVitrine, 
     @Query(value = "select count(id_Profissional) from imagens_vitrine where id_profissional = :idProfissional",
             nativeQuery = true)
     Integer obterQuantidadeImagensVitrineSalvosPorIdProfissional(Integer idProfissional);
+
+    @Query(value = "select nome_imagem from imagens_vitrine where id_profissional = :idProfissional limit 1;",
+            nativeQuery = true)
+    String obterNomePrimeiraImagemVitrineProfissional(Integer idProfissional);
+
 }

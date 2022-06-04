@@ -1,86 +1,12 @@
 {
-    "isUserLogado": true,
-    "nome" : "Natália Lima",
-    "cidade" : "Natal",
-    "estado" : "Rio Grande do Norte",
-    "tipoUsuario" : "fornecedor",
-    "dataCasamento": "30 de Abril de 2022",
-    "diasParaCasamento" : "21 dias",
-
-    "casamentosRealizados" : 4,
-    "orcamentosRecebidos" : 6,
-    "orcamentosPendentes" : 1,
-
-
     "filtros": {
         "Categorias" : ["Buffet", "Vestidos", "Músicos", "Fotógrafo"],
         "Classificação" : [1, 2, 3, 4, 5],
         "Valores" : ["Até R$500", "De R$501 a R$2000", "Acima de R$2001"]
     },
 
-    "produtos":[{
-            "title": "Recepção A",
-            "cidade": "Natal",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 4
-        },{
-            "title": "Recepção B",
-            "cidade": "Natal",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 4
-        },{
-            "title": "Recepção C",
-            "cidade": "Parnamirim",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 3
-        },{
-            "title": "Recepção D",
-            "cidade": "Parnamirim",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 5
-        },{
-            "title": "Recepção E",
-            "cidade": "Macaíba",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 1
-        },{
-            "title": "Fotógrafo A",
-            "cidade": "Natal",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 5
-        },{
-            "title": "Fotógrafo B",
-            "cidade": "Parnamirim",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 4
-        },{
-            "title": "Fotógrafo C",
-            "cidade": "Macaíba",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 3
-        },{
-            "title": "Fotógrafo D",
-            "cidade": "Macaíba",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 5
-        },{
-            "title": "Músico A",
-            "cidade": "Natal",
-            "estado": "Rio Grande do Norte",
-            "classificacao" : 5
-        },{
-            "title": "Músico B",
-            "cidade": "São Paulo",
-            "estado": "São Paulo",
-            "classificacao" : 5
-        }
-    ],
-    
-    "api":[{
-        "buscarTodosAnuncios": "anuncio/buscarTodos",
-        "buscarAnuncioPeloID": "anuncio/",
-        "statusServer": "status"
+    "api":{
+        "linkApiGeral": "http://177.153.60.189:8080/api",
+        "linkValidacaoEmail": "http://177.153.60.189:8080/cadastro/usuario/confirmacaoEmail"
     }
-]
-
 }

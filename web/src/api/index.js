@@ -1,7 +1,8 @@
 import axios from "axios";
+import WedConfig from '../config.json'
 
 const api = axios.create({
-    baseURL: "http://177.153.60.189:8080/api"
+    baseURL: WedConfig.api.linkApiGeral
 })
 
 export default api

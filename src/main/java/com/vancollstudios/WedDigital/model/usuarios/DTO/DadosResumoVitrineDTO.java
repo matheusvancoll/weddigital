@@ -1,5 +1,7 @@
 package com.vancollstudios.WedDigital.model.usuarios.DTO;
 
+import com.vancollstudios.WedDigital.model.imagens.ImagemVitrine;
+
 import java.util.Collection;
 
 public class DadosResumoVitrineDTO {
@@ -17,7 +19,7 @@ public class DadosResumoVitrineDTO {
     private Boolean realizaMaisDeUmEventoPorDia;
     private Boolean trabalhaSozinho;
 
-    private Collection<String> imagensProfissional;
+    private Collection<ImagemVitrine> imagensProfissional;
 
     public Integer getIdProfissional() {
         return idProfissional;
@@ -115,11 +117,11 @@ public class DadosResumoVitrineDTO {
         this.trabalhaSozinho = trabalhaSozinho;
     }
 
-    public Collection<String> getImagensProfissional() {
+    public Collection<ImagemVitrine> getImagensProfissional() {
         return imagensProfissional;
     }
 
-    public void setImagensProfissional(Collection<String> imagensProfissional) {
+    public void setImagensProfissional(Collection<ImagemVitrine> imagensProfissional) {
         this.imagensProfissional = imagensProfissional;
     }
 }

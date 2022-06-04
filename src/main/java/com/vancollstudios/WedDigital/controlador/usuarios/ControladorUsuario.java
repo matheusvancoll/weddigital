@@ -88,6 +88,31 @@ public class ControladorUsuario {
         return ResponseEntity.status(status).body(tokenAcesso);
     }
 
+    @GetMapping(path = "/cadastro/usuario/confirmacaoEmail")
+    public ResponseEntity<String> validarConfirmacaoEmail(@RequestParam Integer idUsuario, @RequestParam Integer tokenUsuario){
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findByIdUsuario(idUsuario);
+        if(usuarioOptional == null || !usuarioOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario inválido");
+        }
+
+        Usuario usuario  = usuarioOptional.get();
+
+        if(usuario.getIs_Validado()){
+            return ResponseEntity.status(HttpStatus.OK).body("Email validado");
+        }
+
+        if(!usuario.getRandomToken().equals(tokenUsuario)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido");
+        }
+
+        usuario.setIs_Validado(true);
+        repositorioUsuario.save(usuario);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Email validado");
+    }
+
+
+
     @PostMapping(path = "/api/dadosPerfil/uploadImagensPerfil/{idUsuario}")
     public String uploadImagensFotoPerfil(@PathVariable("idUsuario") Integer idUsuario, @RequestParam MultipartFile fotoPerfil){
         Usuario usuario = new Usuario();
@@ -370,7 +395,7 @@ public class ControladorUsuario {
             String tipoUsuario;
             if(usuario.getIs_Noivos()) { tipoUsuario = "noivos"; }
             else { tipoUsuario = "profissional"; }
-            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ idTipoUsuario;
+            tokenAcesso = tipoUsuario +"."+ usuario.getIdUsuario() +"."+ idTipoUsuario + "."+ usuario.getRandomToken();
         }
 
         return tokenAcesso;

@@ -14,10 +14,14 @@ export default function CardProdutoMarketplace(props){
     let casamentosBemSucedidos = props.dadosProfissionais.casamentosBemSucedidos
     let idProfissional = props.dadosProfissionais.idProfissional
     let nivelStatusConta = props.dadosProfissionais.nivelStatusConta
+    let imagemVitrine = props.dadosProfissionais.imagemMarketplace
+
+    let nomeArquivo = imagemVitrine ? imagemVitrine : 'capaVitrine.jpeg'
+    const imagemPrincipalCapa = require(`../../../fileContents/imagensVitrineProfissional/${nomeArquivo}`)
 
     return(
         <div className='card-anuncio-marketplace-container'>
-            <img src={Imagem} class="card-img-top image-profissional" alt="..." />
+            <img src={imagemPrincipalCapa} class="card-img-top image-profissional" alt="..." />
             {nivelStatusConta ? <h5 className="card-text nivel-profissional-status">{nivelStatusConta}</h5> : ''}
 
             <div class="card-body">

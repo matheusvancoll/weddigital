@@ -11,6 +11,7 @@ public class DadosResumoProfissionaisDTO {
     private String estado;
     private String segmento;
     private String valorMinimo;
+    private String imagemMarketplace;
 
     public Integer getIdProfissional() {
         return idProfissional;
@@ -82,5 +83,13 @@ public class DadosResumoProfissionaisDTO {
 
     public void setValorMinimo(String valorMinimo) {
         this.valorMinimo = valorMinimo;
+    }
+
+    public String getImagemMarketplace() {
+        return imagemMarketplace;
+    }
+
+    public void setImagemMarketplace(String imagemMarketplace) {
+        this.imagemMarketplace = imagemMarketplace;
     }
 }

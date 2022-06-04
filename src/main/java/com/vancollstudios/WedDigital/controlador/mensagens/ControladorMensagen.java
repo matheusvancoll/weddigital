@@ -80,7 +80,4 @@ public class ControladorMensagen {
         Collection<Mensagem> listaMensagensCliente = repositorioMensagens.findAllByIdCliente(idCliente);
         return listaMensagensCliente;
     }
-
-
-
 }
