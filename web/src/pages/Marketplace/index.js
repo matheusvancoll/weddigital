@@ -13,13 +13,16 @@ export default function Marketplace(){
     const [IsCarregandoDados, setIsCarregandoDados] = useState(true)
     
     useEffect(() => {
-        api.get("profissionais/listarTodos/").then(({data}) => {
-            setProfissionais(data)
-            setIsCarregandoDados(false)
-            //eslint-disable-next-line react-hooks/exhaustive-deps
+        api.get("profissionais/listarTodos/")
+            .then(({data}) => {
+                setProfissionais(data)
+                setIsCarregandoDados(false)
+                //eslint-disable-next-line react-hooks/exhaustive-deps
         })
     }, [])
-    
+
+    console.log("DADOS PROFISSIONAIS")
+    console.log(Profissionais)
     
     let listaProfissionais = Profissionais
     let listaCardProfissionaisMarketplace = []

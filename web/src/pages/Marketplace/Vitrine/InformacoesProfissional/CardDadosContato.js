@@ -1,10 +1,8 @@
 import React, {useContext, useState} from "react";
 import api from "../../../../api";
-import CarregandoPlaceholder from "../../../../components/Modal/CarregandoPlaceholder";
 import UserContext from "../../../../api/userContext-api/userContext";
 
 export default function CardDadosContato(props){
-    const [ isCarregando, setIsCarregando ] = useState(false)
     const [ NomeNoiv, setNomeNoiv ] = useState('')
     const [ QtdConvidados, setQtdConvidados ] = useState('')
     const [ DataCasamento, setDataCasamento ] = useState('')

@@ -70,7 +70,7 @@ export default function FormDadosGerais(props){
         setIsCarregandoDados(true)
         setIsErroCadastro(false)
 
-        api.put('dadosPerfil/atualizarDados/'+idUsuario, DadosCadastro)
+        api.put('empresa/dadosPerfil/atualizarDados/'+idUsuario, DadosCadastro)
             .then((response) => {
                 setIsCarregandoDados(false)
                 setToken(response.data)

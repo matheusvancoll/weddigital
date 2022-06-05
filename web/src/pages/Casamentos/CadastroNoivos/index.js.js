@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useRef, useState} from "react";
 import { useHistory } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import './CadastroNoivos.css'
@@ -10,20 +10,28 @@ import Utils from "../../../utils/Utils";
 
 import Navbar from '../../../components/Navbar'
 import CarregandoPlaceholder from "../../../components/Modal/CarregandoPlaceholder";
-import CadastroInvalido from "../../../components/Modal/CardAnuncioPlaceholder";
+import CadastroInvalido from "../../../components/Modal/ErroCarregarDados";
+import emailjs from "emailjs-com";
+import Config from "../../../config.json";
+import LogoWed from "../../../assets/icon.ico";
 
 export default function CadastroUsuario(){
+    const history = useHistory()
+    const { setToken } = useContext(UserContext)
+    const form = useRef();
+
     const [DadosCadastro, setDadosCadastro] = useState(UsuarioModel.dadosUsuarioNoivDTO)
+
+    const [IsAguardandoConfirmacaoEmail, setIsAguardandoConfirmacaoEmail] = useState(false)
     const [IsUsuarioExistente, setIsUsuarioExistente] = useState(false)
     const [IsCarregandoDados, setIsCarregandoDados] = useState(false)
     const [IsAcordoChecked, setIsAcordoChecked] = useState(true)
     const [IsSenhaValida, setIsSenhaValida] = useState(true)
     const [IsSenhaIgual, setIsSenhaIgual] = useState(true)
-    const { setToken } = useContext(UserContext)
     const [IsNoiva, setIsNoiva] = useState(true)
-    const history = useHistory()
-    
+
     function onChange(ev){
+        ev.preventDefault()
         const { value, name } = ev.target
         setDadosCadastro({
             ...DadosCadastro, 
@@ -33,11 +41,17 @@ export default function CadastroUsuario(){
 
     function formatarData(ev){
         const { value, name } = ev.target
-        let arrData = value.split('-')
-        let dataFormatada = `${arrData[2]}/${arrData[1]}/${arrData[0]}`
+        let data = value.split('-')
+        let dataFormatada = `${data[2]}/${data[1]}/${data[0]}`
 
+        setDadosCadastro({
+            ...DadosCadastro,
+            dataCasamento: dataFormatada,
+        })
     }
+
     function onSenhaValida(ev){
+        ev.preventDefault()
         setIsSenhaValida(false)
         const { value, name } = ev.target
 
@@ -55,6 +69,7 @@ export default function CadastroUsuario(){
     }
 
     function onSenhaIgual(ev){
+        ev.preventDefault()
         setIsSenhaIgual(false)
         const { value, name } = ev.target
         let isSenhaIgual = Utils.verificarIgualdadeSenha(DadosCadastro.senha, value)
@@ -66,7 +81,7 @@ export default function CadastroUsuario(){
         }
     }
 
-    function onSubmit(ev){
+    function validacao(ev){
         setIsCarregandoDados(true)
         setIsUsuarioExistente(false)
         setIsSenhaValida(true)
@@ -78,23 +93,84 @@ export default function CadastroUsuario(){
         }
 
         let termosUso = document.getElementById('invalidCheck').checked
+        let inputEmail = document.getElementById('inputEmailValidacao').value
+        let inputNome = document.getElementById('inputNomeUsuarioValidacao').value
 
         if(!termosUso){
             setIsAcordoChecked(false)
             setIsCarregandoDados(false)
             return
         }
-        
-        // api.post('usuario/noivos/novoUsuario', DadosCadastro)
-        //     .then((response) => {
-        //         setIsCarregandoDados(false)
-        //         setToken(response.data)
-        //         history.push('/aguardando-liberacao')
-        //     }).catch((error) => {
-        //         setIsUsuarioExistente(true)
-        //         setIsCarregandoDados(false)
-        //         window.scrollTo(0,0)
-        //     })
+
+        setDadosCadastro({
+            ...DadosCadastro,
+            email: inputEmail,
+        })
+
+        setTimeout(() => {
+            console.log("Email processado")
+        }, "1500", console.log("NOW"))
+
+        document.getElementById('inputHiddenEmail').value = inputEmail
+        document.getElementById('inputHiddenNomeUsuario').value = inputNome
+
+        let urlDados = window.location.href.split('_')
+        let idUsuarioConviteUrl = null;
+        let tokenUsuarioConviteUrl = null;
+
+        if(urlDados.length > 1){
+            idUsuarioConviteUrl = urlDados[1]
+            tokenUsuarioConviteUrl = urlDados[2]
+
+            setDadosCadastro({
+                ...DadosCadastro,
+                is_CadastroPorConvite: true,
+                idUsuarioConvite: idUsuarioConviteUrl,
+                tokenUsuarioConvite: tokenUsuarioConviteUrl,
+            })
+        }
+
+        onSubmit(ev)
+    }
+
+    function onSubmit(ev){
+        api.post('usuario/noivos/novoUsuario', DadosCadastro)
+            .then((response) => {
+                setIsCarregandoDados(false)
+                setIsAguardandoConfirmacaoEmail(true)
+                setToken(response.data)
+                aguardandoLiberacaoEmail(ev, response.data)
+            }).catch((error) => {
+                setIsAguardandoConfirmacaoEmail(false)
+                setIsUsuarioExistente(true)
+                setIsCarregandoDados(false)
+                window.scrollTo(0,0)
+            })
+    }
+
+    function aguardandoLiberacaoEmail(ev, tokenUsuario){
+        let tokenSplit = tokenUsuario.split('.')
+        let idUsuario = tokenSplit[1]
+        let idLinkToken = tokenSplit[(tokenSplit.length-1)]
+        let linkValidacao = `${Config.api.linkValidacaoEmail}?idUsuario=${idUsuario}&tokenUsuario=${idLinkToken}`
+
+        document.getElementById('inputHiddenLink').value = linkValidacao
+
+        enviarEmailConfirmacaoCadastro(ev)
+        setTimeout(() => {
+            history.push('/perfil')
+        }, "10000")
+    }
+
+    function enviarEmailConfirmacaoCadastro(e){
+        e.preventDefault();
+
+        emailjs.sendForm('service_7me8gxg', 'template_skfs5gg', form.current, 'duhWa4vLPR4ueB2cj')
+            .then((result) => {
+                console.log(result.text)
+            }, (error) => {
+                console.log(error.text)
+            })
     }
 
     return(
@@ -108,12 +184,27 @@ export default function CadastroUsuario(){
 
                 {IsCarregandoDados
                     ? <CarregandoPlaceholder />
-                :<>
+                : IsAguardandoConfirmacaoEmail
+                    ?
+                        <div className="modal-dialog-centered">
+                            <div className="aguardando-confirmacao-email__container">
+                                <img src={LogoWed} />
+
+                                <h1>Confirme seu email!</h1>
+                                <p>Olá você recebeu um email de confirmação de cadastro em seu email</p>
+                                <h6>Caso não tenha recebido o email, clique em:
+                                    <button type="button" class="btn btn-warning" onClick={enviarEmailConfirmacaoCadastro}>
+                                        Reenviar Email
+                                    </button>
+                                </h6>
+                            </div>
+                        </div>
+                    :<>
                     <p className="text-center texto-label-acesso">Dados de Acesso</p>
-                    <form className="row g-3 needs-validation cadastro-usuario-form" action="post">
+                    <form className="row g-3 needs-validation cadastro-usuario-form">
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>
-                                <input type="text" className="form-control" id="validationCustom01"
+                                <input type="text" className="form-control" id="inputNomeUsuarioValidacao"
                                         name="nomeUsuario" value={DadosCadastro.nomeUsuario} onChange={onChange} required />
                         </div>
 
@@ -128,8 +219,8 @@ export default function CadastroUsuario(){
 
                         <div className="col-md-12">
                             <label for="exampleInputEmail1" class="form-label">Email*</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
-                                    name="email" value={DadosCadastro.email} onChange={onChange}/>
+                            <input type="email" class="form-control" id="inputEmailValidacao" autoComplete="off" aria-describedby="emailHelp" required
+                                    name="email" />
                         </div>
 
                         <div className="col-md-6">
@@ -211,15 +302,10 @@ export default function CadastroUsuario(){
                         </div>
 
                         <div className="col-md-7">
-                            <label for="validationCustom01" className="form-label">Casamos em:*</label>
-                            <div className="formField app-form-field formField--date" aria-labelledby="main_aside_date">
-                                <i className="svgIcon svgIcon__calendar formField__icon"></i>
-                                <input className="formField__input app-lead-form-date"
-                                       type="date" name="Fecha" id="main_aside_date"
-                                       placeholder="" autoComplete="off"
-                                       name="dataCasamento" value={DadosCadastro.dataCasamento} onChange={formatarData} required
-                                    />
-                                </div>
+                            <label>Casamos em:*</label>
+                            <div>
+                                <input type="date" autoComplete="off" id="dataCasamento" onChange={formatarData} required />
+                            </div>
                         </div>
             
                         <label class="form-check-label" for="flexSwitchCheckDefault">Sou:</label>
@@ -242,7 +328,7 @@ export default function CadastroUsuario(){
                                 <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
                                 
                                 <label className="form-check-label" for="invalidCheck">
-                                    Declaro que li e aceito os termos de uso
+                                    Declaro que li e aceito os <a href="/termos-de-uso" target="_blank">termos de uso</a>
                                 </label>
                                 {IsAcordoChecked
                                 ? ""
@@ -253,14 +339,22 @@ export default function CadastroUsuario(){
                             </div>
                         </div>
 
-                        {/* A senha deve conter no mínimo 3 caracteres em maiúsculo, 2 números e 1 caractere especial! */}
-
                         <div className="col-12">
-                            <button className="btn btn-primary" type="submit" onClick={onSubmit}>Cadastrar</button>
+                            <button className="btn btn-primary" type="submit" onClick={validacao}>Cadastrar</button>
                         </div>
                     </form>
                 </>
             }
+                <div className="form-envio-email-confirmacao-cadastro">
+                    <form ref={form} >
+                        <label>Name</label>
+                        <input type="text" name="nomeUsuario" id="inputHiddenNomeUsuario" />
+                        <label>Email</label>
+                        <input type="text" name="email" id="inputHiddenEmail" />
+                        <label>Link Validacao</label>
+                        <input type="text" name="urlValidacaoEmail" id="inputHiddenLink" />
+                    </form>
+                </div>
             </div>
         </>
     )

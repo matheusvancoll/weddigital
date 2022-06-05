@@ -110,19 +110,11 @@ public class ControladorVitrine {
 
         Optional<Profissional> profissionalOptional = repositorioProfissional.findAllByIdProfissional(idProfissional);
 
-        if(profissionalOptional != null || profissionalOptional.isPresent()){
-            profissional = profissionalOptional.get();
+        if(profissionalOptional == null || !profissionalOptional.isPresent()){
+            return null;
         }
 
-        dadosResumoVitrineDTO.setIdProfissional(profissional.getIdProfissional());
-        dadosResumoVitrineDTO.setNomeEmpresa(profissional.getNomeEmpresa());
-
-        if(profissional.getCasamentosBemSucedidos() == null){
-            dadosResumoVitrineDTO.setCasamentosBemSucedidos(0);
-        }else{
-            dadosResumoVitrineDTO.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
-        }
-
+        profissional = profissionalOptional.get();
         dadosResumoVitrineDTO = popularDadosResumoVitrineDtoPorProfissional(profissional);
 
         if(profissional.getVisitasVitrine() == null){
@@ -178,6 +170,8 @@ public class ControladorVitrine {
     public DadosResumoVitrineDTO popularDadosResumoVitrineDtoPorProfissional(Profissional profissional){
         DadosResumoVitrineDTO dadosResumoVitrineDTO = new DadosResumoVitrineDTO();
 
+        dadosResumoVitrineDTO.setIdProfissional(profissional.getIdProfissional());
+        dadosResumoVitrineDTO.setNomeEmpresa(profissional.getNomeEmpresa());
         dadosResumoVitrineDTO.setClassificacaoProfissional(profissional.getClassificacao());
         dadosResumoVitrineDTO.setNumeroContato(profissional.getNumeroContato());
         dadosResumoVitrineDTO.setEmailContato(profissional.getEmail());
@@ -186,6 +180,12 @@ public class ControladorVitrine {
         dadosResumoVitrineDTO.setFormasPagamento(profissional.getFormasPagamento());
         dadosResumoVitrineDTO.setRealizaMaisDeUmEventoPorDia(profissional.getMaisDeUmEventoPorDia());
         dadosResumoVitrineDTO.setTrabalhaSozinho(profissional.getTrabalhaSozinho());
+
+        if(profissional.getCasamentosBemSucedidos() == null){
+            dadosResumoVitrineDTO.setCasamentosBemSucedidos(0);
+        }else{
+            dadosResumoVitrineDTO.setCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());
+        }
 
         String nivelConta = Util.converterNivelContaParaString(profissional.getNivelConta());
         String statusConta = controladorStatusPontuacaoProfissional.obterStatusContaPorCasamentosBemSucedidos(profissional.getCasamentosBemSucedidos());

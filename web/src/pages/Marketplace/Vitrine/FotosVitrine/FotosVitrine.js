@@ -12,29 +12,22 @@ export default function FotosVitrine(props){
     let listaImagensVitrine = []
 
     for (let i = 0; i < listaImagens.length; i++) {
-        listaImagensVitrine.push(<ImagemCard imagemNome={listaImagens[i]} />)
+        if(i == 0){ continue }
+        const imagemParam = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[i].nomeImagem}`)
+        listaImagensVitrine.push(<ImagemCard arquivoImagem={imagemParam}/>)
     }
 
+    const imagemActive = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[0].nomeImagem}`)
 
-    const imagem1 = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[0]}`)
-    const imagem2 = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[1]}`)
-    const imagem3 = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[3]}`)
     return(
         <>
             <div className="vitrine-fotos__container">
                 <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {/*{listaImagensVitrine}*/}
-
                         <div class="carousel-item active" data-bs-interval="10000">
-                            <img src={imagem1} class="d-block w-100" alt="..." />
+                            <img src={imagemActive} class="d-block w-100" alt="..." />
                         </div>
-                        <div class="carousel-item" data-bs-interval="10000">
-                            <img src={imagem2} class="d-block w-100" alt="..." />
-                        </div>
-                        <div class="carousel-item">
-                            <img src={imagem3} class="d-block w-100" alt="..." />
-                        </div>
+                        {listaImagensVitrine}
                     </div>
 
                     <button class="carousel-control-prev" type="button"         data-bs-target="#carouselExampleInterval" data-bs-slide="prev">

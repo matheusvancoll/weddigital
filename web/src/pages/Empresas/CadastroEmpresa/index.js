@@ -203,7 +203,7 @@ export default function CadastroUsuario(){
 
                             <div className="col-md-12">
                                 <label for="inputEmailValidacao" class="form-label">Email*</label>
-                                <input type="email" class="form-control" id="inputEmailValidacao" required />
+                                <input type="email" class="form-control" id="inputEmailValidacao" autoComplete="off" required />
                             </div>
 
                             <div className="col-md-6">
@@ -370,7 +370,7 @@ export default function CadastroUsuario(){
                                     <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
 
                                     <label className="form-check-label" for="invalidCheck">
-                                        Declaro que li e aceito os <a href="/termos-de-uso">termos de uso</a>
+                                        Declaro que li e aceito os <a href="/termos-de-uso" target="_blank">termos de uso</a>
                                     </label>
                                     {IsAcordoChecked
                                     ? ""
