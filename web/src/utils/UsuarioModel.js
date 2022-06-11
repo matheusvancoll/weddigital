@@ -24,9 +24,9 @@ module.exports = {
     dadosUsuarioNoivDTO: {
         idUsuario: "",
         nomeUsuario: "",
+        email: "",
         login: "",
         senha: "",
-        email: "",
         cidade: "",
         estado: "SP",
         dataCasamento: "",
@@ -62,5 +62,23 @@ module.exports = {
         formasPagamento: "",
         maisDeUmEventoPorDia: false,
         trabalhaSozinho: false
+    },
+
+    dadosResumoPerfilCasamentoDTO: {
+        idUsuario: "",
+        nomeUsuario: "",
+        fotoPerfil: "",
+        tipoUsuario: "",
+        idNoivX: "",
+        cidade: "",
+        estado: "",
+        email: "",
+        numeroContato: "",
+        dataCasamento: "",
+        is_Whatsapp: "",
+        numeroCPF: "",
+        pontosAcumulados: "",
+        tokenConvite: "",
+        profissionaisContratados: [],
     }
 }

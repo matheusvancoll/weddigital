@@ -2,6 +2,7 @@ package com.vancollstudios.WedDigital.controlador.usuarios;
 
 import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
 import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
+import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilNoivosDTO;
 import com.vancollstudios.WedDigital.repositorio.imagens.RepositorioImagemPerfil;
 import org.springframework.web.multipart.MultipartFile;
 import com.vancollstudios.WedDigital.model.usuarios.*;
@@ -315,7 +316,7 @@ public class ControladorUsuario {
     }
 
     @GetMapping(path = "/api/usuario/empresa/obterDadosPerfil")
-    public ResponseEntity<DadosResumoPerfilProfissionalDTO> obterDadosResumoPerfilPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional){
+    public ResponseEntity<DadosResumoPerfilProfissionalDTO> obterDadosResumoPerfilProfissionalPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional){
         DadosResumoPerfilProfissionalDTO dadosResumoPerfilProfissionalDTO = new DadosResumoPerfilProfissionalDTO();
         Usuario usuario = new Usuario();
         Profissional profissional;
@@ -341,8 +342,8 @@ public class ControladorUsuario {
         return ResponseEntity.ok().body(dadosResumoPerfilProfissionalDTO);
     }
 
-    @PutMapping(path = "/api/dadosPerfil/atualizarDados")
-    public String atualizarDadosUsuarioPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
+    @PutMapping(path = "/api/empresa/dadosPerfil/atualizarDados")
+    public String atualizarDadosProfissionalPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
         Usuario usuarioAtualizado = new Usuario();
         Profissional profissionalAtualizado = new Profissional();
 
@@ -385,7 +386,6 @@ public class ControladorUsuario {
     }
 
 
-
     public String obterTokenPorIdUsuario(Integer idUsuario, Integer idTipoUsuario){
         String tokenAcesso = "";
         Optional<Usuario> usuarioOptional = repositorioUsuario.findByIdUsuario(idUsuario);
@@ -401,20 +401,13 @@ public class ControladorUsuario {
         return tokenAcesso;
     }
 
-    @PostMapping(path = "/api/dadosPerfil/uploadImagens")
-    public String uploadImagensParaVitrine(@RequestParam Collection<MultipartFile> imagem){
-
-
-//        controladorImagem.salvarImagemVitrineProfissional(imagem);
-        return "sucess";
-    }
-
     public Boolean isUsuarioExistente(String login, String email){
+        if (email.equals("")){ email = "@.com"; }
         ResponseEntity usuarioEncontrato = repositorioUsuario.findAllByLoginOrEmail(login, email)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
-        if(usuarioEncontrato != null && usuarioEncontrato.getBody() != null){
+        if(usuarioEncontrato.getBody() != null){
             return true;
         }else{
             return false;
@@ -500,6 +493,76 @@ public class ControladorUsuario {
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);
     }
 
+    @GetMapping(path = "/api/usuario/noivos/obterDadosPerfil")
+    public ResponseEntity<DadosResumoPerfilNoivosDTO> obterDadosResumoPerfilNoivosPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idNoivos){
+        DadosResumoPerfilNoivosDTO dadosResumoPerfilNoivosDTO = new DadosResumoPerfilNoivosDTO();
+        Usuario usuario = new Usuario();
+        Noivos noivx = new Noivos();
+
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+
+        ResponseEntity dadosNoivx = repositorioNoivos.findAllByIdNoivos(idNoivos)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+        if(dadosUsuario != null && dadosUsuario.getBody() != null &&
+                dadosNoivx != null && dadosNoivx.getBody() != null){
+            usuario = (Usuario) dadosUsuario.getBody();
+            noivx = (Noivos) dadosNoivx.getBody();
+            dadosResumoPerfilNoivosDTO = popularDadosResumoPerfilNoivosDTO(usuario, noivx);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        return ResponseEntity.ok().body(dadosResumoPerfilNoivosDTO);
+    }
+
+    @PutMapping(path = "/api/noivos/dadosPerfil/atualizarDados")
+    public String atualizarDadosNoivosPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
+        Usuario usuarioAtualizado = new Usuario();
+        Profissional profissionalAtualizado = new Profissional();
+
+        ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+        ResponseEntity dadosProfissional = repositorioProfissional.findByIdProfissional(idProfissional)
+                .map(registro -> ResponseEntity.ok().body(registro))
+                .orElse(ResponseEntity.notFound().build());
+
+        if(dadosUsuario != null && dadosUsuario.getBody() != null &&
+                dadosProfissional != null && dadosProfissional.getBody() != null){
+            usuarioAtualizado = (Usuario) dadosUsuario.getBody();
+            profissionalAtualizado = (Profissional) dadosProfissional.getBody();
+        }
+
+        usuarioAtualizado.setNomeUsuario(dadosAtualizados.getNomeUsuario());
+        usuarioAtualizado.setEmail(dadosAtualizados.getEmail());
+
+        profissionalAtualizado.setCidade(dadosAtualizados.getCidade());
+        profissionalAtualizado.setEstado(dadosAtualizados.getEstado());
+        profissionalAtualizado.setNomeEmpresa(dadosAtualizados.getNomeEmpresa());
+        profissionalAtualizado.setDescricaoEmpresa(dadosAtualizados.getDescricaoEmpresa());
+        profissionalAtualizado.setEmail(dadosAtualizados.getEmail());
+        profissionalAtualizado.setNumeroContato(dadosAtualizados.getNumeroContato());
+        profissionalAtualizado.setIs_Whatsapp(dadosAtualizados.getIs_Whatsapp());
+        profissionalAtualizado.setIs_CNPJ(dadosAtualizados.getIs_CNPJ());
+        profissionalAtualizado.setNumeroCPF(dadosAtualizados.getNumeroCPF());
+        profissionalAtualizado.setNumeroCNPJ(dadosAtualizados.getNumeroCNPJ());
+        profissionalAtualizado.setValorMinimo(dadosAtualizados.getValorMinimo());
+        profissionalAtualizado.setFormasPagamento(dadosAtualizados.getFormasDePagamento());
+        profissionalAtualizado.setMaisDeUmEventoPorDia(dadosAtualizados.getMaisDeUmEventoPorDia());
+        profissionalAtualizado.setTrabalhaSozinho(dadosAtualizados.getTrabalhaSozinho());
+
+        repositorioProfissional.save(profissionalAtualizado);
+        repositorioUsuario.save(usuarioAtualizado);
+        String token = obterTokenPorIdUsuario(idUsuario, dadosAtualizados.getIdProfissional());
+        return token;
+    }
+
     public Noivos popularDadosNoivos(UsuarioNoivosDTO usuarioNoivosDTO, Integer idNoivosParam){
         Noivos noivos = new Noivos();
         noivos.setIdUsuario(idNoivosParam);
@@ -523,5 +586,25 @@ public class ControladorUsuario {
         }
 
         return noivos;
+    }
+
+    public DadosResumoPerfilNoivosDTO popularDadosResumoPerfilNoivosDTO(Usuario usuarioParam, Noivos noivosParam){
+        DadosResumoPerfilNoivosDTO dadosResumoPerfilNoivosDTO = new DadosResumoPerfilNoivosDTO();
+
+        dadosResumoPerfilNoivosDTO.setIdUsuario(usuarioParam.getIdUsuario());
+        dadosResumoPerfilNoivosDTO.setIdNoivX(noivosParam.getIdNoivos());
+        dadosResumoPerfilNoivosDTO.setFotoPerfil(usuarioParam.getFotoPerfil());
+        dadosResumoPerfilNoivosDTO.setCidade(noivosParam.getCidade());
+        dadosResumoPerfilNoivosDTO.setEstado(noivosParam.getEstado());
+        dadosResumoPerfilNoivosDTO.setNomeUsuario(usuarioParam.getNomeUsuario());
+        dadosResumoPerfilNoivosDTO.setDataCasamento(noivosParam.getDataCasamento());
+        dadosResumoPerfilNoivosDTO.setIs_Whatsapp(noivosParam.getIs_Whatsapp());
+        dadosResumoPerfilNoivosDTO.setNumeroContato(noivosParam.getNumeroContato());
+        dadosResumoPerfilNoivosDTO.setPontosAcumulados(noivosParam.getPontosAcumulados());
+        dadosResumoPerfilNoivosDTO.setEmail(usuarioParam.getEmail());
+        dadosResumoPerfilNoivosDTO.setTipoUsuario("");
+        dadosResumoPerfilNoivosDTO.setTokenConvite(0);
+
+        return dadosResumoPerfilNoivosDTO;
     }
 }

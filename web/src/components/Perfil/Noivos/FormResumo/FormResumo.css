@@ -1,0 +1,49 @@
+.perfil-resumo__cards{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-resumo__container{
+    width: 80%;
+    height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    margin: 0.75rem;
+    background-color: var(--color-cinza);
+    border-radius: 10px;
+    color: var(--color-roxo);
+}
+
+.box-resumo_itens-left{
+    width: 12rem;
+}
+
+.box-resumo_icon i{
+    font-size: 2.25rem;
+    margin: 0.5rem 0;
+}
+
+.box-resumo_itens-left p{
+    font-size: 1.15rem;
+}
+
+.box-resumo_itens-right p{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+@media only screen and (min-width: 768px){
+    .perfil-resumo__cards{
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 30rem 30rem;
+    }
+
+    .box-resumo__container{
+    }
+
+}

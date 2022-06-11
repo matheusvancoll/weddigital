@@ -1,0 +1,46 @@
+.aba-conteudos__container{
+}
+
+.card-curso-capa{
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.title-nivel-conta{
+    position: absolute;
+    padding: 0.5rem 1rem;
+    border-radius: 0 0 5px 0;
+    font-size: 1.5rem;
+    background-color: var(--color-dourado);
+}
+
+.icon-lock-curso{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    border-radius: 0 0 0 5px;
+    background-color: var(--color-dourado);
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    color: var(--color-roxo);
+}
+
+.btn-acessar-curso{
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.25rem;
+    transition: 0.5s;
+}
+
+.btn-acessar-curso:hover{
+    background-color: var(--color-roxo);
+    color: var(--color-dourado);
+}
+
+@media only screen and (min-width: 768px) {
+    .card-curso-capa{
+        width: 48%;
+        margin: 0.8rem 0.4rem;
+    }
+}

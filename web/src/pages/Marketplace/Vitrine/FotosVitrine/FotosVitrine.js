@@ -1,9 +1,5 @@
 import React from "react";
 
-import Imagem1 from '../../../../assets/crs1.jpeg'
-import Imagem2 from '../../../../assets/crs2.jpeg'
-import Imagem3 from '../../../../assets/crs3.jpeg'
-import CardImagemVitrine from "../../../../components/Perfil/Empresas/FormDadosGerais/CardImagemVitrine";
 import ImagemCard from "./ImagemCard";
 
 export default function FotosVitrine(props){

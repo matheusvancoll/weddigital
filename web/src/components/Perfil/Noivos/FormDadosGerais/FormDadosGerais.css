@@ -1,0 +1,25 @@
+.border_custom{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0 0.5rem;
+}
+
+.space-vertical{
+    padding: 2rem 0;
+}
+
+
+.icon-delete-imagem{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    border-radius: 0 0 0 5px;
+    background-color: var(--color-dourado);
+    padding: 0.25rem 0.75rem;
+    font-size: 1.15rem;
+    color: var(--color-roxo);
+}
+
+@media only screen and (min-width: 768px) {
+
+}
