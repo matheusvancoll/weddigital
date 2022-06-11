@@ -68,12 +68,18 @@ public class ControladorUsuario {
             Integer idTipoUsuario = 0;
 
             Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(usuario.getIdUsuario());
-            //para noivos
-//            Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(usuario.getIdUsuario());
+            Optional<Noivos> noivosOption = repositorioNoivos.findAllByIdUsuario(usuario.getIdUsuario());
 
-            if(profissionalOption != null){
+            if(profissionalOption.isPresent()){
                 Profissional profissional = profissionalOption.get();
                 idTipoUsuario = profissional.getIdProfissional();
+            }else{
+                if(noivosOption.isPresent()){
+                    Noivos noivos = noivosOption.get();
+                    idTipoUsuario = noivos.getIdNoivos();
+                }else{
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario inválido");
+                }
             }
 
             tokenAcesso = obterTokenPorIdUsuario(usuario.getIdUsuario(), idTipoUsuario);
@@ -82,6 +88,8 @@ public class ControladorUsuario {
             String dataAcesso = Util.converterDataParaStringSemHora(dataAtual, "dd/MM/yyyy");
             usuario.setUltimoAcesso(dataAcesso);
             repositorioUsuario.save(usuario);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Dados inválidos");
         }
 
         HttpStatus status = isAcessoValido ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
@@ -487,7 +495,7 @@ public class ControladorUsuario {
             novoNoivos.setIs_CadastroPorConvite(false);
         }
 
-        Integer idNoivos =  ResponseEntity.ok(repositorioNoivos.save(novoNoivos)).getBody().getIdUsuario();
+        Integer idNoivos =  ResponseEntity.ok(repositorioNoivos.save(novoNoivos)).getBody().getIdNoivos();
         String tokenUsuario = obterTokenPorIdUsuario(idNovoUsuario, idNoivos);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenUsuario);

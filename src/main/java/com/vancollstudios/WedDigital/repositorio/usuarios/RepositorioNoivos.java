@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface RepositorioNoivos extends CrudRepository<Noivos, Integer> {
     Optional<Noivos> findAllByIdNoivos(Integer idUsuario);
+
+    Optional<Noivos> findAllByIdUsuario(Integer idUsuario);
 }
