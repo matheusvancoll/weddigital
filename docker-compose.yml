@@ -29,6 +29,7 @@ services:
     restart: always
     volumes:
       - /opt/weddigital/web/src/fileContents/:/app/web/src/fileContents/
+#      - C:/dev/github/weddigital/web/src/fileContents:/app/web/src/fileContents/
     depends_on:
       - wed_database_mysql
 
@@ -39,8 +40,9 @@ services:
       context: './web'
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
       - /opt/weddigital/web/src/fileContents/:/app/web/src/fileContents/
+#      - C:/dev/github/weddigital/web/src/fileContents:/app/web/src/fileContents/
     depends_on:
       - wed_spring_backend
