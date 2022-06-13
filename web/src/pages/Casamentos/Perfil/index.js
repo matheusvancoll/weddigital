@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './Perfil.css'
+import './PerfilNoivos.css'
 
 import api from '../../../api/';
 import UserContext from '../../../api/userContext-api/userContext';
 import UsuarioModel from '../../../utils/UsuarioModel';
 
 import NavbarPerfil from '../../../components/Perfil/Navbar'
-import FormResumo from "../../../components/Perfil/Noivos/FormResumo";
+
+import FormResumo from "../../../components/Perfil/Noivos/FormResumoCasamentos";
+import FormDadosCasamentos from "../../../components/Perfil/Noivos/FormDadosCasamentos"
+import FormCursosNoivas from '../../../components/Perfil/Noivos/FormCursosNoivas'
+
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilCasamentoDTO)
@@ -48,8 +52,6 @@ export default function Perfil() {
                 <div className="sidebar__title">
                     <div className="sidebar__img">
                         <img src={fotoPerfil} alt="logo"/>
-
-
                         <h1>{DadosResumoPerfil.nomeUsuario}</h1>
                     </div>
                 </div>
@@ -63,7 +65,7 @@ export default function Perfil() {
                     </div>
 
                     <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'meuCasamento' ? "active" : ""}>
-                        <a href='#meuCasamento' onClick={() => setTabLocation("meuPerfil")} >
+                        <a href='#meuCasamento' onClick={() => setTabLocation("meuCasamento")} >
                             <i class="fa-solid fa-address-card"></i>
                             <span>Meu Casamento</span>
                         </a>
@@ -87,13 +89,6 @@ export default function Perfil() {
                         <a href='#comunidade' onClick={() => setTabLocation("comunidade")} >
                             <i className="fa-solid fa-people-group"></i>
                             <span>Comunidade</span>
-                        </a>
-                    </div>
-
-                    <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'assinatura' ? "active" : ""}>
-                        <a href='#assinatura' onClick={() => setTabLocation("assinatura")} >
-                            <i class="fa-solid fa-money-check-dollar"></i>
-                            <span>Minha assinatura</span>
                         </a>
                     </div>
                 </div>
@@ -125,7 +120,7 @@ export default function Perfil() {
 
                                     {TabLocation == 'meuCasamento' ?
                                         <div >
-                                            <h1>Meu Casamento</h1>
+                                            <FormDadosCasamentos dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} idNoivos={idNoivos} />
                                         </div>
                                         :''}
 
@@ -137,13 +132,13 @@ export default function Perfil() {
 
                                     {TabLocation == 'cursos' ?
                                         <div >
-                                            <h1>Cursos</h1>
+                                            <FormCursosNoivas />
                                         </div>
                                         :''}
 
-                                    {TabLocation == 'conquitas' ?
+                                    {TabLocation == 'comunidade' ?
                                         <div >
-                                            <h1>consuiqsoina</h1>
+                                            <h1>Comunidade</h1>
                                         </div>
                                         :''}
                                 </>

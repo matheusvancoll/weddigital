@@ -1,19 +1,25 @@
 import React from "react";
 
 import ImagemCard from "./ImagemCard";
+import ImageBackup from '../../../../fileContents/imagensVitrineProfissional/capaVitrine.jpeg';
 
 export default function FotosVitrine(props){
 
     let listaImagens = props.listaImagens
     let listaImagensVitrine = []
+    let imagemActive = null;
 
-    for (let i = 0; i < listaImagens.length; i++) {
-        if(i == 0){ continue }
-        const imagemParam = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[i].nomeImagem}`)
-        listaImagensVitrine.push(<ImagemCard arquivoImagem={imagemParam}/>)
+    if(listaImagens.length > 0){
+        imagemActive = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[0].nomeImagem}`)
+        for (let i = 0; i < listaImagens.length; i++) {
+            if(i == 0){ continue }
+            const imagemParam = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[i].nomeImagem}`)
+            listaImagensVitrine.push(<ImagemCard arquivoImagem={imagemParam}/>)
+        }
+    }else{
+        imagemActive = require('../../../../fileContents/imagensVitrineProfissional/capaVitrine.jpeg')
     }
 
-    const imagemActive = require(`../../../../fileContents/imagensVitrineProfissional/${listaImagens[0].nomeImagem}`)
 
     return(
         <>
@@ -23,7 +29,7 @@ export default function FotosVitrine(props){
                         <div class="carousel-item active" data-bs-interval="10000">
                             <img src={imagemActive} class="d-block w-100" alt="..." />
                         </div>
-                        {listaImagensVitrine}
+                        {listaImagensVitrine.length > 0 ? listaImagensVitrine : ''}
                     </div>
 
                     <button class="carousel-control-prev" type="button"         data-bs-target="#carouselExampleInterval" data-bs-slide="prev">

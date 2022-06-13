@@ -5,34 +5,26 @@
     align-items: center;
 }
 
-.box-resumo__container{
-    width: 80%;
+.box-resumo-casamento__container{
+    width: 100%;
     height: 8rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 0.75rem 2rem;
     margin: 0.75rem;
-    background-color: var(--color-cinza);
+    background-color: var(--color-dourado);
     border-radius: 10px;
     color: var(--color-roxo);
 }
 
-.box-resumo_itens-left{
-    width: 12rem;
-}
-
-.box-resumo_icon i{
-    font-size: 2.25rem;
-    margin: 0.5rem 0;
-}
-
-.box-resumo_itens-left p{
+.box-resumo_itens-top p{
     font-size: 1.15rem;
 }
 
-.box-resumo_itens-right p{
-    font-size: 3rem;
+.box-resumo_itens-bottom p{
+    font-size: 2rem;
     font-weight: 600;
 }
 
@@ -43,7 +35,8 @@
         grid-template-columns: 30rem 30rem;
     }
 
-    .box-resumo__container{
+    .box-resumo-casamento__container{
+        width: 80%;
+        margin-left: 6rem;
     }
-
 }

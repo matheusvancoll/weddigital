@@ -15,7 +15,6 @@ import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
 import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
 import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
 
-
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
     const [ DadosStatusProfissional, setDadosStatusProfissional ] = useState(StatusModel.StatusNivelProfissional)

@@ -7,6 +7,7 @@ import Navbar from '../../components/Navbar'
 import SidebarMarketplace from '../../components/Marketplace/SidebarMarketplace'
 import CardAnuncioMarketplace from '../../components/Marketplace/CardProfissionalMarketplace'
 import CardAnuncioPlaceholder from '../../components/Modal/CardAnuncioPlaceholder'
+import Footer from "../../components/Footer";
 
 export default function Marketplace(){
     const [Profissionais, setProfissionais] = useState([])
@@ -20,9 +21,6 @@ export default function Marketplace(){
                 //eslint-disable-next-line react-hooks/exhaustive-deps
         })
     }, [])
-
-    console.log("DADOS PROFISSIONAIS")
-    console.log(Profissionais)
     
     let listaProfissionais = Profissionais
     let listaCardProfissionaisMarketplace = []
@@ -35,7 +33,7 @@ export default function Marketplace(){
         <div className='marketplace-container'>
             <Navbar />
             <div className='marketplace-corpo-produtos'>
-                <SidebarMarketplace />
+                {/*<SidebarMarketplace />*/}
                 <div className='container__vitrine__marketplacce'>
                     <div>
                         <div className="container-sm p-2">
@@ -75,27 +73,9 @@ export default function Marketplace(){
                             </>
                         }
                     </div>
-
-
                 </div>
-
-
-
-                {/*{IsCarregandoDados */}
-                {/*? <>*/}
-                {/*    <div className='placeholder-lista-profissionais'>*/}
-                {/*        <CardAnuncioPlaceholder />*/}
-                {/*        <CardAnuncioPlaceholder />*/}
-                {/*        <CardAnuncioPlaceholder />*/}
-                {/*    </div>*/}
-                {/*</>*/}
-                {/*:<>*/}
-                {/*    <div className='lista-produtos-marketplace'>*/}
-                {/*        {listaCardProfissionaisMarketplace}*/}
-                {/*    </div>*/}
-                {/*</>*/}
-                {/*}*/}
             </div>
+            <Footer />
         </div>
     )
 }

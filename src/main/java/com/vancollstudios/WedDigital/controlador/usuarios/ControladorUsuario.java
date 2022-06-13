@@ -529,45 +529,36 @@ public class ControladorUsuario {
     }
 
     @PutMapping(path = "/api/noivos/dadosPerfil/atualizarDados")
-    public String atualizarDadosNoivosPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idProfissional, @RequestBody DadosResumoPerfilProfissionalDTO dadosAtualizados){
+    public String atualizarDadosNoivosPorIdUsuario(@RequestParam Integer idUsuario, @RequestParam Integer idNoivos, @RequestBody DadosResumoPerfilNoivosDTO dadosAtualizados){
         Usuario usuarioAtualizado = new Usuario();
-        Profissional profissionalAtualizado = new Profissional();
+        Noivos noivosAtualizado = new Noivos();
 
         ResponseEntity dadosUsuario = repositorioUsuario.findByIdUsuario(idUsuario)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
-        ResponseEntity dadosProfissional = repositorioProfissional.findByIdProfissional(idProfissional)
+        ResponseEntity dadosNoivos = repositorioNoivos.findAllByIdNoivos(idNoivos)
                 .map(registro -> ResponseEntity.ok().body(registro))
                 .orElse(ResponseEntity.notFound().build());
 
         if(dadosUsuario != null && dadosUsuario.getBody() != null &&
-                dadosProfissional != null && dadosProfissional.getBody() != null){
+                dadosNoivos != null && dadosNoivos.getBody() != null){
             usuarioAtualizado = (Usuario) dadosUsuario.getBody();
-            profissionalAtualizado = (Profissional) dadosProfissional.getBody();
+            noivosAtualizado = (Noivos) dadosNoivos.getBody();
         }
 
         usuarioAtualizado.setNomeUsuario(dadosAtualizados.getNomeUsuario());
         usuarioAtualizado.setEmail(dadosAtualizados.getEmail());
 
-        profissionalAtualizado.setCidade(dadosAtualizados.getCidade());
-        profissionalAtualizado.setEstado(dadosAtualizados.getEstado());
-        profissionalAtualizado.setNomeEmpresa(dadosAtualizados.getNomeEmpresa());
-        profissionalAtualizado.setDescricaoEmpresa(dadosAtualizados.getDescricaoEmpresa());
-        profissionalAtualizado.setEmail(dadosAtualizados.getEmail());
-        profissionalAtualizado.setNumeroContato(dadosAtualizados.getNumeroContato());
-        profissionalAtualizado.setIs_Whatsapp(dadosAtualizados.getIs_Whatsapp());
-        profissionalAtualizado.setIs_CNPJ(dadosAtualizados.getIs_CNPJ());
-        profissionalAtualizado.setNumeroCPF(dadosAtualizados.getNumeroCPF());
-        profissionalAtualizado.setNumeroCNPJ(dadosAtualizados.getNumeroCNPJ());
-        profissionalAtualizado.setValorMinimo(dadosAtualizados.getValorMinimo());
-        profissionalAtualizado.setFormasPagamento(dadosAtualizados.getFormasDePagamento());
-        profissionalAtualizado.setMaisDeUmEventoPorDia(dadosAtualizados.getMaisDeUmEventoPorDia());
-        profissionalAtualizado.setTrabalhaSozinho(dadosAtualizados.getTrabalhaSozinho());
+        noivosAtualizado.setCidade(dadosAtualizados.getCidade());
+        noivosAtualizado.setEstado(dadosAtualizados.getEstado());
+        noivosAtualizado.setEmail(dadosAtualizados.getEmail());
+        noivosAtualizado.setNumeroContato(dadosAtualizados.getNumeroContato());
+        noivosAtualizado.setIs_Whatsapp(dadosAtualizados.getIs_Whatsapp());
 
-        repositorioProfissional.save(profissionalAtualizado);
+        repositorioNoivos.save(noivosAtualizado);
         repositorioUsuario.save(usuarioAtualizado);
-        String token = obterTokenPorIdUsuario(idUsuario, dadosAtualizados.getIdProfissional());
+        String token = obterTokenPorIdUsuario(idUsuario, dadosAtualizados.getIdNoivX());
         return token;
     }
 
