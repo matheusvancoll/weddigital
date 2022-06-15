@@ -4,8 +4,16 @@
     align-items: center;
     color: var(--color-roxo);
 }
+.area1-home__container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 .home-noivos_area1{
-    width: 80%;
+    width: 100%;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    padding: 0 6rem;
 }
 .area1-text-h1{
     margin: 7rem 2rem 4rem 2rem;
@@ -39,6 +47,11 @@
     color: var(--color-dourado);
     padding: 0.75rem 2.25rem;
 }
+.area1-image__container img{
+    margin-top: 2rem;
+    width: 25rem;
+    border-radius: 15px;
+}
 .area1-icons{
     margin: 7rem 0 3rem 0;
     display: flex;
@@ -54,6 +67,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
     /*background-color: var(--color-roxo);*/
     /*color: var(--color-preto);*/
 }
@@ -106,36 +120,40 @@
 
 
 .home-noivos-area3{
-    margin: 2rem 0;
+    width: 100%;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
-
-.home-noivos-area3 h1{
+.area3-text h4{
+    margin-bottom: 1.5rem;
+}
+.area3-text h1{
     font-size: 3rem;
 }
-
-.home-noivos-area3 img{
-    width: 25rem;
-    border-radius: 15px;
-}
-
-.home-noivos-area3 a{
+.area3-text a{
     border: none;
     background-color: var(--color-roxo);
     color: var(--color-branco);
     padding: 0.75rem 1.75rem;
-    margin-top: 1rem;
     font-weight: 600;
     border-radius: 5px;
     text-decoration: none;
     transition: 0.5s;
 }
-.home-noivos-area3 a:hover{
+.area3-text a:hover{
     padding: 0.75rem 2.25rem;
 }
+.area3-image img{
+    margin-top: 2rem;
+    width: 25rem;
+    border-radius: 15px;
+}
+
+
 
 
 
@@ -144,34 +162,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*background-color: var(--color-roxo);*/
-    /*color: var(--color-branco);*/
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
     padding: 2rem 1rem;
 }
-.home-noivos-area4 a{
+.area4-text h4{
+    margin-bottom: 1.5rem;
+}
+.area4-text a{
     border: none;
     background-color: var(--color-roxo);
     color: var(--color-branco);
     padding: 0.75rem 1.75rem;
-    margin-top: 1rem;
     font-weight: 500;
     border-radius: 5px;
     text-decoration: none;
     transition: 0.5s;
 }
-.home-noivos-area4 a:hover{
+.area4-text a:hover{
     padding: 0.75rem 2.25rem;
+}
+.area4-text img{
+    width: 25rem;
+    border-radius: 15px;
 }
 
 
 
 .home-noivos-area5{
+    width: 100%;
+    padding: 0 6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 2rem 0;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .home-noivos-area5 img{
@@ -186,14 +212,17 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    /*background-color: var(--color-roxo);*/
-    /*color: var(--color-branco);*/
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
     padding: 2rem 0;
 }
 
 
 
 @media only screen and (min-width: 768px){
+    .area1-home__container{
+        flex-direction: row;
+        justify-content: center;
+    }
     .area1-text-title{
         text-align: center;
     }
@@ -201,29 +230,54 @@
         font-size: 4.5rem;
         line-height: 4.5rem;
     }
-
     .area1-description{
         width: 75%;
     }
-
     .area1-icons{
         flex-direction: row;
     }
+    .area1-image__container img{
+        margin-top: 6rem;
+        width: 33rem;
+    }
+
 
     .area2-part1, .area2-part2{
         width: 50%;
     }
+    .area2-part1 img{
+        width: 55rem;
+        margin-top: 2rem;
+    }
 
+
+    .home-noivos-area3, .home-noivos-area4{
+        padding: 0 6rem;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .area3-text{
+        width: 50%;
+    }
+    .area3-image img{
+        width: 40rem;
+        margin-bottom: 2rem;
+    }
     .card_pontos_sorteio{
         margin: 0 2rem;
         margin-top: 2rem;
     }
 
+    .home-noivos-area4 img{
+        width: 40rem;
+    }
+
+    .home-noivos-area5 img{
+        width: 50rem;
+    }
+
     .card_pontos_sorteio__conteinar{
         flex-direction: row;
-    }
-    
-    .home-noivos-area3{
-        width: 70%;
     }
 }

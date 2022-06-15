@@ -1,12 +1,15 @@
 import React from "react";
 
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 export default function TermoDeUso(){
     return(
         <div>
             <Navbar />
             <div className="container">
+                <br></br>
+                <br></br>
                 <h1 className="text-center">Termos e Condições Legais do site Wed Digital</h1>
 
                 <h3 className="text-center">1. INFORMAÇÃO LEGAL</h3>
@@ -688,6 +691,7 @@ export default function TermoDeUso(){
                         noivos e fornecedores.</li>
                 </ul>
             </div>
+            <Footer />
         </div>
     )
 }

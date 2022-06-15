@@ -17,6 +17,7 @@ import Vitrine from '../Marketplace/Vitrine/Vitrine'
 import Teste from '../teste'
 
 import TermoDeUso from '../CondicoesLegais/TermoDeUso'
+import RegrasSorteio from '../CondicoesLegais/RegrasSorteio'
 
 export default function Router() {
     return(
@@ -33,13 +34,16 @@ export default function Router() {
             <Route exact path="/login"> <Login /> </Route>
             <PrivateRouter exact path="/perfil" component={PerfilNoivos} />
 
-            {/* OUTROS */}
+            {/* Marketplace */}
             <Route exact path="/buscar-profissional" component={Marketplace} />
-
             <Route exact path="/buscar-profissional/detalhes" component={Vitrine} />
             <Route exact path="/buscar-profissional/detalhes=:idProfissional" component={Vitrine} />
-            <Route exact path="/teste" component={Teste} />
+
+            {/* Condições legais */}
             <Route exact path='/termos-de-uso' component={TermoDeUso} />
+            <Route exact path='/regras-sorteio' component={RegrasSorteio} />
+
+            <Route exact path="/teste" component={Teste} />
 
         </Switch>
     )

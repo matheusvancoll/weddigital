@@ -121,7 +121,7 @@ export default function Perfil() {
                         <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'convites' ? "active" : ""}>
                             <a href='#convites' onClick={() => setTabLocation("convites")} >
                                 <i class="fa-solid fa-share-nodes"></i>
-                                <span>Convites</span>
+                                <span>Indicar</span>
                             </a>
                         </div>
 
@@ -189,6 +189,11 @@ export default function Perfil() {
                                 <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
                             </div>
                             :''}
+                            {TabLocation == 'convites' ?
+                                <div>
+                                    <h1>Indicações</h1>
+                                </div>
+                                :''}
                         </>
                     </>
                     }

@@ -13,9 +13,12 @@ import IconComunidade  from '../../../assets/icons/comunidade.png'
 import ImageNoivaFeliz from '../../../assets/noiva-feliz.jpg'
 import ImageSorteio from '../../../assets/sorteio-ao-vivo.jpg'
 import ImageComunidade from '../../../assets/comunidade-noivas.jpg'
+import ImageNoivosFesta from '../../../assets/noiva-home.jpg'
+import ImageWedDicas from '../../../assets/wed-dicas.jpg'
 
 import {Link} from "react-router-dom";
 import Footer from "../../../components/Footer";
+
 
 export default function HomePage() {
     return (
@@ -24,17 +27,24 @@ export default function HomePage() {
 
             <div className='home-noivos__container'>
                 <div className='home-noivos_area1' id='inicio'>
-                    <div className='area1-text-title'>
-                        <h1 className='text-roxo area1-text-h1'>Contrate os melhores profissionais para o seu casamento.</h1>
-                    </div>
+                    <div className='area1-home__container'>
+                        <div className='area1-text__container'>
+                            <div className='area1-text-title'>
+                                <h1 className='text-roxo area1-text-h1'>Contrate os melhores profissionais para o seu casamento.</h1>
+                            </div>
 
-                    <div className='area1-search'>
-                        <div className='area1-description'>
-                            <h4 className='text-roxo area1-description-h4'>Concorra a R$ 1.000 e aprenda tudo sobre o seu casamento com fornecedores de forma rápida e segura</h4>
-                            <Link to='/buscar-profissional' className='teste'>LOCALIZAR FORNECEDORES</Link>
+                            <div className='area1-search'>
+                                <div className='area1-description'>
+                                    <h4 className='text-roxo area1-description-h4'>Concorra a R$ 1.000 e aprenda tudo sobre o seu casamento com fornecedores de forma rápida e segura</h4>
+                                    <Link to='/cadastro' className='teste'>LOCALIZAR FORNECEDORES</Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='area1-image__container'>
+                            <img src={ImageNoivosFesta}></img>
                         </div>
                     </div>
-
                     <div className='area1-icons'>
                         <CardIconsServicosCasamento image={IconBusca} texto='Buscar fornecedores' />
                         <CardIconsServicosCasamento image={IconAssistindo} texto='Assista aulas' />
@@ -85,18 +95,26 @@ export default function HomePage() {
 
 
                 <div className='home-noivos-area3'>
-                    <h1 className='text-roxo'>Sorteio Ao vivo</h1>
-                    <h4 className='text-roxo'>O sorteio será realizado ao vivo todos os meses para você torcer junto conosco.</h4>
-                    <img src={ImageSorteio}></img>
-                    <Link to='/cadastro'>QUERO PARTICIPAR</Link>
+                    <div className='area3-text'>
+                        <h1 className='text-roxo'>Sorteio Ao vivo</h1>
+                        <h4 className='text-roxo'>O sorteio será realizado ao vivo todos os meses para você torcer junto conosco.</h4>
+                        <Link to='/cadastro'>QUERO PARTICIPAR</Link>
+                    </div>
+
+                    <div className='area3-image'>
+                        <img src={ImageSorteio}></img>
+                    </div>
                 </div>
 
                 <div className='home-noivos-area4' id='dicas-wed'>
-                    <h1>Dicas da Wed</h1>
-                    <h4 className='text-dicas'>Sabemos que os preparativos para o seu grande dia não será uma tarefa tão fácil, por isso você terá acesso a dicas dos melhores profissionais</h4>
-                    <img src=''></img>
-                    <img src=''></img>
-                    <Link to='/cadastro'>APRENDER TUDO</Link>
+                    <div className='area3-image'>
+                        <img src={ImageWedDicas}></img>
+                    </div>
+                    <div className='area4-text'>
+                        <h1>Dicas da Wed</h1>
+                        <h4 className='text-dicas'>Sabemos que os preparativos para o seu grande dia não será uma tarefa tão fácil, por isso você terá acesso a dicas dos melhores profissionais</h4>
+                        <Link to='/cadastro'>APRENDER TUDO</Link>
+                    </div>
                 </div>
 
                 <div className='home-noivos-area5'>

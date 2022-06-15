@@ -4,10 +4,11 @@ import './Homepage-Empresas.css'
 import Navbar from '../../../components/Navbar';
 import ImagemWed from '../../../assets/home.jpg'
 import ImagemPanel from '../../../assets/panel.jpg'
-import ImagemAcessoria from '../../../assets/acessoria.jpg'
+import ImagemAcessoria from '../../../assets/assessoria.jpg'
 import CardVantagensEmpresas from '../../../components/Homepage/CardVantagens/CardVantagensEmpresas';
 import CardServicosOferecidos from '../../../components/Homepage/CardVantagens/CardServicosOferecidos';
 import {Link} from "react-router-dom";
+import Footer from "../../../components/Footer";
 
 export default function HomePage() {
     return (
@@ -38,7 +39,7 @@ export default function HomePage() {
                                 description='Para ajudar o seu negócio, nós vamos te presentear em cash através de suas conquintas.'/>
 
                         <CardVantagensEmpresas icon="fa-solid fa-bullhorn" title="Marketing é tudo"
-                                description='"Vou falar com meu noivo e te retorno". Aprenda técniucas de marketing com profissionais da área."'/>
+                                description='"Vou falar com meu noivo e te retorno". Aprenda técnicas de marketing e torne sua empresa desejada por noivas.'/>
 
                         <CardVantagensEmpresas icon="fa-solid fa-file-contract" title="Feche mais contratos"
                                 description='Alavanque seu negócio fechando com noivos que acessam a plataforma'/>
@@ -46,7 +47,7 @@ export default function HomePage() {
 
                     <div className='home_cards line2'>
                         <CardVantagensEmpresas icon="fa-solid fa-arrow-trend-up" title="Cresça na velocidade digital"
-                                    description='Não importa quanto tempo você tem de mercado, a internet potencializa sua marca 10x mais rápido'/>
+                                    description='Não importa quanto tempo você tem de mercado, nós potencializamos sua marca 10x mais rápido usando estratégias de marketing'/>
                     </div>
                 </div>
 
@@ -62,10 +63,10 @@ export default function HomePage() {
                     <div className='home3_text_side'>
                         <div>
                             <CardServicosOferecidos icon="fa-solid fa-desktop"
-                                texto='Personalize seu perfil com ajuda dos nossos colaboradores do marketing, torne sua empresa desejada já no primeiro contato dos noivos.' />
+                                texto='Personalize seu perfil com ajuda dos nossos colaboradores do marketing e torne sua empresa desejada já no primeiro contato dos noivos.' />
 
                             <CardServicosOferecidos icon="fa-solid fa-graduation-cap"
-                                texto='Tenha acesso a conteúdos exclusivos em vídeo, áudio, PDF. Um passo a passo sobre estratégias de marketing.' />
+                                texto='Tenha acesso a conteúdos exclusivos em vídeo, áudio e texto. Um passo a passo sobre estratégias de marketing de sucesso.' />
 
                             <CardServicosOferecidos icon="fa-solid fa-chalkboard-user"
                                 texto='Um painel totalmente fácil de ser usado, te proporcionando uma experiência prática.' />
@@ -101,7 +102,7 @@ export default function HomePage() {
                         <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
                     </div>
                 </div>
-
+                <Footer />
             </div>
         </>
     )
