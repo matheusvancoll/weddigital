@@ -184,7 +184,7 @@ export default function CadastroUsuario(){
                             </div>
                         </div>
                     :<>
-                        <p className="text-center texto-label-acesso">Dados de Acesso</p>
+                        <p className="text-center texto-label-acesso">Cadastre-se e faça o seu negócio crescer</p>
                         <form className="row g-3 needs-validation cadastro-usuario-form">
                             <div className="col-md-7">
                                 <label for="validationCustom01" className="form-label">Nome completo*</label>
@@ -288,7 +288,7 @@ export default function CadastroUsuario(){
                             </div>
 
                             <div className="col-md-7">
-                                <label for="validationCustom01" className="form-label">Contato*</label>
+                                <label for="validationCustom01" className="form-label">Telefone*</label>
                                 <InputMask className="form-control" id="validationCustom01" required
                                             mask="(99) 99999999" maskChar=" "
                                             name="numeroContato" value={DadosCadastro.numeroContato} onChange={onChange}/>

@@ -70,7 +70,7 @@ export default function UserLogin({ isEmpresa }){
                 {IsCarregandoDados
                 ? <CarregandoPlaceholder />
                 :<div className="container-sm login-usuario-container">
-                    <p className="text-center texto-label-acesso">Login</p>
+                    <p className="text-center texto-label-acesso">Preencha os campos para entrar</p>
                     <form>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email ou Usuario</label>

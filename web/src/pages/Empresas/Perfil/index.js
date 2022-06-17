@@ -14,6 +14,7 @@ import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerai
 import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
 import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
 import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
+import FormComunidade from "../../../components/Perfil/Empresas/FormComunidade";
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
@@ -63,7 +64,8 @@ export default function Perfil() {
             setIsCarregando(false)
         })
     }, [])
-    
+
+    console.log(DadosResumoPerfil)
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
@@ -159,41 +161,53 @@ export default function Perfil() {
                     : <>
                         <>
                             {TabLocation == 'resumo' ?
-                            <div >
-                                <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
-                                <FormResumo dadosUsuario={DadosResumoPerfil}/>
-                            </div>
+                                <div >
+                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                                    <FormResumo dadosUsuario={DadosResumoPerfil}/>
+                                </div>
                             :''
                             }
 
                             {TabLocation == 'meuPerfil' ?
-                            <div >
-                                <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} idProfissional={idProfissional} />
-                            </div>
+                                <div >
+                                    <FormDadosGerais dadosResumoPerfil={DadosResumoPerfil} idUsuario={idUsuario} idProfissional={idProfissional} />
+                                </div>
                             :''}
 
                             {TabLocation == 'orcamentos' ?
-                            <div >
-                                <FormOrcamentos />
-                            </div>
+                                <div >
+                                    <FormOrcamentos />
+                                </div>
                             :''}
 
                             {TabLocation == 'cursos' ?
-                            <div >
-                                <FormCursos />
-                            </div>
+                                <div >
+                                    <FormCursos nivelConta={DadosResumoPerfil.nivelConta}/>
+                                </div>
                             :''}
 
                             {TabLocation == 'conquitas' ?
-                            <div >
-                                <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
-                            </div>
+                                <div >
+                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                                </div>
                             :''}
+
                             {TabLocation == 'convites' ?
                                 <div>
                                     <h1>Indicações</h1>
                                 </div>
-                                :''}
+                            :''}
+
+                            {TabLocation == 'comunidade' ?
+                                <div>
+                                    <FormComunidade nivelConta={DadosResumoPerfil.nivelConta} />
+                                </div>
+                            :''}
+                            {TabLocation == 'assinatura' ?
+                                <div>
+                                    <h1>Indicações</h1>
+                                </div>
+                            :''}
                         </>
                     </>
                     }

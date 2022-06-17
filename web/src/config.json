@@ -8,5 +8,16 @@
     "api":{
         "linkApiGeral": "http://177.153.60.189:8080/api",
         "linkValidacaoEmail": "http://177.153.60.189:8080/cadastro/usuario/confirmacaoEmail"
+    },
+
+    "comunidade": {
+        "linkProfissionais": "https://discord.gg/EPMeuUCZ",
+        "linkNoivos" : "https://discord.gg/ADUyXvtJ"
+    },
+
+    "planos": {
+        "start" : "",
+        "ouro" : "",
+        "diamante": ""
     }
 }

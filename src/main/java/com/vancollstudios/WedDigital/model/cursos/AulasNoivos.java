@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "CURSOS_PROFISSIONAL")
-public class AulasProfissional {
+@Entity(name = "CURSOS_NOIVOS")
+public class AulasNoivos {
 
     @Id
     @GeneratedValue
@@ -16,16 +16,10 @@ public class AulasProfissional {
     private String nomeCurso;
 
     @Column
-    private String capaCurso;
-
-    @Column
     private String descricao;
 
     @Column
     private String link;
-
-    @Column
-    private Integer restrincao;
 
     public Integer getIdCurso() {
         return idCurso;
@@ -43,14 +37,6 @@ public class AulasProfissional {
         this.nomeCurso = nomeCurso;
     }
 
-    public String getCapaCurso() {
-        return capaCurso;
-    }
-
-    public void setCapaCurso(String capaCurso) {
-        this.capaCurso = capaCurso;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -65,13 +51,5 @@ public class AulasProfissional {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public Integer getRestrincao() {
-        return restrincao;
-    }
-
-    public void setRestrincao(Integer restrincao) {
-        this.restrincao = restrincao;
     }
 }

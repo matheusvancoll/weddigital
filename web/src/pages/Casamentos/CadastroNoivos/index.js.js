@@ -200,7 +200,7 @@ export default function CadastroUsuario(){
                             </div>
                         </div>
                     :<>
-                    <p className="text-center texto-label-acesso">Dados de Acesso</p>
+                    <p className="text-center texto-label-acesso">Cadastre-se e encontre tudo para seu casamento</p>
                     <form className="row g-3 needs-validation cadastro-usuario-form">
                         <div className="col-md-7">
                             <label for="validationCustom01" className="form-label">Nome completo*</label>

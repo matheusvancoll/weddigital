@@ -14,7 +14,7 @@ import ImageNoivaFeliz from '../../../assets/noiva-feliz.jpg'
 import ImageSorteio from '../../../assets/sorteio-ao-vivo.jpg'
 import ImageComunidade from '../../../assets/comunidade-noivas.jpg'
 import ImageNoivosFesta from '../../../assets/noiva-home.jpg'
-import ImageWedDicas from '../../../assets/wed-dicas.jpg'
+import ImageWedDicas from '../../../assets/wed-dicas.png'
 
 import {Link} from "react-router-dom";
 import Footer from "../../../components/Footer";

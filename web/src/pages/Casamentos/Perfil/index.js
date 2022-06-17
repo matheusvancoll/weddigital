@@ -10,6 +10,7 @@ import NavbarPerfil from '../../../components/Perfil/Navbar'
 import FormResumo from "../../../components/Perfil/Noivos/FormResumoCasamentos";
 import FormDadosCasamentos from "../../../components/Perfil/Noivos/FormDadosCasamentos"
 import FormCursosNoivas from '../../../components/Perfil/Noivos/FormCursosNoivas'
+import FormComunidadeNoivos from '../../../components/Perfil/Noivos/FormComunidadeNoivos'
 
 
 export default function Perfil() {
@@ -138,7 +139,7 @@ export default function Perfil() {
 
                                     {TabLocation == 'comunidade' ?
                                         <div >
-                                            <h1>Comunidade</h1>
+                                            <FormComunidadeNoivos />
                                         </div>
                                         :''}
                                 </>

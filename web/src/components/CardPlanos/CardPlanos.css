@@ -1,0 +1,79 @@
+.card-planos__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.acesso-comunidade{
+    text-align: center;
+    width: 100%;
+    padding: 3rem 0;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.acesso-comunidade a{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 15px;
+    font-size: 1.25rem;
+    text-decoration: none;
+    background-color: var(--color-roxo);
+    color: var(--color-dourado);
+    padding: 0.80rem 2rem;
+    transition: 0.5s;
+}
+.acesso-comunidade a:hover{
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+}
+
+.card-planos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-planos img{
+    width: 20rem;
+}
+
+.card-planos-image-link{
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-planos-image-link a{
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    background-color: var(--color-roxo);
+    color: var(--color-dourado);
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.card-planos-image-link a:hover{
+    padding: 0.75rem 3rem;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .acesso-comunidade a{
+        font-size: 2rem;
+    }
+
+    .card-planos{
+        flex-direction: row;
+    }
+
+    .card-planos-image-link a{
+        font-size: 2rem;
+        border-radius: 15px;
+    }
+
+    .card-planos img{
+        width: 35rem;
+    }
+}

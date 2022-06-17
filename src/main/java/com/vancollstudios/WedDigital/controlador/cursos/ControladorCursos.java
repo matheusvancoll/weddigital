@@ -5,7 +5,10 @@ import com.vancollstudios.WedDigital.repositorio.cursos.RepositorioCursoProfissi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
 
 @CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
@@ -14,9 +17,11 @@ public class ControladorCursos {
     @Autowired
     RepositorioCursoProfissional repositorioCursoProfissional;
 
-    @GetMapping(path = "/api/cursos/profissional/obterTodasAulas")
-    public Iterable<AulasProfissional> obterAulasCursoProfissional(){
-        Iterable<AulasProfissional> aulasProfissional = repositorioCursoProfissional.findAll();
+
+    @GetMapping(path = "/api/cursos/profissional/obterTodasAulas/{nivelConta}")
+    public Collection<AulasProfissional> obterAulasCursoProfissional(@PathVariable("nivelConta") Integer nivelConta){
+
+        Collection<AulasProfissional> aulasProfissional = repositorioCursoProfissional.testet(nivelConta);
 
         return aulasProfissional;
     }
