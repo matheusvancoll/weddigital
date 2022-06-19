@@ -24,7 +24,7 @@ export default function HomePage() {
                         </h1>
 
                         <h4 className='text-roxo'>
-                            Tenha acesso a conteúdos exclusivos de estratégias de marketing das empresas de grande sucesso.
+                            Receba 10x mais solicitações de orçamento e tenha acesso a aulas exclusivas de estratégias de marketing de empresas de sucesso.
                         </h4>
 
                         <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>

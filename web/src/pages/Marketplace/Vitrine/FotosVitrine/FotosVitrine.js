@@ -1,7 +1,6 @@
 import React from "react";
 
 import ImagemCard from "./ImagemCard";
-import ImageBackup from '../../../../fileContents/imagensVitrineProfissional/capaVitrine.jpeg';
 
 export default function FotosVitrine(props){
 
@@ -17,7 +16,7 @@ export default function FotosVitrine(props){
             listaImagensVitrine.push(<ImagemCard arquivoImagem={imagemParam}/>)
         }
     }else{
-        imagemActive = require('../../../../fileContents/imagensVitrineProfissional/capaVitrine.jpeg')
+        imagemActive = require('../../../../fileContents/imagensVitrineProfissional/no-image.png')
     }
 
 

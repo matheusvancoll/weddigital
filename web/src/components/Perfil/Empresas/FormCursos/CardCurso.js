@@ -1,7 +1,8 @@
 import React from "react";
 
 export default function CardConteudoCurso(props){
-    const imagemCapaCurso = require(`../../../../fileContents/Capa Cursos/${props.capaCurso}`)
+    let capaCurso = props.capaCurso != '' ? props.capaCurso : 'no-image.png'
+    const imagemCapaCurso = require(`../../../../fileContents/Capa Cursos/${capaCurso}`)
 
     return(
         <div className="col card-curso-capa">
@@ -14,7 +15,10 @@ export default function CardConteudoCurso(props){
                     <p className="card-text">{props.descricaoCurso}</p>
                     <p className="card-text">{props.nivelCurso}</p>
                 </div>
-                <a href='#' class="btn-warning btn-acessar-curso" >Acessar Curso</a>
+                {props.isCursoBloqueado
+                    ? '' :
+                    <a href={props.linkCurso} target='_blank' className="btn-warning btn-acessar-curso">Acessar Curso</a>}
+
             </div>
         </div>
     )

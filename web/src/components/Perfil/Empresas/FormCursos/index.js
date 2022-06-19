@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import './FormCursos.css'
 
 import CardConteudoCurso from "./CardCurso";
+import CarregandoPlaceholder from "../../../Modal/CarregandoPlaceholder";
 import api from "../../../../api";
 
 export default function FormConteudo(props){
@@ -13,7 +14,6 @@ export default function FormConteudo(props){
     useEffect(() => {
         api.get(`cursos/profissional/obterTodasAulas/${nivelConta}`)
             .then(({data}) => {
-                console.log(data)
                 setDadosCurso(data)
                 setIsCarregando(false)
                 //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,9 +36,10 @@ export default function FormConteudo(props){
         let isCursoBlocked = DadosCurso[i].restrincao <= nivelConta ? false : true
 
         listaCardCursos.push(
-            <CardConteudoCurso capaCurso="DESTRAVE-16-9.png"
+            <CardConteudoCurso capaCurso={DadosCurso[i].capaCurso}
                                nomeCurso={DadosCurso[i].nomeCurso}
                                descricaoCurso={DadosCurso[i].descricao}
+                               linkCurso={DadosCurso[i].link}
                                nivelCurso={nivelCursoCurrent}
                                isCursoBloqueado={isCursoBlocked} />
         )
@@ -48,23 +49,12 @@ export default function FormConteudo(props){
         <div className="aba-conteudos__container">
             <div className="modal-content">
                 <h1 className="card-header">Cursos</h1>
-                {IsCarregando ? <h1>Carregando</h1> : ''}
-
-                <div className="card-body">
-                    <div className="row row-cols-1 row-cols-md-2 g-4">
-                        {listaCardCursos}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Diamante" isCursoBloqueado={false} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Diamante" isCursoBloqueado={false} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Diamante" isCursoBloqueado={false} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Diamante" isCursoBloqueado={false} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Diamante" isCursoBloqueado={false} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Ouro" isCursoBloqueado={true} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Ouro" isCursoBloqueado={true} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Ouro" isCursoBloqueado={true} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Ouro" isCursoBloqueado={true} />*/}
-                        {/*<CardConteudoCurso capaCurso="DESTRAVE-16-9.png" nomeCurso="Destrave" descricaoCurso="hueheuheuheu" nivelCurso="Ouro" isCursoBloqueado={true} />*/}
-                    </div>
-                </div>
+                {IsCarregando ? <CarregandoPlaceholder />
+                    : <div className="card-body">
+                        <div className="row row-cols-1 row-cols-md-2 g-4">
+                            {listaCardCursos}
+                        </div>
+                    </div>}
             </div>
         </div>
     )

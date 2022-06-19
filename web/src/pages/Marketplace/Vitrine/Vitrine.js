@@ -5,7 +5,6 @@ import api from '../../../api'
 import VitrineModel from "../../../utils/VitrineModel";
 import Navbar from "../../../components/Navbar";
 
-
 import FotosVitrine from "./FotosVitrine/FotosVitrine";
 import CardDadosContato from "./InformacoesProfissional/CardDadosContato";
 import PrincipaisPerguntas from './InformacoesProfissional/CardPrincipaisPerguntas'
@@ -26,8 +25,6 @@ export default function Vitrine(){
     useEffect(() => {
         api.get(`detalhesProfissional/${idProfissionalURL}`)
         .then(({data}) => {
-            console.log("data")
-            console.log(data)
             setDadosVitrine(data)
             setIsCarregando(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps

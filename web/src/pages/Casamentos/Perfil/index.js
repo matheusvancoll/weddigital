@@ -42,7 +42,7 @@ export default function Perfil() {
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
-    let nomeArquivoPerfil = DadosResumoPerfil.fotoPerfil ? DadosResumoPerfil.fotoPerfil : 'avatar.png'
+    let nomeArquivoPerfil = DadosResumoPerfil.fotoPerfil ? DadosResumoPerfil.fotoPerfil : 'avatar.jpg'
     const fotoPerfil = require(`../../../fileContents/imagensPerfil/${nomeArquivoPerfil}`)
 
     return (
@@ -53,6 +53,7 @@ export default function Perfil() {
                 <div className="sidebar__title">
                     <div className="sidebar__img">
                         <img src={fotoPerfil} alt="logo"/>
+
                         <h1>{DadosResumoPerfil.nomeUsuario}</h1>
                     </div>
                 </div>

@@ -69,7 +69,7 @@ export default function Perfil() {
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
-    let nomeArquivoPerfil = DadosResumoPerfil.fotoPerfil ? DadosResumoPerfil.fotoPerfil : 'avatar.png'
+    let nomeArquivoPerfil = DadosResumoPerfil.fotoPerfil ? DadosResumoPerfil.fotoPerfil : 'avatar.jpg'
     const fotoPerfil = require(`../../../fileContents/imagensPerfil/${nomeArquivoPerfil}`)
 
     return (

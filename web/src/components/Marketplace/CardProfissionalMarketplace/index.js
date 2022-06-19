@@ -1,8 +1,6 @@
 import React from 'react'
 import './CardProfissionalMarketplace.css'
 
-import Imagem from '../../../assets/recepcao.jpeg'
-
 export default function CardProdutoMarketplace(props){
 
     let nomeEmpresa = props.dadosProfissionais.nomeEmpresa
@@ -16,7 +14,7 @@ export default function CardProdutoMarketplace(props){
     let nivelStatusConta = props.dadosProfissionais.nivelStatusConta
     let imagemVitrine = props.dadosProfissionais.imagemMarketplace
 
-    let nomeArquivo = imagemVitrine ? imagemVitrine : 'capaVitrine.jpeg'
+    let nomeArquivo = imagemVitrine ? imagemVitrine : 'no-image.png'
     const imagemPrincipalCapa = require(`../../../fileContents/imagensVitrineProfissional/${nomeArquivo}`)
 
     return(
