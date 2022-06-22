@@ -12,6 +12,8 @@ import Ico_Diamante_Gold from '../../../../assets/icons/Diamante_Gold.ico'
 import Ico_Diamante_Black from '../../../../assets/icons/Diamante_Black.ico'
 import Ico_Diamante_Platinum from '../../../../assets/icons/Diamante_Platinum.ico'
 import Ico_Diamante_Infinity from '../../../../assets/icons/Diamante_Infinity.ico'
+import Config from "../../../../config.json";
+import CardPlanos from "../../../CardPlanos";
 
 export default function FormDadosGerais(props){
     let dadosStatus = props.dadosStatusPontuacao
@@ -36,35 +38,40 @@ export default function FormDadosGerais(props){
 
     return(
         <div className="progresso-casamentos__container">
-            <h1>Nivel da conta: <span className="nivel-conta-text">{nivelContaNome}</span></h1>
+            {props.nivelConta == 1
+                ? <CardPlanos nivelConta={props.nivelConta} linkAcesso={Config.comunidade.linkProfissionais} tituloBotao='Acessar comunidade' />
+                : <>
+                    <h1>Nivel da conta: <span className="nivel-conta-text">{nivelContaNome}</span></h1>
 
-            <div className="progresso-casamentos">
-                <div className="progresso-casamentos-status left">
-                    <img className="status-conta-ico"
-                         src={carregarStatus(nivelContaNome, nivelStatusNome)} />
-                    <h3>Status atual</h3>
-                </div>
+                    <div className="progresso-casamentos">
+                        <div className="progresso-casamentos-status left">
+                            <img className="status-conta-ico"
+                                 src={carregarStatus(nivelContaNome, nivelStatusNome)} />
+                            <h3>Status atual</h3>
+                        </div>
 
-                <div className="barra_progresso_container">
-                    <div className="progress w-100">
-                        <div className="progress-bar" role="progressbar"
-                             style={style}
-                             aria-valuemin={pontoMinimo}
-                             aria-valuenow={numeroCasamentosBemSucedidos}
-                             aria-valuemax={pontoMaximo}>
+                        <div className="barra_progresso_container">
+                            <div className="progress w-100">
+                                <div className="progress-bar" role="progressbar"
+                                     style={style}
+                                     aria-valuemin={pontoMinimo}
+                                     aria-valuenow={numeroCasamentosBemSucedidos}
+                                     aria-valuemax={pontoMaximo}>
+                                </div>
+                            </div>
+                            <h5>Casamentos bem sucedidos:  <span className="badge bg-secondary">{numeroCasamentosBemSucedidos}</span></h5>
+                        </div>
+
+
+                        <div className="progresso-casamentos-status right">
+                            <img className="status-conta-ico"
+                                 src={carregarStatus(nivelContaNome, proximoNivel)} />
+                            <h3>Próximo status</h3>
+                            <h6>Casamentos necessários: {pontoMaximo+1}</h6>
                         </div>
                     </div>
-                    <h5>Casamentos bem sucedidos:  <span className="badge bg-secondary">{numeroCasamentosBemSucedidos}</span></h5>
-                </div>
-
-
-                <div className="progresso-casamentos-status right">
-                    <img className="status-conta-ico"
-                         src={carregarStatus(nivelContaNome, proximoNivel)} />
-                    <h3>Próximo status</h3>
-                    <h6>Casamentos necessários: {pontoMaximo+1}</h6>
-                </div>
-            </div>
+                </>
+            }
         </div>
     )
 }
@@ -72,6 +79,8 @@ export default function FormDadosGerais(props){
 function carregarStatus(nivelConta, status){
 
     let statusProfissional = `Ico_${nivelConta}_${status}`
+    console.log("statusProfissional")
+    console.log(statusProfissional)
 
     if(statusProfissional == "Ico_Ouro_Gold"){ return Ico_Ouro_Gold }
     if(statusProfissional == "Ico_Ouro_Black"){ return Ico_Ouro_Black }

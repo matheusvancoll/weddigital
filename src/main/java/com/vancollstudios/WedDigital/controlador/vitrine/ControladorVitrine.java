@@ -2,11 +2,11 @@ package com.vancollstudios.WedDigital.controlador.vitrine;
 
 import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
 import com.vancollstudios.WedDigital.controlador.usuarios.ControladorStatusPontuacaoProfissional;
-import com.vancollstudios.WedDigital.controlador.vitrine.DTO.DadosResumoProfissionaisDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
 import com.vancollstudios.WedDigital.model.imagens.ImagemVitrine;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
 import com.vancollstudios.WedDigital.model.orcamentos.Orcamento;
+import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoProfissionaisDTO;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoVitrineDTO;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;

@@ -42,7 +42,7 @@ public class ControladorMensagen {
         Collection<Mensagem> listaMensagensDoProfissional = new ArrayList<>();
         Profissional profissional = new Profissional();
 
-        Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdUsuario(idProfissional);
+        Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdProfissional(idProfissional);
 
         if(profissionalOption.isPresent()){
             profissional = profissionalOption.get();

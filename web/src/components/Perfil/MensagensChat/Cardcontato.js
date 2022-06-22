@@ -8,7 +8,7 @@ export default function Cardcontato(props){
                 <div className="about">
                     <div className="name">{props.nome}</div>
                     <div className="status">
-                        <i className={props.isOnline ? "fa fa-circle online" : "fa fa-circle offline"}></i> left 7 mins ago
+                        {/*<i className={props.isOnline ? "fa fa-circle online" : "fa fa-circle offline"}></i>*/}
                     </div>
                 </div>
             </li>

@@ -13,8 +13,9 @@ import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
 import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
 import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
-import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
+import FormOrcamentos from "../../../components/Perfil/MensagensChat";
 import FormComunidade from "../../../components/Perfil/Empresas/FormComunidade";
+import {useHistory} from "react-router-dom";
 
 export default function Perfil() {
     const [ DadosResumoPerfil, setDadosResumoPerfil ] = useState(UsuarioModel.dadosResumoPerfilProfissionalDTO)
@@ -23,7 +24,9 @@ export default function Perfil() {
     const [ TabLocation, setTabLocation ] = useState("resumo")
     const [ IsCarregando, setIsCarregando ] = useState(true)
     const [ SidebarOpen, setSidebarOpen ] = useState(true)
+
     const { token } = useContext(UserContext)
+    const history = useHistory()
 
     let urlTabAcesso = window.location.href.split('#')
 
@@ -52,6 +55,7 @@ export default function Perfil() {
         }).catch(({error}) => {
             setIsCarregando(false)
             setIsDadosInvalido(true)
+            history.push('/empresas')
         })
 
 
@@ -64,8 +68,6 @@ export default function Perfil() {
             setIsCarregando(false)
         })
     }, [])
-
-    console.log(DadosResumoPerfil)
 
     function toggleSidebar() { setSidebarOpen(!SidebarOpen) }
 
@@ -162,7 +164,9 @@ export default function Perfil() {
                         <>
                             {TabLocation == 'resumo' ?
                                 <div >
-                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                                    {DadosStatusProfissional.nivelContaNome == 'Bronze'
+                                        ? ''
+                                        : <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>}
                                     <FormResumo dadosUsuario={DadosResumoPerfil}/>
                                 </div>
                             :''
@@ -188,13 +192,13 @@ export default function Perfil() {
 
                             {TabLocation == 'conquitas' ?
                                 <div >
-                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional}/>
+                                    <FormConquistas dadosStatusPontuacao={DadosStatusProfissional} nivelConta={DadosResumoPerfil.nivelConta} />
                                 </div>
                             :''}
 
                             {TabLocation == 'convites' ?
                                 <div>
-                                    <h1>Indicações</h1>
+                                    <h1>Convide parceiros e ganhe pontos para concorrer a R$1.000 todos os meses, confira quantos pontos você pode ganhar:</h1>
                                 </div>
                             :''}
 

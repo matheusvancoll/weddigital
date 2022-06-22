@@ -5,7 +5,7 @@ export default function BoxInfoResumo(props){
         <div className="box-resumo__container">
             <div className="box-resumo_itens-left">
                 <div className="box-resumo_icon">
-                    <i class="fa-solid fa-chart-line"></i>
+                    <i class={props.icon}></i>
                 </div>
 
                 <p>{props.title}</p>

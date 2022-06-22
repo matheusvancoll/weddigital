@@ -177,7 +177,7 @@ export default function FormDadosGerais(props){
 
                     <div class="mb-3">
                         <label for="validationTextarea" class="form-label">Descrição da Empresa</label>
-                        <textarea class="form-control" id="validationTextarea" placeholder="Informe para seus visitantes o que você pode oferecer!" required
+                        <textarea class="form-control" id="validationTextarea" placeholder="Fale aos noivos sobre os seus serviços!" required
                                     name="descricaoEmpresa" value={DadosCadastro.descricaoEmpresa} onChange={onChange}></textarea>
                     </div>
 

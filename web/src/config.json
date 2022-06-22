@@ -16,8 +16,8 @@
     },
 
     "planos": {
-        "start" : "",
-        "ouro" : "",
-        "diamante": ""
+        "start" : "https://pay.greenn.com.br/5716",
+        "ouro" : "https://pay.greenn.com.br/5539",
+        "diamante": "https://pay.greenn.com.br/5542"
     }
 }

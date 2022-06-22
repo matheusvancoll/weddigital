@@ -9,7 +9,7 @@ import NavbarPerfil from '../../../components/Perfil/Navbar'
 
 import FormResumo from "../../../components/Perfil/Noivos/FormResumoCasamentos";
 import FormDadosCasamentos from "../../../components/Perfil/Noivos/FormDadosCasamentos"
-import FormCursosNoivas from '../../../components/Perfil/Noivos/FormCursosNoivas'
+import FormDicasNoivas from '../../../components/Perfil/Noivos/FormDicasNoivas'
 import FormComunidadeNoivos from '../../../components/Perfil/Noivos/FormComunidadeNoivos'
 
 
@@ -80,10 +80,10 @@ export default function Perfil() {
                         </a>
                     </div>
 
-                    <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'cursos' ? "active" : ""}>
-                        <a href='#cursos' onClick={() => setTabLocation("cursos")} >
+                    <div className={SidebarOpen ? "sidebar__item" : "sidebar__item responsive"} id={TabLocation == 'dicas' ? "active" : ""}>
+                        <a href='#cursos' onClick={() => setTabLocation("dicas")} >
                             <i class="fa-solid fa-graduation-cap"></i>
-                            <span>Cursos</span>
+                            <span>Dicas</span>
                         </a>
                     </div>
 
@@ -132,9 +132,9 @@ export default function Perfil() {
                                         </div>
                                         :''}
 
-                                    {TabLocation == 'cursos' ?
+                                    {TabLocation == 'dicas' ?
                                         <div >
-                                            <FormCursosNoivas />
+                                            <FormDicasNoivas />
                                         </div>
                                         :''}
 

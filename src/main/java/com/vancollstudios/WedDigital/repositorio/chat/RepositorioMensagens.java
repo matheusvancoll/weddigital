@@ -12,7 +12,7 @@ import java.util.Collection;
 public interface RepositorioMensagens extends CrudRepository<Mensagem, Integer> {
 
 
-    @Query(value = "select *  from dados_chat where id_profissional = :idProfissional group by id_cliente order by data_envio_mensagem desc;",
+    @Query(value = "select *  from mensagens_chat where id_profissional = :idProfissional group by id_cliente order by data_envio_mensagem desc",
             nativeQuery = true)
     Collection<Mensagem> findAllByIdProfissional(Integer idProfissional);
 

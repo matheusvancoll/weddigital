@@ -1,4 +1,4 @@
-package com.vancollstudios.WedDigital.controlador.vitrine.DTO;
+package com.vancollstudios.WedDigital.model.usuarios.DTO;
 
 public class DadosResumoProfissionaisDTO {
 
