@@ -28,6 +28,8 @@ public class DadosResumoPerfilProfissionalDTO {
     private Integer pontosAcumulados;
     private Double classificacao;
     private Integer casamentosBemSucedidos;
+    private Integer feedbacksRecebidos;
+    private String ultimoGanhadorSorteio;
     private Integer orcamentosRecebidos;
     private Integer visitasVitrine;
     private Integer tokenConvite;
@@ -211,6 +213,22 @@ public class DadosResumoPerfilProfissionalDTO {
 
     public Integer getCasamentosBemSucedidos() {
         return casamentosBemSucedidos;
+    }
+
+    public Integer getFeedbacksRecebidos() {
+        return feedbacksRecebidos;
+    }
+
+    public void setFeedbacksRecebidos(Integer feedbacksRecebidos) {
+        this.feedbacksRecebidos = feedbacksRecebidos;
+    }
+
+    public String getUltimoGanhadorSorteio() {
+        return ultimoGanhadorSorteio;
+    }
+
+    public void setUltimoGanhadorSorteio(String ultimoGanhadorSorteio) {
+        this.ultimoGanhadorSorteio = ultimoGanhadorSorteio;
     }
 
     public void setCasamentosBemSucedidos(Integer casamentosBemSucedidos) {

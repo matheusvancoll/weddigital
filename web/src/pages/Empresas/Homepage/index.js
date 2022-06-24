@@ -2,9 +2,12 @@ import React from 'react'
 import './Homepage-Empresas.css'
 
 import Navbar from '../../../components/Navbar';
+
 import ImagemWed from '../../../assets/home.jpg'
 import ImagemPanel from '../../../assets/panel.jpg'
 import ImagemAcessoria from '../../../assets/assessoria.jpg'
+import ImagemPerfilProfissional from '../../../assets/perfil-profissional.PNG'
+
 import CardVantagensEmpresas from '../../../components/Homepage/CardVantagens/CardVantagensEmpresas';
 import CardServicosOferecidos from '../../../components/Homepage/CardVantagens/CardServicosOferecidos';
 import {Link} from "react-router-dom";
@@ -48,6 +51,9 @@ export default function HomePage() {
                     <div className='home_cards line2'>
                         <CardVantagensEmpresas icon="fa-solid fa-arrow-trend-up" title="Cresça na velocidade digital"
                                     description='Não importa quanto tempo você tem de mercado, nós potencializamos sua marca 10x mais rápido usando estratégias de marketing'/>
+
+                        <CardVantagensEmpresas icon="fa-solid fa-arrow-up-right-dots" title="Programa Win"
+                                               description='Reconhecemos o seu trabalho para realizar grandes casamentos, por isso criampos o programa Win'/>
                     </div>
                 </div>
 
@@ -102,6 +108,80 @@ export default function HomePage() {
                         <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
                     </div>
                 </div>
+
+                <div className='homepage__home_three'>
+                    <div className='home3_text_side'>
+                        <div className='home3__imagem'>
+                            <img src={ImagemPerfilProfissional}></img>
+                        </div>
+
+                        <div>
+                            <CardServicosOferecidos icon="fa-solid fa-file-circle-check"
+                                                    texto='Obtenha certificado de conclusão das aulas assistidas.' />
+
+                            <CardServicosOferecidos icon="fa-solid fa-sack-dollar"
+                                                    texto='Conquiste pontos e concorra a R$500 todos os meses.' />
+                        </div>
+                    </div>
+                    <div className='home3_text_title'>
+                        <h2>
+                            Tudo isso na sua mão
+                        </h2>
+
+                        <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                <div className='homepage__home_one' id='inicio'>
+                    <div className='home_one__textos'>
+                        <h1>
+                            <span className='text-roxo'>Sua empresa</span> <br></br>
+                            <span className='text-preto'>vendendo para <br></br>
+                                                        noivos <span className='text-roxo'>reais</span></span>
+                        </h1>
+
+                        <h4 className='text-roxo'>
+                            Receba 10x mais solicitações de orçamento e tenha acesso a aulas exclusivas de estratégias de marketing de empresas de sucesso.
+                        </h4>
+
+                        <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
+                    </div>
+                    <div className='home_one__imagem'>
+                        <img src={ImagemWed}></img>
+                    </div>
+                </div>
+                <div className='homepage__home_two' id='vantagens'>
+                    <div className='home_cards line1'>
+                        <CardVantagensEmpresas icon="fa-solid fa-trophy" title="Concorra a prêmios"
+                                               description='Para ajudar o seu negócio, nós vamos te presentear em cash através de suas conquintas.'/>
+
+                        <CardVantagensEmpresas icon="fa-solid fa-bullhorn" title="Marketing é tudo"
+                                               description='"Vou falar com meu noivo e te retorno". Aprenda técnicas de marketing e torne sua empresa desejada por noivas.'/>
+
+                        <CardVantagensEmpresas icon="fa-solid fa-file-contract" title="Feche mais contratos"
+                                               description='Alavanque seu negócio fechando com noivos que acessam a plataforma'/>
+                    </div>
+
+                    <div className='home_cards line2'>
+                        <CardVantagensEmpresas icon="fa-solid fa-arrow-trend-up" title="Cresça na velocidade digital"
+                                               description='Não importa quanto tempo você tem de mercado, nós potencializamos sua marca 10x mais rápido usando estratégias de marketing'/>
+
+                        <CardVantagensEmpresas icon="fa-solid fa-arrow-up-right-dots" title="Programa Win"
+                                               description='Reconhecemos o seu trabalho para realizar grandes casamentos, por isso criampos o programa Win'/>
+                    </div>
+                </div>
+
                 <Footer />
             </div>
         </>

@@ -1,6 +1,7 @@
 package com.vancollstudios.WedDigital.controlador.usuarios;
 
 import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
+import com.vancollstudios.WedDigital.model.feedbacks.FeedbackProfissional;
 import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilNoivosDTO;
 import com.vancollstudios.WedDigital.repositorio.imagens.RepositorioImagemPerfil;
@@ -342,7 +343,14 @@ public class ControladorUsuario {
                 dadosProfissional != null && dadosProfissional.getBody() != null){
             usuario = (Usuario) dadosUsuario.getBody();
             profissional = (Profissional) dadosProfissional.getBody();
+
+            Collection<FeedbackProfissional> listFeedbacksProfissional = new ArrayList<>();
+            String ultimoGanhadorSorteio = "Guilherme Fonteles";
+
             dadosResumoPerfilProfissionalDTO = popularDadosResumoPerfilProfissional(usuario, profissional);
+            dadosResumoPerfilProfissionalDTO.setFeedbacksRecebidos(115);
+            dadosResumoPerfilProfissionalDTO.setUltimoGanhadorSorteio(ultimoGanhadorSorteio);
+
         }else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }

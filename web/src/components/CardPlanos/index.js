@@ -1,6 +1,7 @@
 import React from "react";
 import './CardPlanos.css'
 
+import PlanStart from '../../assets/plan-start.png'
 import PlanOuro from '../../assets/plan-ouro.png'
 import PlanDiamante from '../../assets/plan-diamante.png'
 
@@ -26,6 +27,11 @@ export default function FormComunidade(props){
                     <h3>Esse recurso é exclusivo para profissionais Ouro e Diamante</h3>
                     <h4>Assine um dos planos para ter acesso!</h4>
                     <div className='card-planos'>
+                        <div className='card-planos-image-link'>
+                            <img src={PlanStart} />
+                            <a href={Config.planos.start} target='_blank'>Assinar Start</a>
+                        </div>
+
                         <div className='card-planos-image-link'>
                             <img src={PlanOuro} />
                             <a href={Config.planos.ouro} target='_blank'>Assinar Ouro</a>
