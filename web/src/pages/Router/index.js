@@ -8,7 +8,7 @@ import CadastroEmpresa from '../Empresas/CadastroEmpresa'
 import PerfilEmpresa from '../Empresas/Perfil/'
 
 import HomepageNoivos from '../Casamentos/Homepage'
-import CadastroNoivos from '../Casamentos/CadastroNoivos/index.js'
+import CadastroNoivos from '../Casamentos/CadastroNoivos'
 import PerfilNoivos from '../Casamentos/Perfil/'
 
 import Login from '../Login'

@@ -2,28 +2,27 @@ import React, {useEffect, useState} from "react";
 import Helmet from 'react-helmet'
 import './FormOrcamento.css'
 
-import Cardcontato from "./Cardcontato";
-import CardChat from "./CardChat";
+import Cardcontato from "../../MensagensChat/Cardcontato";
 import api from "../../../api";
-import CardAnuncioMarketplace from "../../Marketplace/CardProfissionalMarketplace";
+
 import CarregandoPlaceholder from "../../Modal/CarregandoPlaceholder";
 
 export default function FormOrcamentos(props){
     const [IsCarregando, setIsCarregando] = useState(true)
     const [DadosMensagem, setDadosMensagem] = useState([])
 
-    let isProfissional = props.isProfissional
-    isProfissional = true
+    let idCliente = props.dadosProfissional.idProfissional
+    idCliente = 33
 
     useEffect(() => {
-        api.get("mensagens/profissional/listarConversas/33")
+        api.get(`mensagens/cliente/listarConversas/${idCliente}`)
             .then(({data}) => {
                 setDadosMensagem(data)
                 setIsCarregando(false)
                 //eslint-disable-next-line react-hooks/exhaustive-deps
             }).catch(({error}) => {
-                console.log(error)
-                setIsCarregando(false)
+            console.log(error)
+            setIsCarregando(false)
         })
     }, [])
 
@@ -33,15 +32,14 @@ export default function FormOrcamentos(props){
         let image =  DadosMensagem[i].fotoPerfil ? DadosMensagem[i].fotoPerfil : 'avatar.jpg'
         const imagePerfilChat = require(`../../../fileContents/imagensPerfil/${image}`)
 
-        if(isProfissional){
-            listaCardMensagens.push(
-                <Cardcontato
-                    nome={DadosMensagem[i].nomeCliente}
-                    fotoPerfil={imagePerfilChat}
-                    isOnline={true}
-                    isActive={false} />
-            )
-        }
+        listaCardMensagens.push(
+            <Cardcontato
+                nome={DadosMensagem[i].nomeCliente}
+                fotoPerfil={imagePerfilChat}
+                isOnline={true}
+                isActive={false}
+            />
+        )
     }
 
     return(

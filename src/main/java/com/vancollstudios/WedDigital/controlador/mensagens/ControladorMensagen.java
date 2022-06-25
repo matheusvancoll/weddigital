@@ -3,17 +3,16 @@ package com.vancollstudios.WedDigital.controlador.mensagens;
 import com.vancollstudios.WedDigital.model.chat.DTO.dadosResumoListaMensagensDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
+import com.vancollstudios.WedDigital.model.usuarios.Noivos;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.chat.RepositorioMensagens;
 import com.vancollstudios.WedDigital.repositorio.orcamentos.RepositorioOrcamento;
+import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
@@ -34,8 +33,14 @@ public class ControladorMensagen {
     RepositorioProfissional repositorioProfissional;
 
     @Autowired
+    RepositorioNoivos repositorioNoivos;
+
+    @Autowired
     RepositorioUsuario repositorioUsuario;
 
+    /**
+     *
+     */
     @GetMapping(path = "/api/mensagens/profissional/listarConversas/{idProfissional}")
     public Collection<dadosResumoListaMensagensDTO> obterListaMensagensPorProfissionalId(@PathVariable("idProfissional") Integer idProfissional){
         Collection<dadosResumoListaMensagensDTO> listaResumoMensagenDTO = new ArrayList<>();
@@ -66,6 +71,12 @@ public class ControladorMensagen {
                 dadosResumoMensagenDTO.setNomeCliente(usuario.getNomeUsuario());
                 dadosResumoMensagenDTO.setUltimaMensagem(mensagem.getCorpoMensagem());
                 dadosResumoMensagenDTO.setDataHoraMensagemUltimaMensagem(mensagem.getDataEnvioMensagem().toString());
+                dadosResumoMensagenDTO.setFotoPerfil(usuario.getFotoPerfil());
+
+                Optional<Noivos> clienteOpt = repositorioNoivos.findAllByIdUsuario(usuario.getIdUsuario());
+                if (clienteOpt.isPresent()){
+                    dadosResumoMensagenDTO.setDataCasamento(clienteOpt.get().getDataCasamento());
+                }
             }
 
             listaResumoMensagenDTO.add(dadosResumoMensagenDTO);
@@ -79,5 +90,23 @@ public class ControladorMensagen {
     public Collection<Mensagem> obterMensagensPorClienteId(@PathVariable("idCliente") Integer idCliente){
         Collection<Mensagem> listaMensagensCliente = repositorioMensagens.findAllByIdCliente(idCliente);
         return listaMensagensCliente;
+    }
+
+
+
+
+    @GetMapping(path = "/api/mensagens/listarConteudoMensagem")
+    public Collection<Mensagem> obterConteudoMensagem(@RequestParam Integer idProfissional, @RequestParam Integer idCliente){
+        Collection<Mensagem> listaMensagens = new ArrayList<>();
+        Profissional profissional = new Profissional();
+        Noivos cliente = new Noivos();
+
+
+        Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdProfissional(idProfissional);
+        Optional<Noivos> clienteOption = repositorioNoivos.findAllByIdUsuario(idCliente);
+
+        listaMensagens = repositorioMensagens.findAllByIdProfissionalAndIdCliente(idProfissional, idCliente);
+
+        return listaMensagens;
     }
 }

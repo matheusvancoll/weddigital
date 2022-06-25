@@ -13,7 +13,7 @@ import FormResumo from '../../../components/Perfil/Empresas/FormResumo';
 import FormDadosGerais from '../../../components/Perfil//Empresas/FormDadosGerais';
 import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
 import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
-import FormOrcamentos from "../../../components/Perfil/MensagensChat";
+import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
 import FormComunidade from "../../../components/Perfil/Empresas/FormComunidade";
 import {useHistory} from "react-router-dom";
 
@@ -180,7 +180,7 @@ export default function Perfil() {
 
                             {TabLocation == 'orcamentos' ?
                                 <div >
-                                    <FormOrcamentos />
+                                    <FormOrcamentos dadosProfissional={DadosResumoPerfil}/>
                                 </div>
                             :''}
 

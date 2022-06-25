@@ -7,6 +7,8 @@ public class dadosResumoListaMensagensDTO {
     private String nomeProfissional;
     private Integer idCliente;
     private String nomeCliente;
+    private String fotoPerfil;
+    private String dataCasamento;
     private String dataHoraMensagemUltimaMensagem;
     private String ultimaMensagem;
 
@@ -48,6 +50,22 @@ public class dadosResumoListaMensagensDTO {
 
     public void setNomeCliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getDataCasamento() {
+        return dataCasamento;
+    }
+
+    public void setDataCasamento(String dataCasamento) {
+        this.dataCasamento = dataCasamento;
     }
 
     public String getDataHoraMensagemUltimaMensagem() {
