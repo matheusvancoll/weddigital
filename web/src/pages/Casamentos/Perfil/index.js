@@ -11,6 +11,7 @@ import FormResumo from "../../../components/Perfil/Noivos/FormResumoCasamentos";
 import FormDadosCasamentos from "../../../components/Perfil/Noivos/FormDadosCasamentos"
 import FormDicasNoivas from '../../../components/Perfil/Noivos/FormDicasNoivas'
 import FormComunidadeNoivos from '../../../components/Perfil/Noivos/FormComunidadeNoivos'
+import FormOrcamentosNoivos from "../../../components/Perfil/Noivos/FormOrcamentosNoivos";
 
 
 export default function Perfil() {
@@ -32,7 +33,7 @@ export default function Perfil() {
             .then(({data}) => {
                 setDadosResumoPerfil(data)
                 setIsCarregando(false)
-                setIsCarregando(false)
+                setTabLocation(urlTabAcesso[1] ? urlTabAcesso[1] : "resumo")
                 //eslint-disable-next-line react-hooks/exhaustive-deps
             }).catch(({error}) => {
             setIsCarregando(false)
@@ -128,7 +129,7 @@ export default function Perfil() {
 
                                     {TabLocation == 'orcamentos' ?
                                         <div >
-                                            <h1>Orçamentos</h1>
+                                            <FormOrcamentosNoivos dadosResumoPerfil={DadosResumoPerfil}/>
                                         </div>
                                         :''}
 

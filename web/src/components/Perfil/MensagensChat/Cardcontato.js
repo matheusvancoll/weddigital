@@ -2,10 +2,9 @@ import React from "react";
 
 export default function Cardcontato(props){
 
-
     function alterarActive(){
-        props.alterarContatoAtivo(props.idItem);
-        props.isAltare(true)
+        props.setContatoAtivo(props.idItem);
+        props.isAltaredo(true)
     }
 
     return(

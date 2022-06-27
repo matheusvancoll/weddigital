@@ -3,16 +3,18 @@ import Helmet from 'react-helmet'
 import './FormOrcamento.css'
 
 import Cardcontato from "../../MensagensChat/Cardcontato";
-import api from "../../../api";
+import api from "../../../../api";
 
-import CarregandoPlaceholder from "../../Modal/CarregandoPlaceholder";
+import CarregandoPlaceholder from "../../../Modal/CarregandoPlaceholder";
+import CardChat from "../../MensagensChat/CardChat";
 
 export default function FormOrcamentos(props){
     const [IsCarregando, setIsCarregando] = useState(true)
     const [DadosMensagem, setDadosMensagem] = useState([])
+    const [IdContatoAtivo, setIdContatoAtivo] = useState(0)
+    const [IsAlterado, setIsAlterado] = useState(true)
 
-    let idCliente = props.dadosProfissional.idProfissional
-    idCliente = 33
+    let idCliente = props.dadosResumoPerfil.idUsuario
 
     useEffect(() => {
         api.get(`mensagens/cliente/listarConversas/${idCliente}`)
@@ -30,14 +32,17 @@ export default function FormOrcamentos(props){
 
     for (let i = 0; i < DadosMensagem.length; i++) {
         let image =  DadosMensagem[i].fotoPerfil ? DadosMensagem[i].fotoPerfil : 'avatar.jpg'
-        const imagePerfilChat = require(`../../../fileContents/imagensPerfil/${image}`)
+        const imagePerfilChat = require(`../../../../fileContents/imagensPerfil/${image}`)
 
         listaCardMensagens.push(
             <Cardcontato
-                nome={DadosMensagem[i].nomeCliente}
+                idItem={i}
+                isAltaredo={setIsAlterado}
+                setContatoAtivo={setIdContatoAtivo}
+                nome={DadosMensagem[i].nomeContato}
                 fotoPerfil={imagePerfilChat}
                 isOnline={true}
-                isActive={false}
+                isActive={i == IdContatoAtivo ? true : false}
             />
         )
     }
@@ -45,9 +50,9 @@ export default function FormOrcamentos(props){
     return(
         <div>
             <header className="App-header">
-                <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+                {/*<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>*/}
+                {/*<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>*/}
+                {/*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />*/}
             </header>
             <Helmet>
                 <title>Orçamentos - WedDigital</title>
@@ -80,12 +85,13 @@ export default function FormOrcamentos(props){
                                     </ul>
                                 </div>
                                 {listaCardMensagens.length > 0
-                                    ? ''
-                                    // <CardChat nomeChatAtual="Jonicleidson Fagundes" listaMensagens={""} dataCasamento={"15/11/2022"}
-                                    //             fotoPerfil={"https://bootdey.com/img/Content/avatar/avatar2.png"}/>
+                                    ? <CardChat
+                                        isAlterado={IsAlterado}
+                                        setAlterado={setIsAlterado}
+                                        dadosConversa={DadosMensagem[IdContatoAtivo]}
+                                        isProfissional={false} />
                                     : ''
                                 }
-
                             </div>
                         </div>
                     </div>

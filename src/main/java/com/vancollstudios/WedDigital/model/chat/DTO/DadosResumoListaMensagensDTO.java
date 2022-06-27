@@ -1,16 +1,13 @@
 package com.vancollstudios.WedDigital.model.chat.DTO;
 
-public class dadosResumoListaMensagensDTO {
+public class DadosResumoListaMensagensDTO {
 
     private Integer idMensagem;
     private Integer idProfissional;
-    private String nomeProfissional;
     private Integer idCliente;
-    private String nomeCliente;
+    private String nomeContato;
     private String fotoPerfil;
     private String dataCasamento;
-    private String dataHoraMensagemUltimaMensagem;
-    private String ultimaMensagem;
 
     public Integer getIdMensagem() {
         return idMensagem;
@@ -28,13 +25,6 @@ public class dadosResumoListaMensagensDTO {
         this.idProfissional = idProfissional;
     }
 
-    public String getNomeProfissional() {
-        return nomeProfissional;
-    }
-
-    public void setNomeProfissional(String nomeProfissional) {
-        this.nomeProfissional = nomeProfissional;
-    }
 
     public Integer getIdCliente() {
         return idCliente;
@@ -44,13 +34,6 @@ public class dadosResumoListaMensagensDTO {
         this.idCliente = idCliente;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
-    }
-
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
 
     public String getFotoPerfil() {
         return fotoPerfil;
@@ -68,19 +51,11 @@ public class dadosResumoListaMensagensDTO {
         this.dataCasamento = dataCasamento;
     }
 
-    public String getDataHoraMensagemUltimaMensagem() {
-        return dataHoraMensagemUltimaMensagem;
+    public String getNomeContato() {
+        return nomeContato;
     }
 
-    public void setDataHoraMensagemUltimaMensagem(String dataHoraMensagemUltimaMensagem) {
-        this.dataHoraMensagemUltimaMensagem = dataHoraMensagemUltimaMensagem;
-    }
-
-    public String getUltimaMensagem() {
-        return ultimaMensagem;
-    }
-
-    public void setUltimaMensagem(String ultimaMensagem) {
-        this.ultimaMensagem = ultimaMensagem;
+    public void setNomeContato(String nomeContato) {
+        this.nomeContato = nomeContato;
     }
 }

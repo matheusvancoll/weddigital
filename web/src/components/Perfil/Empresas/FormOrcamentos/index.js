@@ -12,14 +12,12 @@ export default function FormOrcamentos(props){
     const [IsCarregando, setIsCarregando] = useState(true)
     const [DadosConversa, setDadosConversa] = useState([])
     const [IdContatoAtivo, setIdContatoAtivo] = useState(0)
-    const [IsAlterado, setIsAlterado] = useState(false)
+    const [IsAlterado, setIsAlterado] = useState(true)
 
     let idProfissional = props.dadosProfissional.idProfissional
-    idProfissional = 33
-
 
     useEffect(() => {
-        api.get(`mensagens/profissional/listarConversas/33`)
+        api.get(`mensagens/profissional/listarConversas/${idProfissional}`)
             .then(({data}) => {
                 setDadosConversa(data)
                 setIsCarregando(false)
@@ -39,9 +37,9 @@ export default function FormOrcamentos(props){
         listaCardMensagens.push(
             <Cardcontato
                 idItem={i}
-                isAltare={setIsAlterado}
-                alterarContatoAtivo={setIdContatoAtivo}
-                nome={DadosConversa[i].nomeCliente}
+                isAltaredo={setIsAlterado}
+                setContatoAtivo={setIdContatoAtivo}
+                nome={DadosConversa[i].nomeContato}
                 fotoPerfil={imagePerfilChat}
                 isOnline={true}
                 isActive={i == IdContatoAtivo ? true : false}
@@ -52,9 +50,9 @@ export default function FormOrcamentos(props){
     return(
         <div>
             <header className="App-header">
-                <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+                {/*<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>*/}
+                {/*<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>*/}
+                {/*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />*/}
             </header>
             <Helmet>
                 <title>Orçamentos - WedDigital</title>
@@ -88,9 +86,8 @@ export default function FormOrcamentos(props){
                                 </div>
                                 {listaCardMensagens.length > 0
                                     ? <CardChat
-                                        alterarContatoAtivo={IdContatoAtivo}
-                                        teste={IsAlterado}
-                                        alterar={setIsAlterado}
+                                        isAlterado={IsAlterado}
+                                        setAlterado={setIsAlterado}
                                         dadosConversa={DadosConversa[IdContatoAtivo]}
                                         isProfissional={true} />
                                     : ''

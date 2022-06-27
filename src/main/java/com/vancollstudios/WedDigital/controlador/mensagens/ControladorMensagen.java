@@ -1,8 +1,9 @@
 package com.vancollstudios.WedDigital.controlador.mensagens;
 
-import com.vancollstudios.WedDigital.model.chat.DTO.dadosResumoListaMensagensDTO;
+import com.vancollstudios.WedDigital.model.chat.DTO.DadosResumoListaMensagensDTO;
 import com.vancollstudios.WedDigital.model.chat.Mensagem;
 import com.vancollstudios.WedDigital.model.orcamentos.DTO.DadosResumoOrcamentoDTO;
+import com.vancollstudios.WedDigital.model.orcamentos.Orcamento;
 import com.vancollstudios.WedDigital.model.usuarios.Noivos;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
 import com.vancollstudios.WedDigital.model.usuarios.Usuario;
@@ -12,9 +13,12 @@ import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -42,38 +46,37 @@ public class ControladorMensagen {
      *
      */
     @GetMapping(path = "/api/mensagens/profissional/listarConversas/{idProfissional}")
-    public Collection<dadosResumoListaMensagensDTO> obterListaMensagensPorProfissionalId(@PathVariable("idProfissional") Integer idProfissional){
-        Collection<dadosResumoListaMensagensDTO> listaResumoMensagenDTO = new ArrayList<>();
+    public Collection<DadosResumoListaMensagensDTO> obterContatosDoProfissionalPorIdProfissional(@PathVariable("idProfissional") Integer idProfissional){
+        Collection<DadosResumoListaMensagensDTO> listaResumoMensagenDTO = new ArrayList<>();
         Collection<Mensagem> listaMensagensDoProfissional = new ArrayList<>();
-        Profissional profissional = new Profissional();
 
         Optional<Profissional> profissionalOption = repositorioProfissional.findAllByIdProfissional(idProfissional);
 
         if(profissionalOption.isPresent()){
-            profissional = profissionalOption.get();
-            listaMensagensDoProfissional = repositorioMensagens.findAllByIdProfissional(profissional.getIdProfissional());
+            listaMensagensDoProfissional = repositorioMensagens.findAllByIdProfissional(idProfissional);
+        }else{
+            return null;
         }
 
         for(Mensagem mensagem : listaMensagensDoProfissional){
-            Usuario usuario = new Usuario();
-            dadosResumoListaMensagensDTO dadosResumoMensagenDTO = new dadosResumoListaMensagensDTO();
+            Usuario usuarioCliente = new Usuario();
+            DadosResumoListaMensagensDTO dadosResumoMensagenDTO = new DadosResumoListaMensagensDTO();
 
             Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(mensagem.getIdCliente());
             if(usuarioOptional.isPresent()){
-                usuario = usuarioOptional.get();
+                usuarioCliente = usuarioOptional.get();
             }
 
-            if(usuario != null && profissional != null){
+            if(usuarioCliente != null){
                 dadosResumoMensagenDTO.setIdMensagem(mensagem.getIdMensagem());
-                dadosResumoMensagenDTO.setIdProfissional(profissional.getIdProfissional());
-                dadosResumoMensagenDTO.setNomeProfissional(profissional.getNomeEmpresa());
-                dadosResumoMensagenDTO.setIdCliente(usuario.getIdUsuario());
-                dadosResumoMensagenDTO.setNomeCliente(usuario.getNomeUsuario());
-                dadosResumoMensagenDTO.setUltimaMensagem(mensagem.getCorpoMensagem());
-                dadosResumoMensagenDTO.setDataHoraMensagemUltimaMensagem(mensagem.getDataEnvioMensagem().toString());
-                dadosResumoMensagenDTO.setFotoPerfil(usuario.getFotoPerfil());
+                dadosResumoMensagenDTO.setIdProfissional(mensagem.getIdProfissional());
+                dadosResumoMensagenDTO.setIdCliente(mensagem.getIdCliente());
 
-                Optional<Noivos> clienteOpt = repositorioNoivos.findAllByIdUsuario(usuario.getIdUsuario());
+                dadosResumoMensagenDTO.setNomeContato(usuarioCliente.getNomeUsuario());
+                dadosResumoMensagenDTO.setFotoPerfil(usuarioCliente.getFotoPerfil());
+
+                Optional<Noivos> clienteOpt = repositorioNoivos.findAllByIdUsuario(usuarioCliente.getIdUsuario());
+
                 if (clienteOpt.isPresent()){
                     dadosResumoMensagenDTO.setDataCasamento(clienteOpt.get().getDataCasamento());
                 }
@@ -87,9 +90,44 @@ public class ControladorMensagen {
     }
 
     @GetMapping(path = "/api/mensagens/cliente/listarConversas/{idCliente}")
-    public Collection<Mensagem> obterMensagensPorClienteId(@PathVariable("idCliente") Integer idCliente){
-        Collection<Mensagem> listaMensagensCliente = repositorioMensagens.findAllByIdCliente(idCliente);
-        return listaMensagensCliente;
+    public Collection<DadosResumoListaMensagensDTO> obterContatosDoClientePorIdNoivos(@PathVariable("idCliente") Integer idCliente){
+        Collection<DadosResumoListaMensagensDTO> listaResumoMensagenDTO = new ArrayList<>();
+        Collection<Mensagem> listaMensagensDoCliente = new ArrayList<>();
+
+        Optional<Usuario> clienteUsuarioOption = repositorioUsuario.findAllByIdUsuario(idCliente);
+
+        if(clienteUsuarioOption.isPresent()){
+            listaMensagensDoCliente = repositorioMensagens.findAllByIdCliente(idCliente);
+        }else{
+            return null;
+        }
+
+        for(Mensagem mensagem : listaMensagensDoCliente){
+            DadosResumoListaMensagensDTO dadosResumoMensagenDTO = new DadosResumoListaMensagensDTO();
+            Usuario usuarioProfissional = new Usuario();
+            Profissional profissional = new Profissional();
+
+            Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(mensagem.getIdCliente());
+            Optional<Profissional> profissionalOptional = repositorioProfissional.findAllByIdProfissional(mensagem.getIdProfissional());
+
+            if(usuarioOptional.isPresent() && profissionalOptional.isPresent()){
+                usuarioProfissional = usuarioOptional.get();
+                profissional = profissionalOptional.get();
+            }
+
+            if(usuarioProfissional != null && profissional != null){
+                dadosResumoMensagenDTO.setIdMensagem(mensagem.getIdMensagem());
+                dadosResumoMensagenDTO.setIdProfissional(mensagem.getIdProfissional());
+                dadosResumoMensagenDTO.setIdCliente(mensagem.getIdCliente());
+
+                dadosResumoMensagenDTO.setNomeContato(profissional.getNomeEmpresa());
+                dadosResumoMensagenDTO.setFotoPerfil(usuarioProfissional.getFotoPerfil());
+            }
+
+            listaResumoMensagenDTO.add(dadosResumoMensagenDTO);
+        }
+
+        return listaResumoMensagenDTO;
     }
 
 
@@ -108,5 +146,46 @@ public class ControladorMensagen {
         listaMensagens = repositorioMensagens.findAllByIdProfissionalAndIdCliente(idProfissional, idCliente);
 
         return listaMensagens;
+    }
+
+
+
+    @PostMapping(path = "/api/mensagens/enviarMensagem")
+    public ResponseEntity<String> enviarMensagemChat(@RequestParam Boolean enviadoPorProfissional, @RequestBody Mensagem mensagemEnviada){
+
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findAllByIdUsuario(mensagemEnviada.getIdCliente());
+        Optional<Profissional> ProfissionalOptional = repositorioProfissional.findAllByIdProfissional(mensagemEnviada.getIdProfissional());
+
+        if(usuarioOptional == null || !usuarioOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not user");
+        }
+        if(ProfissionalOptional == null || !ProfissionalOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("not prof");
+        }
+
+        Usuario usuario  = usuarioOptional.get();
+        Profissional profissional  = ProfissionalOptional.get();
+        Mensagem mensagem = new Mensagem();
+
+        mensagem.setIdProfissional(profissional.getIdProfissional());
+        mensagem.setIdCliente(usuario.getIdUsuario());
+        mensagem.setCorpoMensagem(mensagemEnviada.getCorpoMensagem());
+
+        if(enviadoPorProfissional){
+            mensagem.setEnviadoPorProfissional(true);
+            mensagem.setEnviadoPorCliente(false);
+        }else{
+            mensagem.setEnviadoPorProfissional(false);
+            mensagem.setEnviadoPorCliente(true);
+        }
+
+
+        Long datetime = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(datetime);
+        mensagem.setDataEnvioMensagem(timestamp);
+
+        repositorioMensagens.save(mensagem);
+
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 }

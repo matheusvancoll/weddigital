@@ -1,32 +1,32 @@
 import React, {useEffect, useState} from 'react'
 import './Chat.css'
 
-import MensagemItem from "./MensagemItem";
 import api from "../../../api";
+import Model from '../../../utils/MensagensModel'
+
+import MensagemItem from "./MensagemItem";
 import CarregandoPlaceholder from "../../Modal/CarregandoPlaceholder";
 
 export default function CardChat(props){
     const [ConteudoMensagem, setConteudoMensagem] = useState([])
-    const [isPrimeiroAcesso, setIsPrimeiroAcesso] = useState(true)
-    const [IsCarregandoPlaceholder, setIsCarregandoPlaceholder] = useState(true)
+    const [IsCarregandoPlaceholder, setIsCarregandoPlaceholder] = useState(false)
+    const [MensagemEnvio, setMensagemEnvio] = useState(Model.ChatMensagem)
 
+    let nomeContato = props.dadosConversa.nomeContato
     let dataCasamento = props.dadosConversa.dataCasamento
-    let isProfissional = props.isProfissional ? props.isProfissional : true
-
+    let isProfissional = props.isProfissional
     let idProfissional = props.dadosConversa.idProfissional
     let idCliente = props.dadosConversa.idCliente
 
-    if(props.teste){
-        props.alterar(false)
-        carregarDados()
+    if(props.isAlterado){
+        props.setAlterado(false)
+        carregarMensagens()
     }
 
-    function carregarDados(){
+    function carregarMensagens(){
         api.get(`mensagens/listarConteudoMensagem?idProfissional=${idProfissional}&idCliente=${idCliente}`)
             .then(({data}) => {
                 setConteudoMensagem(data)
-                console.log("MENSANEOE")
-                console.log(ConteudoMensagem)
                 setIsCarregandoPlaceholder(false)
                 //eslint-disable-next-line react-hooks/exhaustive-deps
             }).catch(({error}) => {
@@ -49,6 +49,32 @@ export default function CardChat(props){
     }
 
 
+
+    function onChange(ev){
+        ev.preventDefault()
+        const { value, name } = ev.target
+        setMensagemEnvio({
+            ...MensagemEnvio,
+            [name]: value,
+            idProfissional: idProfissional,
+            idCliente: idCliente
+        })
+    }
+
+
+    function enviarMensagem(){
+
+        let campoCorpoMensagem = document.getElementById('campoCorpoMensagem')
+
+        api.post(`mensagens/enviarMensagem?enviadoPorProfissional=${isProfissional}`, MensagemEnvio)
+            .then((response) => {
+                campoCorpoMensagem.value = ''
+                carregarMensagens()
+            }).catch((error) => {
+                console.log(error)
+        })
+    }
+
     return(
         <div>
             { IsCarregandoPlaceholder
@@ -64,9 +90,9 @@ export default function CardChat(props){
                                 </a>
 
                                 <div className="chat-about">
-                                    <h6 className="m-b-0">{props.nomeChatAtual}</h6>
+                                    <h6 className="m-b-0">{nomeContato}</h6>
                                     {dataCasamento
-                                        ? <small>Vai casar em: {props.dataCasamento}</small>
+                                        ? <small>Vai casar em: {dataCasamento}</small>
                                         : ''
                                     }
                                 </div>
@@ -91,16 +117,14 @@ export default function CardChat(props){
                     </div>
                     <div className="chat-message clearfix">
                         <div className="input-group mb-0">
-                            <input type="text" className="form-control" placeholder="Enter text here..." />
+                            <input type="text" className="form-control" id="campoCorpoMensagem" name='corpoMensagem' placeholder="Enter text here..." onChange={onChange} />
                             <div className="input-group-prepend">
-                                <span className="input-group-text"><i className="fa fa-send"></i></span>
+                                <span className="input-group-text" id="btnEnvioMensagemChat"><i className="fa fa-send" onClick={enviarMensagem}></i></span>
                             </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
-
     )
-
 }
