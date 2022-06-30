@@ -44,7 +44,7 @@ export default function Navbar(props) {
                         ? <div>
                             <a href='/#inicio'>Início</a>
                             <a href='/#sorteio'>Sorteio</a>
-                            <a href='/#dicas-wed'>Dicas</a>
+                            <a href='/#dicas'>Dicas</a>
                         </div>
                         : tipoUsuario == 'noivos' 
                         ? <div>

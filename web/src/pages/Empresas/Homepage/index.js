@@ -59,11 +59,11 @@ export default function HomePage() {
 
                 <div className='homepage__home_three' id='servicos'>
                     <div className='home3_text_title'>
-                        <h2>
+                        <h2 className='title-escrita'>
                             Você está perdendo vários contratos por não ser da Wed
                         </h2>
                         <p>O marketing digital invadiu o mercado de casamentos nos últimos anos e métodos ultrapassados não são suficientes para você obter a sua liberdade financeira</p>
-                        <h2>Por isso , você vai encontrar isso:</h2>
+                        <h2 className='title-escrita'>Por isso , você vai encontrar isso:</h2>
                     </div>
 
                     <div className='home3_text_side'>
@@ -101,7 +101,7 @@ export default function HomePage() {
                         </div>
                     </div>
                     <div className='home3_text_title'>
-                        <h2>
+                        <h2 className='title-escrita'>
                             Tudo isso na sua mão
                         </h2>
 
@@ -122,13 +122,6 @@ export default function HomePage() {
                             <CardServicosOferecidos icon="fa-solid fa-sack-dollar"
                                                     texto='Conquiste pontos e concorra a R$500 todos os meses.' />
                         </div>
-                    </div>
-                    <div className='home3_text_title'>
-                        <h2>
-                            Tudo isso na sua mão
-                        </h2>
-
-                        <Link to='/empresas/cadastro' className='button_quero_crescer'>QUERO CRESCER</Link>
                     </div>
                 </div>
 

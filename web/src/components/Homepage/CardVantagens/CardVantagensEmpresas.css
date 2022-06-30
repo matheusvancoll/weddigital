@@ -14,12 +14,9 @@
     color: var(--color-roxo);
 }
 
-.card_title, .card_description{
-    color: var(--color-preto);
-}
-
 .card_title{
-    font-size: 1.75rem;
+    font-size: 2.5rem;
+    line-height: 2.5rem;
 }
 .card_description{
     font-size: 1rem;

@@ -1,9 +1,9 @@
-@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/hk-grotesk.min.css");
+@import url('http://fonts.cdnfonts.com/css/rawline');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
+@import url('http://fonts.cdnfonts.com/css/gauntly');
 
 :root {
-
 
     --header-height: 3rem;
     --side-width-close: 5rem;
@@ -26,9 +26,10 @@
     /*===== z index =====*/
     --z-fixed: 100;
     
-    --body-font: 'HK Grotesk', sans-serif;
+    --body-font: 'Rawline', sans-serif;
+    --title-font: 'Gauntly', sans-serif;
+    --font-logo-WedDigital : 'Rawline', sans-serif;
     --normal-font-size: 1rem;
-    --font-logo-WedDigital : 'HK Grotesk', sans-serif;
 }
 
 /* ===== Estilo Geral ===== */

@@ -4,6 +4,13 @@
     align-items: center;
     color: var(--color-roxo);
 }
+
+.title-escrita{
+    font-family: var(--title-font);
+    font-size: 5rem;
+    line-height: 5rem;
+}
+
 .area1-home__container{
     width: 100%;
     display: flex;
@@ -130,9 +137,6 @@
 }
 .area3-text h4{
     margin-bottom: 1.5rem;
-}
-.area3-text h1{
-    font-size: 3rem;
 }
 .area3-text a{
     border: none;

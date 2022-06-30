@@ -8,7 +8,7 @@ export default function CardVantagensEmpresas(props){
                 <i class={props.icon}></i>
             </div>
             <div className="card_text">
-                <h2 className="card_title">
+                <h2 className="card_title title-escrita">
                     {props.title}
                 </h2>
                 <h4 className="card_description">

@@ -5,6 +5,12 @@
     justify-content: center;
 }
 
+.title-escrita{
+    font-family: var(--title-font);
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+}
+
 /* === HOMEPAGE - 1 */
 .homepage__home_one{
     display: flex;
