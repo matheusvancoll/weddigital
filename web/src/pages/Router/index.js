@@ -24,7 +24,7 @@ export default function Router() {
         <Switch>
             {/* EMPRESAS */}
             <Route exact path="/empresas" component={HomepageEmpresa} />
-            <Route exact path="/empresas/cadastro" component={CadastroEmpresa} />
+            <Route exact path="/empresas/cadastro:tokenConvite" component={CadastroEmpresa} />
             <Route exact path="/empresas/login"> <Login isEmpresa={true}/> </Route>
             <PrivateRouter exact path="/empresas/perfil" component={PerfilEmpresa} />
             

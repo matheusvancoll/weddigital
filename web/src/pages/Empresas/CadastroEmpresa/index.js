@@ -15,7 +15,7 @@ import CarregandoPlaceholder from "../../../components/Modal/CarregandoPlacehold
 import LogoWed from "../../../assets/icon.ico";
 
 
-export default function CadastroUsuario(){
+export default function CadastroEmpresa(){
     const history = useHistory()
     const { setToken } = useContext(UserContext)
 
@@ -31,6 +31,10 @@ export default function CadastroUsuario(){
 
     const [IsCNPJ, setIsCNPJ] = useState(false)
     const form = useRef();
+
+    let urlDados = window.location.href.split('_')
+    let idUsuarioConviteUrl = null;
+    let tokenUsuarioConviteUrl = null;
 
     function onChange(ev){
         ev.preventDefault()
@@ -90,15 +94,16 @@ export default function CadastroUsuario(){
         let inputEmail = document.getElementById('inputEmailValidacao').value
         let inputNome = document.getElementById('inputNomeUsuarioValidacao').value
 
-        setDadosCadastro({
-            ...DadosCadastro,
-            email: inputEmail,
-        })
+        if(urlDados.length > 1){
+            idUsuarioConviteUrl = urlDados[1]
+            tokenUsuarioConviteUrl = urlDados[2]
 
-        setTimeout(() => {
-            console.log("Email processado")
-        }, "1500")
+            DadosCadastro.is_CadastroPorConvite = true;
+            DadosCadastro.idUsuarioConvite = idUsuarioConviteUrl;
+            DadosCadastro.tokenUsuarioConvite = tokenUsuarioConviteUrl;
+        }
 
+        DadosCadastro.email = inputEmail
         document.getElementById('inputHiddenEmail').value = inputEmail
         document.getElementById('inputHiddenNomeUsuario').value = inputNome
 
@@ -106,22 +111,6 @@ export default function CadastroUsuario(){
             setIsAcordoChecked(false)
             setIsCarregandoDados(false)
             return
-        }
-
-        let urlDados = window.location.href.split('_')
-        let idUsuarioConviteUrl = null;
-        let tokenUsuarioConviteUrl = null;
-
-        if(urlDados.length > 1){
-            idUsuarioConviteUrl = urlDados[1]
-            tokenUsuarioConviteUrl = urlDados[2]
-
-            setDadosCadastro({
-                ...DadosCadastro,
-                is_CadastroPorConvite: true,
-                idUsuarioConvite: idUsuarioConviteUrl,
-                tokenUsuarioConvite: tokenUsuarioConviteUrl,
-            })
         }
 
         onSubmit(ev)

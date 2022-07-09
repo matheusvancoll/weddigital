@@ -15,6 +15,8 @@ import FormConquistas from '../../../components/Perfil/Empresas/FormConquistas'
 import FormCursos from "../../../components/Perfil/Empresas/FormCursos";
 import FormOrcamentos from "../../../components/Perfil/Empresas/FormOrcamentos";
 import FormComunidade from "../../../components/Perfil/Empresas/FormComunidade";
+import FormInficacao from "../../../components/Perfil/Empresas/FormIndicacao";
+
 import {useHistory} from "react-router-dom";
 
 export default function Perfil() {
@@ -49,7 +51,6 @@ export default function Perfil() {
         api.get(`usuario/empresa/obterDadosPerfil?idUsuario=${idUsuario}&idProfissional=${idProfissional}`)
         .then(({data}) => {
             setDadosResumoPerfil(data)
-            setIsCarregando(false)
             setIsCarregando(false)
             //eslint-disable-next-line react-hooks/exhaustive-deps
         }).catch(({error}) => {
@@ -198,7 +199,7 @@ export default function Perfil() {
 
                             {TabLocation == 'convites' ?
                                 <div>
-                                    <h1>Convide parceiros e ganhe pontos para concorrer a R$1.000 todos os meses, confira quantos pontos você pode ganhar:</h1>
+                                    <FormInficacao nivelConta={DadosResumoPerfil.nivelConta} dadosProfissional={DadosResumoPerfil} />
                                 </div>
                             :''}
 

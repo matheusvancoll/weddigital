@@ -1,7 +1,5 @@
-@import url('http://fonts.cdnfonts.com/css/rawline');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-
-@import url('http://fonts.cdnfonts.com/css/gauntly');
+@import url('http://fonts.cdnfonts.com/css/book-antiqua');
+@import url('http://fonts.cdnfonts.com/css/montserrat');
 
 :root {
 
@@ -26,9 +24,9 @@
     /*===== z index =====*/
     --z-fixed: 100;
     
-    --body-font: 'Rawline', sans-serif;
-    --title-font: 'Gauntly', sans-serif;
-    --font-logo-WedDigital : 'Rawline', sans-serif;
+    --body-font: 'Montserrat', sans-serif;
+    --title-font: 'Book Antiqua', sans-serif;
+    --font-logo-WedDigital : 'Montserrat', sans-serif;
     --normal-font-size: 1rem;
 }
 

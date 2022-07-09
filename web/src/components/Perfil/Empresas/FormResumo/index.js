@@ -14,7 +14,7 @@ export default function FormResumo(props){
                 <BoxInfoResumo title='Casamentos bem sucedidos' valor={dadosPerfil.casamentosBemSucedidos} icon="fa-solid fa-thumbs-up" />
                 <BoxInfoResumo title='Feedbacks recebidos' valor={dadosPerfil.feedbacksRecebidos} icon="fa-solid fa-bullhorn" />
 
-                <BoxInfoResumo title='Ultimo sorteado' valor={dadosPerfil.ultimoGanhadorSorteio} icon="fa-solid fa-trophy" />
+                <BoxInfoResumo title='Ultimo ganhador' valor={dadosPerfil.ultimoGanhadorSorteio} icon="fa-solid fa-trophy" />
                 <BoxInfoResumo title='Pontos Acumulados' valor={dadosPerfil.pontosAcumulados} icon="fa-solid fa-bars-progress" />
             </div>
         </>

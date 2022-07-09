@@ -1,6 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
 import { useHistory } from "react-router-dom";
-import InputMask from 'react-input-mask';
 import './CadastroNoivos.css'
 
 import api from '../../../api'
@@ -102,15 +101,7 @@ export default function CadastroUsuario(){
             return
         }
 
-        setDadosCadastro({
-            ...DadosCadastro,
-            email: inputEmail,
-        })
-
-        setTimeout(() => {
-            console.log("Email processado")
-        }, "1500", console.log("NOW"))
-
+        DadosCadastro.email = inputEmail
         document.getElementById('inputHiddenEmail').value = inputEmail
         document.getElementById('inputHiddenNomeUsuario').value = inputNome
 
@@ -130,7 +121,9 @@ export default function CadastroUsuario(){
             })
         }
 
-        onSubmit(ev)
+        // onSubmit(ev)
+        console.log("DadosCadastro")
+        console.log(setDadosCadastro)
     }
 
     function onSubmit(ev){
