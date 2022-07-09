@@ -1,7 +1,9 @@
 package com.vancollstudios.WedDigital.controlador.pontuacao;
 
+import com.vancollstudios.WedDigital.model.sorteios.Sorteio;
 import com.vancollstudios.WedDigital.model.usuarios.Noivos;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
+import com.vancollstudios.WedDigital.repositorio.sorteios.RepositorioSorteio;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -22,6 +25,9 @@ public class ControladorPontuacao {
 
     @Autowired
     RepositorioNoivos repositorioNoivos;
+
+    @Autowired
+    RepositorioSorteio repositorioSorteio;
 
     @GetMapping(path = "/api/pontuacao/sorteioProfissional/gerar")
     public Profissional gerarSorteioProfissional() {
@@ -55,8 +61,17 @@ public class ControladorPontuacao {
 
         Object[] listaSorteioProfissionaisArr = listaSorteioProfissionais.toArray();
         Object profissionalSorteado = listaSorteioProfissionaisArr[numeroSorteado];
+        Profissional profissional = (Profissional) profissionalSorteado;
 
-        return (Profissional) profissionalSorteado;
+        Sorteio sorteio = new Sorteio();
+        sorteio.setDataSorteio(LocalDateTime.now());
+        sorteio.setNomeGanhador(profissional.getNomeEmpresa());
+        sorteio.setProfissional(true);
+        sorteio.setNoivos(false);
+        sorteio.setIdGanhador(profissional.getIdUsuario());
+        repositorioSorteio.save(sorteio);
+
+        return profissional;
     }
 
     @GetMapping(path = "/api/pontuacao/sorteioNoivos/gerar")
@@ -91,6 +106,17 @@ public class ControladorPontuacao {
         Object[] listaSorteioNoivosArr = listaSorteioNoivos.toArray();
         Object NoivosSorteado = listaSorteioNoivosArr[numeroSorteado];
 
-        return (Noivos) NoivosSorteado;
+        Noivos noivos = (Noivos) NoivosSorteado;
+
+        Sorteio sorteio = new Sorteio();
+        sorteio.setDataSorteio(LocalDateTime.now());
+        sorteio.setNomeGanhador(noivos.getNomeNoiv());
+        sorteio.setProfissional(false);
+        sorteio.setNoivos(true);
+        sorteio.setIdGanhador(noivos.getIdUsuario());
+        repositorioSorteio.save(sorteio);
+
+        return noivos;
     }
+
 }

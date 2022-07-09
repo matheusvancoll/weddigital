@@ -19,6 +19,7 @@ public class DadosResumoPerfilNoivosDTO {
     private Boolean is_Whatsapp;
     private String numeroCPF;
     private Integer pontosAcumulados;
+    private String ultimoGanhadorSorteio;
     private Integer tokenConvite;
     private Collection<Profissional> profissionaisContratados;
 
@@ -124,6 +125,14 @@ public class DadosResumoPerfilNoivosDTO {
 
     public void setPontosAcumulados(Integer pontosAcumulados) {
         this.pontosAcumulados = pontosAcumulados;
+    }
+
+    public String getUltimoGanhadorSorteio() {
+        return ultimoGanhadorSorteio;
+    }
+
+    public void setUltimoGanhadorSorteio(String ultimoGanhadorSorteio) {
+        this.ultimoGanhadorSorteio = ultimoGanhadorSorteio;
     }
 
     public Integer getTokenConvite() {

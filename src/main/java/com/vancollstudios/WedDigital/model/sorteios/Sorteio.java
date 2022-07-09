@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity(name = "SORTEIOS")
 public class Sorteio {
@@ -14,7 +14,7 @@ public class Sorteio {
     private Integer idSorteio;
 
     @Column
-    private Date dataSorteio;
+    private LocalDateTime dataSorteio;
 
     @Column
     private Integer idGanhador;
@@ -36,11 +36,11 @@ public class Sorteio {
         this.idSorteio = idSorteio;
     }
 
-    public Date getDataSorteio() {
+    public LocalDateTime getDataSorteio() {
         return dataSorteio;
     }
 
-    public void setDataSorteio(Date dataSorteio) {
+    public void setDataSorteio(LocalDateTime dataSorteio) {
         this.dataSorteio = dataSorteio;
     }
 

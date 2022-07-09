@@ -3,8 +3,10 @@ package com.vancollstudios.WedDigital.controlador.usuarios;
 import com.vancollstudios.WedDigital.controlador.imagens.ControladorImagem;
 import com.vancollstudios.WedDigital.model.feedbacks.FeedbackProfissional;
 import com.vancollstudios.WedDigital.model.imagens.ImagemPerfil;
+import com.vancollstudios.WedDigital.model.sorteios.Sorteio;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilNoivosDTO;
 import com.vancollstudios.WedDigital.repositorio.imagens.RepositorioImagemPerfil;
+import com.vancollstudios.WedDigital.repositorio.sorteios.RepositorioSorteio;
 import org.springframework.web.multipart.MultipartFile;
 import com.vancollstudios.WedDigital.model.usuarios.*;
 import com.vancollstudios.WedDigital.model.usuarios.DTO.DadosResumoPerfilProfissionalDTO;
@@ -36,6 +38,9 @@ public class ControladorUsuario {
 
     @Autowired
     RepositorioImagemPerfil repositorioImagemPerfil;
+
+    @Autowired
+    RepositorioSorteio repositorioSorteio;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -344,12 +349,17 @@ public class ControladorUsuario {
             usuario = (Usuario) dadosUsuario.getBody();
             profissional = (Profissional) dadosProfissional.getBody();
 
+            String nomeUltimoProfissionalSorteado = "--";
             Collection<FeedbackProfissional> listFeedbacksProfissional = new ArrayList<>();
-            String ultimoGanhadorSorteio = "Guilherme Fonteles";
+            Sorteio ultimoProfissionalSorteado = repositorioSorteio.obterUltimoProfissionalSorteado();
+
+            if(ultimoProfissionalSorteado != null){
+                nomeUltimoProfissionalSorteado = ultimoProfissionalSorteado.getNomeGanhador();
+            }
 
             dadosResumoPerfilProfissionalDTO = popularDadosResumoPerfilProfissional(usuario, profissional);
-            dadosResumoPerfilProfissionalDTO.setFeedbacksRecebidos(115);
-            dadosResumoPerfilProfissionalDTO.setUltimoGanhadorSorteio(ultimoGanhadorSorteio);
+            dadosResumoPerfilProfissionalDTO.setFeedbacksRecebidos(listFeedbacksProfissional.size());
+            dadosResumoPerfilProfissionalDTO.setUltimoGanhadorSorteio(nomeUltimoProfissionalSorteado);
 
         }else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -533,6 +543,15 @@ public class ControladorUsuario {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
+        String nomeUltimoNoivSorteado = "--";
+        Sorteio ultimoNoivSorteado = repositorioSorteio.obterUltimoNoivSorteado();
+
+        if(ultimoNoivSorteado != null){
+            nomeUltimoNoivSorteado = ultimoNoivSorteado.getNomeGanhador();
+        }
+
+        dadosResumoPerfilNoivosDTO.setUltimoGanhadorSorteio(nomeUltimoNoivSorteado);
+
         return ResponseEntity.ok().body(dadosResumoPerfilNoivosDTO);
     }
 
@@ -584,6 +603,7 @@ public class ControladorUsuario {
         noivos.setCidade(usuarioNoivosDTO.getCidade());
         noivos.setEstado(usuarioNoivosDTO.getEstado());
         noivos.setDataCasamento(usuarioNoivosDTO.getDataCasamento());
+        noivos.setPontosAcumulados(0);
 
         if(usuarioNoivosDTO.getIs_CadastroPorConvite() != null && usuarioNoivosDTO.getIs_CadastroPorConvite()){
             noivos.setIs_CadastroPorConvite(true);
