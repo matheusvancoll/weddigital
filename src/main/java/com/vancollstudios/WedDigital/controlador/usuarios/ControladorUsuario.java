@@ -49,12 +49,6 @@ public class ControladorUsuario {
     ControladorImagem controladorImagem;
 
 
-//    @GetMapping(path = "/api/usuario/buscarTodosUsuarios")
-//    public Iterable<Usuario> buscarTodosUsuarios(){
-//        return repositorioUsuario.findAll();
-//    }
-
-
     /**
      * Função para validar entrada do usuario
      *
@@ -101,6 +95,20 @@ public class ControladorUsuario {
         HttpStatus status = isAcessoValido ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
 
         return ResponseEntity.status(status).body(tokenAcesso);
+    }
+
+    /**
+     * Validar acesso para área de sorteio
+     *
+     */
+    @GetMapping(path = "/api/sorteio/validarAcessoAdmin")
+    public ResponseEntity<String> validarAcessoSorteio(@RequestParam String login, @RequestParam String senha){
+
+        if(login.equals("weddigital_user_admin") && senha.equals("S9cyS.qE)*kK)vqj")){
+            return ResponseEntity.status(HttpStatus.OK).body("Usuario válido");
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario inválido");
+        }
     }
 
     @GetMapping(path = "/cadastro/usuario/confirmacaoEmail")

@@ -1,20 +1,23 @@
 package com.vancollstudios.WedDigital.controlador.pontuacao;
 
+import com.vancollstudios.WedDigital.model.sorteios.DadosResumoSorteioDTO;
 import com.vancollstudios.WedDigital.model.sorteios.Sorteio;
 import com.vancollstudios.WedDigital.model.usuarios.Noivos;
 import com.vancollstudios.WedDigital.model.usuarios.Profissional;
+import com.vancollstudios.WedDigital.model.usuarios.Usuario;
 import com.vancollstudios.WedDigital.repositorio.sorteios.RepositorioSorteio;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
+import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
+import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
+import java.util.*;
 
 @CrossOrigin(origins = "${SERVER_ORIGIN_CORS}")
 @RestController
@@ -29,8 +32,11 @@ public class ControladorPontuacao {
     @Autowired
     RepositorioSorteio repositorioSorteio;
 
+    @Autowired
+    RepositorioUsuario repositorioUsuario;
+
     @GetMapping(path = "/api/pontuacao/sorteioProfissional/gerar")
-    public Profissional gerarSorteioProfissional() {
+    public DadosResumoSorteioDTO gerarSorteioProfissional() {
 
         Collection<Profissional> listaProfissionais = new ArrayList<Profissional>();
         Collection<Profissional> listaSorteioProfissionais = new ArrayList<Profissional>();
@@ -71,11 +77,36 @@ public class ControladorPontuacao {
         sorteio.setIdGanhador(profissional.getIdUsuario());
         repositorioSorteio.save(sorteio);
 
-        return profissional;
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findByIdUsuario(profissional.getIdUsuario());
+        DadosResumoSorteioDTO dadosResumoSorteioDTO = new DadosResumoSorteioDTO();
+        Usuario usuario = new Usuario();
+
+        if(usuarioOptional.isPresent()){
+            usuario = usuarioOptional.get();
+            dadosResumoSorteioDTO.setDataCriacao(usuario.getDataCriacao());
+            dadosResumoSorteioDTO.setImagemPefil(usuario.getFotoPerfil());
+        }else{
+            dadosResumoSorteioDTO.setImagemPefil("");
+            dadosResumoSorteioDTO.setDataCriacao("");
+        }
+
+        Date dataHoraAtual = new Date();
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String hora = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+
+        String dataHoraSorteio = data + " " + hora;
+
+        dadosResumoSorteioDTO.setNomeGanhador(profissional.getNomeEmpresa());
+        dadosResumoSorteioDTO.setDataHoraSorteio(dataHoraSorteio);
+        dadosResumoSorteioDTO.setPontosAcumulados(profissional.getPontosAcumulados());
+        dadosResumoSorteioDTO.setNoivos(false);
+        dadosResumoSorteioDTO.setNomeConjuge(null);
+
+        return dadosResumoSorteioDTO;
     }
 
     @GetMapping(path = "/api/pontuacao/sorteioNoivos/gerar")
-    public Noivos gerarSorteioNoivos() {
+    public DadosResumoSorteioDTO gerarSorteioNoivos() {
         Collection<Noivos> listaNoivos = new ArrayList<Noivos>();
         Collection<Noivos> listaSorteioNoivos = new ArrayList<Noivos>();
 
@@ -116,7 +147,33 @@ public class ControladorPontuacao {
         sorteio.setIdGanhador(noivos.getIdUsuario());
         repositorioSorteio.save(sorteio);
 
-        return noivos;
+        Optional<Usuario> usuarioOptional = repositorioUsuario.findByIdUsuario(noivos.getIdUsuario());
+        DadosResumoSorteioDTO dadosResumoSorteioDTO = new DadosResumoSorteioDTO();
+        Usuario usuario = new Usuario();
+
+        if(usuarioOptional.isPresent()){
+            usuario = usuarioOptional.get();
+            dadosResumoSorteioDTO.setDataCriacao(usuario.getDataCriacao());
+            dadosResumoSorteioDTO.setImagemPefil(usuario.getFotoPerfil());
+        }else{
+            dadosResumoSorteioDTO.setImagemPefil("");
+            dadosResumoSorteioDTO.setDataCriacao("");
+        }
+
+        Date dataHoraAtual = new Date();
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String hora = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+
+        String dataHoraSorteio = data + " " + hora;
+
+        dadosResumoSorteioDTO.setNomeGanhador(noivos.getNomeNoiv());
+        dadosResumoSorteioDTO.setDataHoraSorteio(dataHoraSorteio);
+        dadosResumoSorteioDTO.setPontosAcumulados(noivos.getPontosAcumulados());
+        dadosResumoSorteioDTO.setNoivos(true);
+        dadosResumoSorteioDTO.setNomeConjuge(noivos.getNomeConjuge());
+
+        return dadosResumoSorteioDTO;
     }
+
 
 }

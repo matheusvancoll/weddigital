@@ -18,6 +18,7 @@ import Teste from '../teste'
 
 import TermoDeUso from '../CondicoesLegais/TermoDeUso'
 import RegrasSorteio from '../CondicoesLegais/RegrasSorteio'
+import Sorteio from "../Sorteio/Login";
 
 export default function Router() {
     return(
@@ -44,6 +45,7 @@ export default function Router() {
             <Route exact path='/regras-sorteio' component={RegrasSorteio} />
 
             <Route exact path="/teste" component={Teste} />
+            <Route exact path="/gerarSorteio" component={Sorteio} />
 
         </Switch>
     )

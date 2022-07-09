@@ -1,0 +1,118 @@
+/* SELEÇÃO PARA SORTEIO */
+.selecaoSorteio__container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-sorteio-label{
+    margin-top: 7rem;
+    margin-bottom: -7rem;
+    font-size: 3.5em;
+    text-align: center;
+}
+
+.selecaoSorteio__opcoes{
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.selecaoSorteio__opcoes button{
+    width: 22rem;
+    height: 8rem;
+    background-color: var(--color-roxo);
+    color: var(--color-dourado);
+    font-size: 2rem;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 18px;
+    transition: 0.5s;
+}
+
+.selecaoSorteio__opcoes button:hover{
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+}
+
+
+
+
+/* PLACEHOLDER "GERANDO GANHADOR" */
+.gerandoGanhador__container{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.gerandoGanhador__container button{
+    padding: 2rem 3rem;
+    font-size: 2rem;
+    border-radius: 15rem;
+}
+
+
+
+
+
+/* CONFIRMAÇÃO DE SORTEIO */
+.confirmacaoSorteio__container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btnVoltarSelecaoSorteio{
+    width: 8rem;
+    height: 4rem;
+    background-color: var(--color-dourado);
+    color: var(--color-roxo);
+    font-size: 1.25rem;
+    border: none;
+    padding: 0.75rem 1.75rem;
+    border-radius: 12px;
+    transition: 0.5s;
+}
+
+.btnVoltarSelecaoSorteio:hover{
+    background-color: var(--color-roxo);
+    color: var(--color-dourado);
+}
+
+
+
+
+
+/* RESULTADO DO SORTEIO */
+.resultadoSorteio_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0 3rem 0;
+}
+
+.resultadoSorteio_titulo{
+    font-size: 2.5rem;
+}
+
+.resultadoSorteio_imagem{
+    width: 12rem;
+}
+
+.resultadoSorteio_nomeGanhador{
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.resultadoSorteio_horaSorteio,
+.resultadoSorteio_pontosAcumulados,
+.resultadoSorteio_dtCriacao,
+.resultadoSorteio_nomeConjugue{
+    font-size: 1.15rem;
+}
