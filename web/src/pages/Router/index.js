@@ -45,7 +45,7 @@ export default function Router() {
             <Route exact path='/regras-sorteio' component={RegrasSorteio} />
 
             <Route exact path="/teste" component={Teste} />
-            <Route exact path="/gerarSorteio" component={Sorteio} />
+            <Route exact path="/admin/gerar-ganhador" component={Sorteio} />
 
         </Switch>
     )
