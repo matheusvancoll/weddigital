@@ -9,7 +9,6 @@ import com.vancollstudios.WedDigital.repositorio.sorteios.RepositorioSorteio;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioNoivos;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioProfissional;
 import com.vancollstudios.WedDigital.repositorio.usuarios.RepositorioUsuario;
-import com.vancollstudios.WedDigital.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
