@@ -1,0 +1,39 @@
+.card_icons_pontos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+ }
+
+.icons_icon i {
+    font-size: 1.5rem;
+}
+
+.icons_title{
+    font-size: 0.75rem;
+}
+
+.icons_desc{
+    font-size: 0.75rem;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .card_icons_pontos{
+        width: 16rem;
+        padding: 0 2rem;
+    }
+
+    .icons_icon i {
+        font-size: 2rem;
+    }
+
+    .icons_title{
+        font-size: 1rem;
+    }
+
+    .icons_desc{
+        font-size: 1rem;
+    }
+
+}

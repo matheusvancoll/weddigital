@@ -5,11 +5,46 @@
     justify-content: center;
 }
 
-.title-escrita{
-    font-family: var(--title-font);
-    font-size: 2rem;
-    line-height: 2rem;
+.wed_text_primary{
+    font-size: 3rem;
 }
+
+.wed_text_secundary{
+    font-size: 2rem;
+}
+
+.wed_text_compl{
+    font-size: 1.35rem;
+}
+
+.image_wed_profissional{
+    width: 26rem;
+}
+
+
+/* === HOMEPAGE PRIMARY === */
+.hp-primary-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hp-image-primary img{
+    width: 26rem;
+}
+
+.hp-text-primary{
+    width: 13rem;
+    margin-top: -10rem;
+    margin-left: 0.75rem;
+}
+
+.hp-text-secundary{
+    margin-top: 2.5rem;
+    margin-left: 0.75rem;
+}
+
 
 /* === HOMEPAGE - 1 */
 .homepage__home_one{
@@ -41,6 +76,7 @@
 }
 
 .button_quero_crescer{
+    margin-top: 1rem;
     padding: 1rem 2rem;
     border: none;
     border-radius: 5px;
@@ -58,20 +94,6 @@
     color: var(--color-dourado);
 }
 
-.home_one__imagem img{
-    width: 20rem;
-    border-radius: 15px;
-    margin: 0 3rem;
-}
-
-/* === HOMEPAGE - 2 */
-.homepage__home_two{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*background-color: var(--color-roxo);*/
-}
 
 /* === HOMEPAGE - 3 */
 .homepage__home_three{
@@ -102,35 +124,141 @@
     margin: 0 3rem;
 }
 
+
+/* === PONTOS WED === */
+.hp_pontos_wed{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.pontos_text_primary{
+    font-size: 2rem;
+}
+
+.pontos_image img{
+    width: 26rem;
+    border-radius: 15px;
+}
+
+.pontos_icons__group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* === SOBRE SORTEIO ===*/
+.sobre_sorteio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.sobre_data_sorteio{
+    margin: 3rem 0;
+}
+
+
+/* === PROGRAMA WIN === */
+.programa_win{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.win_wed_primary{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.win_text{
+    width: 95%;
+}
+
+.win_explicacao{
+    width: 95%;
+    margin: 3rem 0;
+}
+
+
+
+/* === STATUS PROFISSIONAL === */
+.status_wed{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.status_icons__group{
+    margin: 2rem 0;
+}
+.status_icons__group img{
+    width: 6rem;
+}
+.status_text{
+    display: flex;
+}
+.status_text p{
+    font-size: 0.8rem;
+}
+
+
+
+
+
+
 @media only screen and (min-width: 768px) {
-    .homepage__home_one{
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .home_one__textos, .home_one__textos h1{
-        text-align: left;
-        font-size: 5rem;
-        line-height: 5rem;
-    }
-    .home_one__textos h4{
-        width: 75%;
-        text-align: left;
-        font-size: 2rem;
-        line-height: 2rem;
-    }
-    .home_one__imagem img{
+    .image_wed_profissional{
         width: 50rem;
+        border-radius: 15px;
     }
 
+    .hp-primary-container{
+        margin-bottom: 3rem;
+    }
+    .hp-image-primary img{
+        width: 100%;
+    }
+
+    .hp-text-primary h1{
+        width: 18rem;
+        font-size: 4rem;
+        margin-top: -40rem;
+        margin-left: 2rem;
+    }
+
+    .hp-text-secundary h4{
+        width: 33rem;
+        color: var(--color-dourado);
+        font-size: 1.5rem;
+        margin-top: 2.5rem;
+        margin-left: 2rem;
+    }
 
 
     .homepage__home_two{
         width: 100%;
+        display: flex;
+        flex-direction: column;
     }
-    .home_cards{ display: flex;}
-    .line1{ width: 80%; }
-    .line2{ width: 40%; }
+    .home_cards{
+        display: flex;
+        justify-content: center;
+    }
+    .line1{ width: 100%; }
+    .line2{ width: 100%; }
 
 
 
@@ -145,5 +273,61 @@
         width: 50rem;
     }
 
+
+
+
+    .pontos_wed_primary{
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .pontos_image img{
+        width: 50rem;
+        margin-left: 2rem;
+    }
+
+
+
+    .sobre_sorteio{
+        width: 60%;
+    }
+
+    .sobre_data_sorteio{
+        margin: 3rem 0;
+    }
+
+
+
+    /* === PROGRAMA WIN === */
+    .win_wed_primary{
+        margin: 3rem 0;
+        width: 75%;
+        flex-direction: row;
+    }
+
+    .win_text{
+        margin-left: 2rem;
+    }
+
+    .win_explicacao{
+        width: 60%;
+    }
+
+
+    /* === STATUS PROFISSIONAL === */
+    .status_icons__group{
+        margin: 4rem 0;
+    }
+
+    .status_icons__group img{
+        width: 14rem;
+        margin: 0 1rem;
+    }
+    .status_text p{
+        margin: 0 1.5rem;
+        font-size: 1rem;
+    }
 }
 
